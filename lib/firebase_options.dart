@@ -17,15 +17,24 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      return web;
+      throw UnsupportedError(
+        'DefaultFirebaseOptions have not been configured for web - '
+        'you can reconfigure this by running the FlutterFire CLI again.',
+      );
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
         return android;
       case TargetPlatform.iOS:
-        return ios;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for ios - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.macOS:
-        return macos;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for macos - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.windows:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for windows - '
@@ -43,42 +52,12 @@ class DefaultFirebaseOptions {
     }
   }
 
-  static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyDCsqQATEzbBgL_4PmUWYE2W53MdwlWpoM',
-    appId: '1:298592581662:web:42d4cbb1964f148e27d60f',
-    messagingSenderId: '298592581662',
-    projectId: 'the-gdsc-club-app',
-    authDomain: 'the-gdsc-club-app.firebaseapp.com',
-    storageBucket: 'the-gdsc-club-app.appspot.com',
-  );
-
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyBsVeoIPbonPfFqRVAESBLzL-8Gxfrh1ag',
-    appId: '1:298592581662:android:fa21ce743b5023d127d60f',
+    appId: '1:298592581662:android:16ac407d0631e3af27d60f',
     messagingSenderId: '298592581662',
     projectId: 'the-gdsc-club-app',
+    databaseURL: 'https://the-gdsc-club-app-default-rtdb.asia-southeast1.firebasedatabase.app',
     storageBucket: 'the-gdsc-club-app.appspot.com',
-  );
-
-  static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyAPzBx5DEM5X-9lVAX5Y1T2ymtQLFnfBEc',
-    appId: '1:298592581662:ios:15481dc8c31c9b6827d60f',
-    messagingSenderId: '298592581662',
-    projectId: 'the-gdsc-club-app',
-    storageBucket: 'the-gdsc-club-app.appspot.com',
-    iosClientId:
-        '298592581662-abqedcffdn135oqp287l888c2fad9k1o.apps.googleusercontent.com',
-    iosBundleId: 'com.example.mockApp',
-  );
-
-  static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyAPzBx5DEM5X-9lVAX5Y1T2ymtQLFnfBEc',
-    appId: '1:298592581662:ios:15481dc8c31c9b6827d60f',
-    messagingSenderId: '298592581662',
-    projectId: 'the-gdsc-club-app',
-    storageBucket: 'the-gdsc-club-app.appspot.com',
-    iosClientId:
-        '298592581662-abqedcffdn135oqp287l888c2fad9k1o.apps.googleusercontent.com',
-    iosBundleId: 'com.example.mockApp',
   );
 }

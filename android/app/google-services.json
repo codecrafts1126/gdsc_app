@@ -1,0 +1,91 @@
+{
+  "project_info": {
+    "project_number": "298592581662",
+    "firebase_url": "https://the-gdsc-club-app-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "the-gdsc-club-app",
+    "storage_bucket": "the-gdsc-club-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:298592581662:android:16ac407d0631e3af27d60f",
+        "android_client_info": {
+          "package_name": "com.example.gdsc_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "298592581662-41fcoflpd8i5mfkb31skt17odimgl04f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBsVeoIPbonPfFqRVAESBLzL-8Gxfrh1ag"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "298592581662-41fcoflpd8i5mfkb31skt17odimgl04f.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "298592581662-abqedcffdn135oqp287l888c2fad9k1o.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.mockApp"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:298592581662:android:fa21ce743b5023d127d60f",
+        "android_client_info": {
+          "package_name": "com.example.mock_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "298592581662-k3mqk34ekcruj4ms4mg9jgl7qtn5spa0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.mock_app",
+            "certificate_hash": "00682592cc41f8da655da15030304768650945e5"
+          }
+        },
+        {
+          "client_id": "298592581662-41fcoflpd8i5mfkb31skt17odimgl04f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBsVeoIPbonPfFqRVAESBLzL-8Gxfrh1ag"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "298592581662-41fcoflpd8i5mfkb31skt17odimgl04f.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "298592581662-abqedcffdn135oqp287l888c2fad9k1o.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.mockApp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
