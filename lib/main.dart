@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Mock App',
+      title: 'GDSC App',
       home: MultiBlocProvider(
         providers: [
           BlocProvider(
