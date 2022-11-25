@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gdsc_app/app_navigator.dart';
 import 'package:gdsc_app/cubit/auth/auth_cubit.dart';
-import 'package:gdsc_app/cubit/event/event_register_cubit.dart';
+import 'package:gdsc_app/cubit/event/Event_refresh/event_refresh_cubit.dart';
+import 'package:gdsc_app/cubit/event/Event_register/event_register_cubit.dart';
 import 'package:gdsc_app/cubit/nav_bar/navbar_cubit.dart';
 
 import 'firebase_options.dart';
@@ -32,6 +33,9 @@ class MyApp extends StatelessWidget {
           ),
           BlocProvider(
             create: (context) => EventRegisterCubit(),
+          ),
+          BlocProvider(
+            create: (context) => EventRefreshCubit(),
           ),
           BlocProvider(
             create: (context) => AuthCubit(),

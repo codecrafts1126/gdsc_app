@@ -1,6 +1,8 @@
 import 'package:bloc/bloc.dart';
+import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
+import 'package:gdsc_app/networkVars.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 part 'auth_state.dart';
@@ -19,6 +21,26 @@ class AuthCubit extends Cubit<AuthState> {
     emit(const SignedOutState());
   }
 
+  Future<void> autoLoginStateCall() async {
+    var user = await FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      emit(const LoggedInState());
+    } else {
+      return;
+    }
+  }
+
+  Future<void> registerIfNewUser() async {
+    await Dio().post(
+      registerUserPath,
+      data: {
+        "uid": FirebaseAuth.instance.currentUser?.uid,
+        "name": FirebaseAuth.instance.currentUser?.displayName,
+        'email': FirebaseAuth.instance.currentUser?.email
+      },
+    );
+  }
+
   Future<void> logInEmailPass(String email, String password) async {
     if (!_canTriggerAuthActions) return;
     _canTriggerAuthActions = false;
@@ -26,8 +48,11 @@ class AuthCubit extends Cubit<AuthState> {
 
     //auth code goes here
     try {
-      await FirebaseAuth.instance
+      var authResult = await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
+
+      await registerIfNewUser();
+
       if (!FirebaseAuth.instance.currentUser!.emailVerified) {
         emit(const LogInErrorState(
             "please verify your account using the verification sent on your email c:"));
@@ -38,6 +63,12 @@ class AuthCubit extends Cubit<AuthState> {
       emit(const LoggedInState());
     } on FirebaseAuthException catch (e) {
       emit(LogInErrorState(e.message.toString()));
+      emit(const SignedOutState());
+    } on DioError catch (e) {
+      emit(LogInErrorState(e.message.toString()));
+      emit(const SignedOutState());
+    } on Exception catch (e) {
+      emit(LogInErrorState(e.toString()));
       emit(const SignedOutState());
     }
 
@@ -77,12 +108,22 @@ class AuthCubit extends Cubit<AuthState> {
         await FirebaseAuth.instance.signInWithPopup(googleProvider);
       } else {
         GoogleAuthProvider googleProvider = GoogleAuthProvider();
-        await FirebaseAuth.instance.signInWithProvider(googleProvider);
+        var authResult =
+            await FirebaseAuth.instance.signInWithProvider(googleProvider);
+        if (authResult.additionalUserInfo?.isNewUser == true) {
+          await registerIfNewUser();
+        }
       }
 
       emit(const LoggedInState());
     } on FirebaseAuthException catch (e) {
       emit(LogInErrorState(e.message.toString()));
+      emit(const SignedOutState());
+    } on DioError catch (e) {
+      emit(LogInErrorState(e.message.toString()));
+      emit(const SignedOutState());
+    } on Exception catch (e) {
+      emit(LogInErrorState(e.toString()));
       emit(const SignedOutState());
     }
     // Trigger the authentication flow

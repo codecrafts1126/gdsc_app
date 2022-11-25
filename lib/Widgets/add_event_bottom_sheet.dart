@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gdsc_app/Models/event_model.dart';
-import 'package:gdsc_app/cubit/event/event_register_cubit.dart';
+import 'package:gdsc_app/cubit/event/Event_register/event_register_cubit.dart';
 import 'custom_textfield.dart';
 
 class AddEventBottomSheet extends StatefulWidget {
@@ -165,12 +165,12 @@ class _AddEventBottomSheetState extends State<AddEventBottomSheet> {
         },
         child: BlocConsumer<EventRegisterCubit, EventRegisterState>(
           listener: (context, state) {
-            if (state is EventRegisterError) {
+            if (state is EventRegisterErrorState) {
               ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                 content: Text(state.message),
                 backgroundColor: Colors.red[300],
               ));
-            } else if (state is EventRegistered) {
+            } else if (state is EventRegisteredState) {
               ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                 content: Text(state.message),
                 backgroundColor: Colors.green[300],
@@ -178,11 +178,11 @@ class _AddEventBottomSheetState extends State<AddEventBottomSheet> {
             }
           },
           builder: (context, state) {
-            if (state is EventRegisterError ||
-                state is EventRegistered ||
-                state is EventRegisterInitial) {
+            if (state is EventRegisterErrorState ||
+                state is EventRegisteredState ||
+                state is EventRegisterInitialState) {
               return const Text("Confirm");
-            } else if (state is EventRegisterProcessing) {
+            } else if (state is EventRegisterProcessingState) {
               return const CircularProgressIndicator();
             } else {
               return const CircularProgressIndicator();

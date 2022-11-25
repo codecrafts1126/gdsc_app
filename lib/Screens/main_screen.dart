@@ -7,6 +7,7 @@ import 'package:gdsc_app/Widgets/custom_drawer.dart';
 
 import 'package:gdsc_app/Widgets/custom_navbar.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gdsc_app/cubit/event/Event_refresh/event_refresh_cubit.dart';
 import 'package:gdsc_app/cubit/nav_bar/navbar_cubit.dart';
 
 class MainScreen extends StatefulWidget {
@@ -71,11 +72,6 @@ class _MainScreenState extends State<MainScreen> {
   Widget addEventButton(BuildContext context) {
     return FloatingActionButton(
       onPressed: () {
-        // Navigator.push(
-        //     context,
-        //     MaterialPageRoute(
-        //       builder: (context) => AddEventsScreen(),
-        //     ));
         showModalBottomSheet(
             context: context,
             enableDrag: true, // <----------- value to change when state changes
