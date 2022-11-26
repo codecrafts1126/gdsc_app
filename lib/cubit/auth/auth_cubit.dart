@@ -1,3 +1,5 @@
+// ignore_for_file: await_only_futures
+
 import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -15,30 +17,76 @@ class AuthCubit extends Cubit<AuthState> {
     try {
       await FirebaseAuth.instance.signOut();
       await GoogleSignIn().signOut();
-    } on FirebaseAuthException catch (e) {
-      emit(LogInErrorState(e.message.toString()));
+      emit(const SignedOutState());
+    } on Exception catch (e) {
+      throwLoginException(e);
     }
-    emit(const SignedOutState());
   }
 
   Future<void> autoLoginStateCall() async {
-    var user = await FirebaseAuth.instance.currentUser;
-    if (user != null) {
-      emit(const LoggedInState());
-    } else {
-      return;
+    try {
+      var user = await FirebaseAuth.instance.currentUser;
+      if (user != null) {
+        emit(const ProcessingState());
+        await getUserInfo();
+        emit(const LoggedInState());
+      } else {
+        return;
+      }
+    } on Exception catch (e) {
+      throwLoginException(e);
+      await signOut();
+      emit(const SignedOutState());
+    }
+  }
+
+  Future<void> getUserInfo() async {
+    try {
+      var res = await Dio().post(
+        getUserInfoPath,
+        data: {
+          "uid": FirebaseAuth.instance.currentUser?.uid,
+        },
+      );
+
+      if (res.statusCode == 200) {
+        var data = res.data;
+        if (data['status'] == true) {
+          roles = data['message']['roles'];
+        } else {
+          await registerIfNewUser();
+          throw DioError(
+              error: data['message'].toString(),
+              requestOptions: RequestOptions(path: getUserInfoPath));
+        }
+      } else {
+        throw DioError(
+            error: "${res.statusCode} ${res.statusMessage}",
+            requestOptions: RequestOptions(path: getUserInfoPath));
+      }
+    } on DioError catch (e) {
+      throw DioError(
+          error: e.message.toString(),
+          requestOptions: RequestOptions(path: getUserInfoPath));
     }
   }
 
   Future<void> registerIfNewUser() async {
-    await Dio().post(
-      registerUserPath,
-      data: {
-        "uid": FirebaseAuth.instance.currentUser?.uid,
-        "name": FirebaseAuth.instance.currentUser?.displayName,
-        'email': FirebaseAuth.instance.currentUser?.email
-      },
-    );
+    try {
+      await Dio().post(
+        registerUserPath,
+        data: {
+          "uid": FirebaseAuth.instance.currentUser?.uid,
+          "name": FirebaseAuth.instance.currentUser?.displayName,
+          'email': FirebaseAuth.instance.currentUser?.email
+        },
+      );
+    } on DioError catch (e) {
+      await signOut();
+      throw DioError(
+          error: e.message.toString(),
+          requestOptions: RequestOptions(path: registerUserPath));
+    }
   }
 
   Future<void> logInEmailPass(String email, String password) async {
@@ -48,7 +96,7 @@ class AuthCubit extends Cubit<AuthState> {
 
     //auth code goes here
     try {
-      var authResult = await FirebaseAuth.instance
+      await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
 
       await registerIfNewUser();
@@ -60,40 +108,14 @@ class AuthCubit extends Cubit<AuthState> {
         _canTriggerAuthActions = true;
         return;
       }
+      await getUserInfo();
       emit(const LoggedInState());
-    } on FirebaseAuthException catch (e) {
-      emit(LogInErrorState(e.message.toString()));
-      emit(const SignedOutState());
-    } on DioError catch (e) {
-      emit(LogInErrorState(e.message.toString()));
-      emit(const SignedOutState());
     } on Exception catch (e) {
-      emit(LogInErrorState(e.toString()));
+      throwLoginException(e);
+      await signOut();
       emit(const SignedOutState());
     }
 
-    _canTriggerAuthActions = true;
-  }
-
-  Future<void> loginGithub() async {
-    if (!_canTriggerAuthActions) return;
-    _canTriggerAuthActions = false;
-    emit(const ProcessingState());
-
-    try {
-      GithubAuthProvider githubProvider = GithubAuthProvider();
-      if (kIsWeb) {
-        await FirebaseAuth.instance.signInWithPopup(githubProvider);
-      } else {
-        await FirebaseAuth.instance.signInWithProvider(githubProvider);
-      }
-
-      emit(const LoggedInState());
-    } on FirebaseAuthException catch (e) {
-      emit(LogInErrorState(e.message.toString()));
-      emit(const SignedOutState());
-    }
-    // Trigger the authentication flow
     _canTriggerAuthActions = true;
   }
 
@@ -113,20 +135,16 @@ class AuthCubit extends Cubit<AuthState> {
         if (authResult.additionalUserInfo?.isNewUser == true) {
           await registerIfNewUser();
         }
+        await getUserInfo();
       }
 
       emit(const LoggedInState());
-    } on FirebaseAuthException catch (e) {
-      emit(LogInErrorState(e.message.toString()));
-      emit(const SignedOutState());
-    } on DioError catch (e) {
-      emit(LogInErrorState(e.message.toString()));
-      emit(const SignedOutState());
     } on Exception catch (e) {
-      emit(LogInErrorState(e.toString()));
+      throwLoginException(e);
+      await signOut();
       emit(const SignedOutState());
     }
-    // Trigger the authentication flow
+
     _canTriggerAuthActions = true;
   }
 
@@ -161,5 +179,25 @@ class AuthCubit extends Cubit<AuthState> {
     }
     emit(const SignedOutState());
     _canTriggerAuthActions = true;
+  }
+
+  void throwLoginException(Exception e) async {
+    switch (e.runtimeType) {
+      case (FirebaseAuthException):
+        {
+          emit(
+              LogInErrorState((e as FirebaseAuthException).message.toString()));
+        }
+        break;
+      case (DioError):
+        {
+          emit(LogInErrorState((e as DioError).message.toString()));
+        }
+        break;
+      default:
+        {
+          emit(LogInErrorState(e.toString()));
+        }
+    }
   }
 }

@@ -14,9 +14,8 @@ class EventsPage extends StatefulWidget {
 class _EventsPageState extends State<EventsPage> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    print(Random().nextInt(2));
+    context.read<EventRefreshCubit>().refreshEventData();
   }
 
   @override

@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:gdsc_app/Screens/Navbar%20Pages/events_page.dart';
 import 'package:gdsc_app/Screens/Navbar%20Pages/news_page.dart';
@@ -9,6 +10,7 @@ import 'package:gdsc_app/Widgets/custom_navbar.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gdsc_app/cubit/event/Event_refresh/event_refresh_cubit.dart';
 import 'package:gdsc_app/cubit/nav_bar/navbar_cubit.dart';
+import 'package:gdsc_app/networkVars.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -40,7 +42,7 @@ class _MainScreenState extends State<MainScreen> {
       resizeToAvoidBottomInset: false,
       floatingActionButton: BlocBuilder<NavbarCubit, NavbarState>(
         builder: (context, state) {
-          if (state is NavbarEventsState) {
+          if (state is NavbarEventsState && roles.contains('EventManager')) {
             return addEventButton(context);
           } else {
             return Container();

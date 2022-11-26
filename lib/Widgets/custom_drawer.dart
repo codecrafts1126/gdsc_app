@@ -43,6 +43,12 @@ class _CustomDrawerState extends State<CustomDrawer> {
                   ? Text(
                       "UID: ${FirebaseAuth.instance.currentUser!.uid.toString()}")
                   : const Text("null"),
+            ),
+            ListTile(
+              title: FirebaseAuth.instance.currentUser != null
+                  ? Text(
+                      "Email: ${FirebaseAuth.instance.currentUser!.email.toString()}")
+                  : const Text("null"),
             )
           ]),
         );

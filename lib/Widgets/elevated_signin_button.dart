@@ -24,9 +24,10 @@ class ElevatedSignInButton extends StatelessWidget {
             onPressed: () async {
               if (mode == 1) {
                 await context.read<AuthCubit>().loginGoogle();
-              } else if (mode == 2) {
-                await context.read<AuthCubit>().loginGithub();
               }
+              // else if (mode == 2) {
+              //   await context.read<AuthCubit>().loginGithub();
+              // }
             },
             child: Image.asset(path)));
   }
