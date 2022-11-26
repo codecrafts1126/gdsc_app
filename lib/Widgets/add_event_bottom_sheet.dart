@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gdsc_app/Models/event_model.dart';
+import 'package:gdsc_app/cubit/event/Event_refresh/event_refresh_cubit.dart';
 import 'package:gdsc_app/cubit/event/Event_register/event_register_cubit.dart';
 import 'custom_textfield.dart';
 
@@ -12,11 +13,35 @@ class AddEventBottomSheet extends StatefulWidget {
 }
 
 class _AddEventBottomSheetState extends State<AddEventBottomSheet> {
+  String timeToString(TimeOfDay time) {
+    return "${time.hourOfPeriod}:${time.minute} ${time.period.name.toUpperCase()}"
+        .trim();
+  }
+
+  String dateToString(DateTime date) {
+    List months = [
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec'
+    ];
+    return "${date.day} ${months[(date.month) - 1]} ${date.year}".trim();
+  }
+
   TextEditingController eventName = TextEditingController();
   TextEditingController eventDescription = TextEditingController();
-  DateTime? selectedDate;
-  TimeOfDay? startTime;
-  TimeOfDay? endTime;
+  TextEditingController eventVenue = TextEditingController();
+  DateTime selectedDate = DateTime.now();
+  TimeOfDay startTime = TimeOfDay.now();
+  TimeOfDay endTime = TimeOfDay.now();
   @override
   Widget build(BuildContext context) {
     return ConstrainedBox(
@@ -47,64 +72,53 @@ class _AddEventBottomSheetState extends State<AddEventBottomSheet> {
         decoration: InputDecoration(
           icon: const Icon(Icons.timelapse), //icon of text field
           hintText: isStart
-              ? (startTime != null
-                  ? ("Start Time is set to ${startTime?.hourOfPeriod} : ${startTime?.minute} ${startTime?.period.name}")
-                  : "Start Time Not Selected")
-              : (endTime != null
-                  ? ("End time is set to ${endTime?.hour} : ${endTime?.minute} ${endTime?.period.name}")
-                  : "End time Not Selected"), //label text of field
+              ? ("Start Time is set to ${timeToString(startTime)}")
+              : ("End time is set to ${timeToString(endTime)}"), //label text of field
         ),
         readOnly: true, // when true user cannot edit text
         onTap: () async {
+          var time = (await showTimePicker(
+            initialTime: startTime,
+            context: context,
+          ));
           if (isStart) {
-            startTime = (await showTimePicker(
-              initialTime: TimeOfDay.now(),
-              context: context,
-            ));
+            setState(() {
+              if (time != null) {
+                startTime = time;
+              }
+            });
           } else {
-            endTime = (await showTimePicker(
-              initialTime: TimeOfDay.now(),
-              context: context,
-            ));
+            setState(() {
+              if (time != null) {
+                endTime = time;
+              }
+            });
           }
-
-          setState(() {});
         });
   }
 
   Widget dayPicker() {
-    List months = [
-      'Jan',
-      'Feb',
-      'Mar',
-      'Apr',
-      'May',
-      'Jun',
-      'Jul',
-      'Aug',
-      'Sep',
-      'Oct',
-      'Nov',
-      'Dec'
-    ];
     return TextField(
         //editing controller of this TextField
 
         decoration: InputDecoration(
-          icon: const Icon(Icons.calendar_today), //icon of text field
-          hintText: selectedDate != null
-              ? ("Event date is on ${selectedDate?.day} ${months[(selectedDate?.month)! - 1]} ${selectedDate?.year}")
-              : "Event date is Not selected", //label text of field
-        ),
+            icon: const Icon(Icons.calendar_today), //icon of text field
+            hintText:
+                "Event date is on ${dateToString(selectedDate)}" //label text of field
+            ),
         readOnly: true, // when true user cannot edit text
         onTap: () async {
-          selectedDate = (await showDatePicker(
+          var date = (await showDatePicker(
               context: context,
-              initialDate: DateTime.now(), //get today's date
+              initialDate: selectedDate, //get today's date
               firstDate: DateTime(
                   2000), //DateTime.now() - not to allow to choose before today.
               lastDate: DateTime(2100)));
-          setState(() {});
+          setState(() {
+            if (date != null) {
+              selectedDate = date;
+            }
+          });
         });
   }
 
@@ -128,7 +142,10 @@ class _AddEventBottomSheetState extends State<AddEventBottomSheet> {
             const SizedBox(height: 18),
             CustomTextField(controller: eventName, hintText: "Event name"),
             const SizedBox(height: 12),
-            CustomTextField(controller: eventDescription, hintText: "Venue"),
+            CustomTextField(
+                controller: eventDescription, hintText: "Description"),
+            const SizedBox(height: 12),
+            CustomTextField(controller: eventVenue, hintText: "Venue"),
             const SizedBox(height: 12),
             dayPicker(),
             const SizedBox(height: 12),
@@ -152,12 +169,14 @@ class _AddEventBottomSheetState extends State<AddEventBottomSheet> {
             )),
         onPressed: () async {
           EventModel data = EventModel(
-              eventName: eventName.toString(),
-              eventDescripion: eventDescription.toString(),
-              eventDate: selectedDate.toString(),
-              eventStartTime: startTime.toString(),
-              eventEndTime: endTime.toString());
+              eventName: eventName.text.toString().trim(),
+              eventDescripion: eventDescription.text.toString().trim(),
+              eventVenue: eventVenue.text.toString().trim(),
+              eventDate: dateToString(selectedDate),
+              eventStartTime: timeToString(startTime),
+              eventEndTime: timeToString(endTime));
           await context.read<EventRegisterCubit>().registerEvent(data);
+          await context.read<EventRefreshCubit>().refreshEventData();
           clearControllers();
           try {
             Navigator.pop(context);

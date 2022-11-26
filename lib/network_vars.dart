@@ -1,5 +1,6 @@
 String serverAddress = 'https://gdsc-server.onrender.com';
-String eventsPath = '$serverAddress/read/events';
+String eventsReadPath = '$serverAddress/read/events';
+String eventsRegisterPath = '$serverAddress/create/event';
 String registerUserPath = '$serverAddress/create/user';
 String getUserInfoPath = '$serverAddress/read/userInfo';
 

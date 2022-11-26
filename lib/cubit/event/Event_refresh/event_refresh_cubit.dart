@@ -3,17 +3,16 @@ import 'dart:async';
 import 'package:dio/dio.dart';
 import 'package:bloc/bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:gdsc_app/networkVars.dart';
+import 'package:gdsc_app/network_vars.dart';
 import 'package:meta/meta.dart';
-import 'package:firebase_database/firebase_database.dart';
 
 part 'event_refresh_state.dart';
 
-final _database = FirebaseDatabase.instance.ref();
-StreamSubscription<DatabaseEvent> _eventStream =
-    _database.onValue.listen((event) {
-  print("event ref changes");
-});
+// final _database = FirebaseDatabase.instance.ref();
+// StreamSubscription<DatabaseEvent> _eventStream =
+//     _database.onValue.listen((event) {
+//   print("event ref changes");
+// });
 
 class EventRefreshCubit extends Cubit<EventRefreshState> {
   EventRefreshCubit() : super(const EventRefreshInitialState());
@@ -26,13 +25,12 @@ class EventRefreshCubit extends Cubit<EventRefreshState> {
 
     try {
       var res = await Dio().post(
-        eventsPath,
+        eventsReadPath,
         data: {"uid": FirebaseAuth.instance.currentUser?.uid},
       );
       if (res.statusCode == 200) {
         var jsonRes = res.data;
         if (jsonRes["status"] == true) {
-          print(jsonRes);
           events = jsonRes["message"];
         } else {
           emit(EventRefreshErrorState(jsonRes["message"].toString()));

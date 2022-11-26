@@ -1,6 +1,7 @@
 class EventModel {
   final String eventName;
   final String eventDescripion;
+  final String eventVenue;
   final String eventDate;
   final String eventStartTime;
   final String eventEndTime;
@@ -8,6 +9,7 @@ class EventModel {
   EventModel({
     required this.eventName,
     required this.eventDescripion,
+    required this.eventVenue,
     required this.eventDate,
     required this.eventStartTime,
     required this.eventEndTime,

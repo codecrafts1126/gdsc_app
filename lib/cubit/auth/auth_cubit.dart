@@ -4,7 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
-import 'package:gdsc_app/networkVars.dart';
+import 'package:gdsc_app/network_vars.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 part 'auth_state.dart';

@@ -1,5 +1,7 @@
-import 'dart:math';
 import 'package:bloc/bloc.dart';
+import 'package:dio/dio.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:gdsc_app/network_vars.dart';
 import 'package:meta/meta.dart';
 import 'package:gdsc_app/Models/event_model.dart';
 
@@ -8,23 +10,47 @@ part 'event_register_state.dart';
 class EventRegisterCubit extends Cubit<EventRegisterState> {
   EventRegisterCubit() : super(const EventRegisterInitialState());
 
-  bool _canRegister = true;
+  bool _canTriggerActions = true;
 
   Future<void> registerEvent(EventModel eventData) async {
-    if (!_canRegister) return;
-    _canRegister = false;
+    if (!_canTriggerActions) return;
+    _canTriggerActions = false;
     emit(const EventRegisterProcessingState());
+
     try {
-      await Future.delayed(const Duration(seconds: 3), () {
-        var x = Random();
-        var y = x.nextInt(2);
-        if (y.isOdd) throw Exception();
-        emit(const EventRegisteredState("Event registered successfully c:"));
-      });
-    } catch (e) {
-      emit(const EventRegisterErrorState("Could not register event :C"));
+      var res = await Dio().post(
+        eventsRegisterPath,
+        data: {
+          "uid": FirebaseAuth.instance.currentUser?.uid,
+          "name": eventData.eventName.toString(),
+          "description": eventData.eventDescripion.toString(),
+          "venue": eventData.eventVenue.toString(),
+          "date": eventData.eventDate.toString(),
+          "startTime": eventData.eventStartTime.toString(),
+          "endTime": eventData.eventEndTime.toString()
+        },
+      );
+      if (res.statusCode == 200) {
+        var jsonRes = res.data;
+        if (jsonRes["status"] == true) {
+          emit(EventRegisteredState(jsonRes["message"].toString()));
+        } else {
+          emit(EventRegisterErrorState(jsonRes["message"].toString()));
+        }
+      } else {
+        emit(EventRegisterErrorState(
+            "Server returned an error with status code ${res.statusCode}"));
+      }
+      emit(const EventRegisterInitialState());
+      _canTriggerActions = true;
+    } on DioError catch (e) {
+      print(e);
+      emit(EventRegisterErrorState(e.error.toString()));
+      emit(const EventRegisterInitialState());
+    } on Exception catch (e) {
+      print(e);
+      emit(EventRegisterErrorState(e.toString()));
+      emit(const EventRegisterInitialState());
     }
-    emit(const EventRegisterInitialState());
-    _canRegister = true;
   }
 }

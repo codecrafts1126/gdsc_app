@@ -71,6 +71,15 @@ flutter:
     - icons/google.png
     - icons/github.png
     - icons/twitter.png
+    - icons/flutter.png
+    - icons/android.png
+    - icons/cloud.png
+    - icons/code.png
+    - icons/devops.png
+    - icons/gamedev.png
+    - icons/hacking.png
+    - icons/ml.png
+    - icons/web.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
