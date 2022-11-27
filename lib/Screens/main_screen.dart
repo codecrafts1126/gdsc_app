@@ -20,6 +20,7 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
+    // globalContext = context;
     return Scaffold(
       body: BlocBuilder<NavbarCubit, NavbarState>(
         builder: (context, state) {
@@ -71,8 +72,8 @@ class _MainScreenState extends State<MainScreen> {
 
   Widget addEventButton(BuildContext context) {
     return FloatingActionButton(
-      onPressed: () {
-        showModalBottomSheet(
+      onPressed: () async {
+        await showModalBottomSheet(
             context: context,
             enableDrag: true, // <----------- value to change when state changes
             isDismissible:

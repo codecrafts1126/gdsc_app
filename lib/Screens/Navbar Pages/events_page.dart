@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gdsc_app/Widgets/edit_event_bottom_sheet.dart';
+import 'package:gdsc_app/cubit/event/Event_delete/event_delete_cubit.dart';
 import 'package:gdsc_app/cubit/event/Event_refresh/event_refresh_cubit.dart';
 import 'package:gdsc_app/network_vars.dart';
 
@@ -77,7 +79,7 @@ class _EventsPageListViewState extends State<EventsPageListView> {
           alignment: Alignment.topCenter,
           children: [
             Padding(
-                padding: const EdgeInsets.only(top: 25),
+                padding: const EdgeInsets.only(top: 18),
                 child: InkWell(
                   child: Card(
                     shape: const RoundedRectangleBorder(
@@ -90,11 +92,22 @@ class _EventsPageListViewState extends State<EventsPageListView> {
                     color: Colors.blueGrey[100],
                     child: Padding(
                         padding: const EdgeInsets.only(
-                            left: 9, right: 9, top: 54, bottom: 12),
+                            left: 9, right: 9, top: 9, bottom: 12),
                         // events[events.keys.elementAt(index)].toString()
                         child: SizedBox(
                           width: double.maxFinite,
                           child: Column(children: [
+                            SizedBox(
+                              height: 54,
+                              width: double.maxFinite,
+                              // color: Colors.red,
+                              child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    if (roles.contains("EventManager"))
+                                      popUpDialogueButton(index),
+                                  ]),
+                            ),
                             Text(
                               events[events.keys.elementAt(index)]['name']
                                   .toString(),
@@ -135,5 +148,64 @@ class _EventsPageListViewState extends State<EventsPageListView> {
         ),
       ),
     );
+  }
+
+  Widget popUpDialogueButton(int index) {
+    return PopupMenuButton(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
+        elevation: 3,
+        itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
+              PopupMenuItem<String>(
+                child: ListTile(
+                  contentPadding: EdgeInsets.zero,
+                  title: const Text('Edit Event'),
+                  leading: const Icon(Icons.edit_outlined),
+                  onTap: () async {
+                    Navigator.of(context).pop();
+                    await showModalBottomSheet(
+                        context: context,
+                        enableDrag:
+                            true, // <----------- value to change when state changes
+                        isDismissible:
+                            true, // <----------- value to change when state changes
+                        isScrollControlled: true,
+                        shape: const RoundedRectangleBorder(
+                          borderRadius:
+                              BorderRadius.vertical(top: Radius.circular(30)),
+                        ),
+                        builder: (context) {
+                          return EditEventBottomSheet(index: index);
+                        });
+                  },
+                ),
+              ),
+              PopupMenuItem<String>(
+                child: ListTile(
+                  contentPadding: EdgeInsets.zero,
+                  title: const Text('Delete Event'),
+                  leading: BlocBuilder<EventDeleteCubit, EventDeleteState>(
+                    builder: (context, state) {
+                      if (state is EventDeleteProcessingState) {
+                        return const CircularProgressIndicator();
+                      } else {
+                        return Icon(
+                          Icons.delete_outline_rounded,
+                          color: Colors.red[400],
+                        );
+                      }
+                    },
+                  ),
+                  onTap: () async {
+                    await context
+                        .read<EventDeleteCubit>()
+                        .deleteEvent(events.keys.elementAt(index).toString())
+                        .then((value) => Navigator.of(context).pop())
+                        .then((value) async => await context
+                            .read<EventRefreshCubit>()
+                            .refreshEventData());
+                  },
+                ),
+              ),
+            ]);
   }
 }

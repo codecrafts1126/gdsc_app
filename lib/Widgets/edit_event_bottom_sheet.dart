@@ -1,25 +1,40 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gdsc_app/Models/event_model.dart';
+import 'package:gdsc_app/cubit/event/Event_edit/event_edit_cubit.dart';
 import 'package:gdsc_app/cubit/event/Event_refresh/event_refresh_cubit.dart';
-import 'package:gdsc_app/cubit/event/Event_register/event_register_cubit.dart';
-import 'package:gdsc_app/date_time_utils.dart';
+import 'package:gdsc_app/network_vars.dart';
+import '../date_time_utils.dart';
 import 'custom_textfield.dart';
 
-class AddEventBottomSheet extends StatefulWidget {
-  const AddEventBottomSheet({super.key});
+class EditEventBottomSheet extends StatefulWidget {
+  final int index;
+  const EditEventBottomSheet({super.key, required this.index});
 
   @override
-  State<AddEventBottomSheet> createState() => _AddEventBottomSheetState();
+  State<EditEventBottomSheet> createState() => _EditEventBottomSheetState();
 }
 
-class _AddEventBottomSheetState extends State<AddEventBottomSheet> {
+class _EditEventBottomSheetState extends State<EditEventBottomSheet> {
   TextEditingController eventName = TextEditingController();
   TextEditingController eventDescription = TextEditingController();
   TextEditingController eventVenue = TextEditingController();
   DateTime selectedDate = DateTime.now();
   TimeOfDay startTime = TimeOfDay.now();
   TimeOfDay endTime = TimeOfDay.now();
+
+  @override
+  void initState() {
+    super.initState();
+    var eventData = events[events.keys.elementAt(widget.index)];
+    eventName.text = eventData['name'];
+    eventDescription.text = eventData['description'];
+    eventVenue.text = eventData['venue'];
+    selectedDate = stringToDatetime(eventData['date']);
+    startTime = stringToTime(eventData['startTime']);
+    endTime = stringToTime(eventData['endTime']);
+  }
+
   @override
   Widget build(BuildContext context) {
     return ConstrainedBox(
@@ -36,7 +51,7 @@ class _AddEventBottomSheetState extends State<AddEventBottomSheet> {
                 SizedBox(
                     width: MediaQuery.of(context).size.width - 42,
                     height: 60,
-                    child: confirmButton()),
+                    child: confirmButton(widget.index)),
               ],
             ),
           ),
@@ -122,7 +137,7 @@ class _AddEventBottomSheetState extends State<AddEventBottomSheet> {
           // height: 100,
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            const Text("New Event", style: TextStyle(fontSize: 27)),
+            const Text("Edit Event", style: TextStyle(fontSize: 27)),
             const Divider(),
             const SizedBox(height: 18),
             CustomTextField(
@@ -149,7 +164,7 @@ class _AddEventBottomSheetState extends State<AddEventBottomSheet> {
     );
   }
 
-  Widget confirmButton() {
+  Widget confirmButton(int index) {
     return ElevatedButton(
         style: ElevatedButton.styleFrom(
             elevation: 1,
@@ -166,8 +181,10 @@ class _AddEventBottomSheetState extends State<AddEventBottomSheet> {
               eventStartTime: dateTimeToTimeString(startTime).toString().trim(),
               eventEndTime: dateTimeToTimeString(endTime).toString().trim());
 
-          await context.read<EventRegisterCubit>().registerEvent(data).then(
-              (value) async => await context
+          await context
+              .read<EventEditCubit>()
+              .editEvent(events.keys.elementAt(index).toString(), data)
+              .then((value) async => await context
                   .read<EventRefreshCubit>()
                   .refreshEventData()
                   .then((value) => clearControllers()));
@@ -176,14 +193,14 @@ class _AddEventBottomSheetState extends State<AddEventBottomSheet> {
             Navigator.pop(context);
           } catch (e) {}
         },
-        child: BlocConsumer<EventRegisterCubit, EventRegisterState>(
+        child: BlocConsumer<EventEditCubit, EventEditState>(
           listener: (context, state) {
-            if (state is EventRegisterErrorState) {
+            if (state is EventEditErrorState) {
               ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                 content: Text(state.message),
                 backgroundColor: Colors.red[300],
               ));
-            } else if (state is EventRegisteredState) {
+            } else if (state is EventEditedState) {
               ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                 content: Text(state.message),
                 backgroundColor: Colors.green[300],
@@ -191,11 +208,11 @@ class _AddEventBottomSheetState extends State<AddEventBottomSheet> {
             }
           },
           builder: (context, state) {
-            if (state is EventRegisterErrorState ||
-                state is EventRegisteredState ||
-                state is EventRegisterInitialState) {
+            if (state is EventEditErrorState ||
+                state is EventEditedState ||
+                state is EventEditInitialState) {
               return const Text("Confirm");
-            } else if (state is EventRegisterProcessingState) {
+            } else if (state is EventEditProcessingState) {
               return const CircularProgressIndicator();
             } else {
               return const CircularProgressIndicator();

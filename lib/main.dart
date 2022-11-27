@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gdsc_app/app_navigator.dart';
 import 'package:gdsc_app/cubit/auth/auth_cubit.dart';
+import 'package:gdsc_app/cubit/event/Event_delete/event_delete_cubit.dart';
+import 'package:gdsc_app/cubit/event/Event_edit/event_edit_cubit.dart';
 import 'package:gdsc_app/cubit/event/Event_refresh/event_refresh_cubit.dart';
 import 'package:gdsc_app/cubit/event/Event_register/event_register_cubit.dart';
 import 'package:gdsc_app/cubit/nav_bar/navbar_cubit.dart';
@@ -32,13 +34,19 @@ class MyApp extends StatelessWidget {
             create: (context) => NavbarCubit(),
           ),
           BlocProvider(
-            create: (context) => EventRegisterCubit(),
+            create: (context) => AuthCubit(),
           ),
           BlocProvider(
             create: (context) => EventRefreshCubit(),
           ),
           BlocProvider(
-            create: (context) => AuthCubit(),
+            create: (context) => EventRegisterCubit(),
+          ),
+          BlocProvider(
+            create: (context) => EventEditCubit(),
+          ),
+          BlocProvider(
+            create: (context) => EventDeleteCubit(),
           ),
         ],
         child: const AppNavigator(),

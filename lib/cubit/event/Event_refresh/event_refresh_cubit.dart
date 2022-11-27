@@ -41,11 +41,9 @@ class EventRefreshCubit extends Cubit<EventRefreshState> {
       }
       emit(const EventRefreshInitialState());
     } on DioError catch (e) {
-      print(e);
       emit(EventRefreshErrorState(e.error.toString()));
       emit(const EventRefreshInitialState());
     } on Exception catch (e) {
-      print(e);
       emit(EventRefreshErrorState(e.toString()));
       emit(const EventRefreshInitialState());
     }
