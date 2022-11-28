@@ -4,6 +4,7 @@ import 'package:gdsc_app/Models/domain_model.dart';
 import 'package:gdsc_app/Widgets/edit_event_bottom_sheet.dart';
 import 'package:gdsc_app/cubit/event/Event_delete/event_delete_cubit.dart';
 import 'package:gdsc_app/cubit/event/Event_refresh/event_refresh_cubit.dart';
+import 'package:gdsc_app/date_time_utils.dart';
 import 'package:gdsc_app/network_vars.dart';
 
 class EventsPage extends StatefulWidget {
@@ -122,8 +123,56 @@ class _EventsPageListViewState extends State<EventsPageListView> {
                             const SizedBox(height: 9),
                             Text(
                               sortedEvents[sortedEvents.keys.elementAt(index)]
-                                      ['date']
+                                      ['description']
                                   .toString(),
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                            const SizedBox(height: 9),
+                            Text(
+                              "Venue: ${sortedEvents[sortedEvents.keys.elementAt(index)]['venue'].toString()}",
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                            const SizedBox(height: 9),
+                            Text(
+                              "Date: ${writableDateTimeToReadableDateTime(
+                                sortedEvents[sortedEvents.keys.elementAt(index)]
+                                        ['date']
+                                    .toString(),
+                              )}",
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                            const SizedBox(height: 9),
+                            Text(
+                              "Start Time: ${stringToTime(
+                                sortedEvents[sortedEvents.keys.elementAt(index)]
+                                        ['startTime']
+                                    .toString(),
+                              )}",
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                            const SizedBox(height: 9),
+                            Text(
+                              "End Time: ${stringToTime(
+                                sortedEvents[sortedEvents.keys.elementAt(index)]
+                                        ['endTime']
+                                    .toString(),
+                              )}",
                               textAlign: TextAlign.center,
                               style: const TextStyle(
                                 fontSize: 15,
