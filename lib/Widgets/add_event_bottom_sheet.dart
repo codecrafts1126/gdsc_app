@@ -111,7 +111,7 @@ class _AddEventBottomSheetState extends State<AddEventBottomSheet> {
 
   Widget domainDropDown() {
     return DropdownButtonHideUnderline(
-      child: Container(
+      child: SizedBox(
         width: double.maxFinite,
         child: DropdownButtonFormField(
           borderRadius: BorderRadius.circular(18),

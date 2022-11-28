@@ -85,10 +85,7 @@ class _EventsPageListViewState extends State<EventsPageListView> {
             Padding(
                 padding: const EdgeInsets.only(top: 18),
                 child: InkWell(
-                  onTap: () {
-                    print(
-                        sortedEvents.values.elementAt(0)['domain'].toString());
-                  },
+                  onTap: () {},
                   child: Card(
                     shape: const RoundedRectangleBorder(
                         borderRadius: BorderRadius.only(
