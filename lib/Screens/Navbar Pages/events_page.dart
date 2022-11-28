@@ -56,20 +56,22 @@ class _EventsPageListViewState extends State<EventsPageListView> {
         await context.read<EventRefreshCubit>().refreshEventData();
       },
       child: Container(
-          color: Colors.grey[50],
-          child: ListView.builder(
-            itemCount: events.length,
-            itemBuilder: (context, index) {
-              return Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 9, vertical: 6),
-                  child: eventCard(index));
-            },
-          )),
+        color: Colors.grey[50],
+        child: ListView.builder(
+          itemCount: events.length,
+          itemBuilder: (context, index) {
+            final sortedEvents = Map.fromEntries(events.entries.toList()
+              ..sort((e1, e2) => e1.value['date'].compareTo(e2.value['date'])));
+            return Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 6),
+                child: eventCard(sortedEvents, index));
+          },
+        ),
+      ),
     );
   }
 
-  Widget eventCard(int index) {
+  Widget eventCard(dynamic sortedEvents, int index) {
     return Padding(
       padding: EdgeInsets.only(top: ((index == 0) ? 12 : 0)),
       child: Container(
@@ -109,15 +111,16 @@ class _EventsPageListViewState extends State<EventsPageListView> {
                                   ]),
                             ),
                             Text(
-                              events[events.keys.elementAt(index)]['name']
+                              sortedEvents[sortedEvents.keys.elementAt(index)]
+                                      ['name']
                                   .toString(),
                               style: const TextStyle(
                                   fontSize: 24, fontWeight: FontWeight.w300),
                             ),
                             const SizedBox(height: 9),
                             Text(
-                              events[events.keys.elementAt(index)]
-                                      ['description']
+                              sortedEvents[sortedEvents.keys.elementAt(index)]
+                                      ['date']
                                   .toString(),
                               textAlign: TextAlign.center,
                               style: const TextStyle(
