@@ -155,11 +155,8 @@ class _EventsPageListViewState extends State<EventsPageListView> {
                             ),
                             const SizedBox(height: 9),
                             Text(
-                              "Start Time: ${stringToTime(
-                                sortedEvents[sortedEvents.keys.elementAt(index)]
-                                        ['startTime']
-                                    .toString(),
-                              )}",
+                              sortedEvents[sortedEvents.keys.elementAt(index)]
+                                  ['startTime'],
                               textAlign: TextAlign.center,
                               style: const TextStyle(
                                 fontSize: 15,
@@ -168,11 +165,8 @@ class _EventsPageListViewState extends State<EventsPageListView> {
                             ),
                             const SizedBox(height: 9),
                             Text(
-                              "End Time: ${stringToTime(
-                                sortedEvents[sortedEvents.keys.elementAt(index)]
-                                        ['endTime']
-                                    .toString(),
-                              )}",
+                              sortedEvents[sortedEvents.keys.elementAt(index)]
+                                  ['endTime'],
                               textAlign: TextAlign.center,
                               style: const TextStyle(
                                 fontSize: 15,
