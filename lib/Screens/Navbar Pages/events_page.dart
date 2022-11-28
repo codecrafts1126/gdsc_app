@@ -248,7 +248,8 @@ class _EventsPageListViewState extends State<EventsPageListView> {
                   onTap: () async {
                     await context
                         .read<EventDeleteCubit>()
-                        .deleteEvent(events.keys.elementAt(index).toString())
+                        .deleteEvent(
+                            sortedEvents.keys.elementAt(index).toString())
                         .then((value) => Navigator.of(context).pop())
                         .then((value) async => await context
                             .read<EventRefreshCubit>()
