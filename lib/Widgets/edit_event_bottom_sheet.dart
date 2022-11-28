@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gdsc_app/Models/domain_model.dart';
 import 'package:gdsc_app/Models/event_model.dart';
 import 'package:gdsc_app/cubit/event/Event_edit/event_edit_cubit.dart';
 import 'package:gdsc_app/cubit/event/Event_refresh/event_refresh_cubit.dart';
@@ -22,11 +23,13 @@ class _EditEventBottomSheetState extends State<EditEventBottomSheet> {
   DateTime selectedDate = DateTime.now();
   TimeOfDay startTime = TimeOfDay.now();
   TimeOfDay endTime = TimeOfDay.now();
+  String domainInitValue = 'General';
 
   @override
   void initState() {
     super.initState();
-    var eventData = events[events.keys.elementAt(widget.index)];
+    var eventData = sortedEvents[sortedEvents.keys.elementAt(widget.index)];
+    domainInitValue = eventData['domain'];
     eventName.text = eventData['name'];
     eventDescription.text = eventData['description'];
     eventVenue.text = eventData['venue'];
@@ -122,9 +125,31 @@ class _EditEventBottomSheetState extends State<EditEventBottomSheet> {
         });
   }
 
-  void clearControllers() {
-    eventName.clear();
-    eventDescription.clear();
+  Widget domainDropDown() {
+    return DropdownButtonHideUnderline(
+      child: Container(
+        width: double.maxFinite,
+        child: DropdownButtonFormField(
+          borderRadius: BorderRadius.circular(18),
+          elevation: 3,
+          menuMaxHeight: 450,
+          value: domainInitValue,
+          hint: const Text('Domain'),
+          // value: domainInitValue,
+          items: domainModel.keys.toList().map((String domain) {
+            return DropdownMenuItem<String>(
+              value: domain,
+              child: Text(domain, textAlign: TextAlign.center),
+            );
+          }).toList(),
+          onChanged: (value) {
+            setState(() {
+              domainInitValue = value!;
+            });
+          },
+        ),
+      ),
+    );
   }
 
   Widget bottomSheetBody() {
@@ -140,6 +165,8 @@ class _EditEventBottomSheetState extends State<EditEventBottomSheet> {
             const Text("Edit Event", style: TextStyle(fontSize: 27)),
             const Divider(),
             const SizedBox(height: 18),
+            const SizedBox(height: 18),
+            domainDropDown(),
             CustomTextField(
                 controller: eventName,
                 hintText: "Event name (Ex: Flutter Festival 2023)"),
@@ -174,6 +201,7 @@ class _EditEventBottomSheetState extends State<EditEventBottomSheet> {
             )),
         onPressed: () async {
           EventModel data = EventModel(
+              eventDomain: domainInitValue.trim(),
               eventName: eventName.text.toString().trim(),
               eventDescripion: eventDescription.text.toString().trim(),
               eventVenue: eventVenue.text.toString().trim(),
@@ -184,10 +212,8 @@ class _EditEventBottomSheetState extends State<EditEventBottomSheet> {
           await context
               .read<EventEditCubit>()
               .editEvent(events.keys.elementAt(index).toString(), data)
-              .then((value) async => await context
-                  .read<EventRefreshCubit>()
-                  .refreshEventData()
-                  .then((value) => clearControllers()));
+              .then((value) async =>
+                  await context.read<EventRefreshCubit>().refreshEventData());
 
           try {
             Navigator.pop(context);

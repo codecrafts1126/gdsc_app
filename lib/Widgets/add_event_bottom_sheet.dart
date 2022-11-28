@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gdsc_app/Models/domain_model.dart';
 import 'package:gdsc_app/Models/event_model.dart';
 import 'package:gdsc_app/cubit/event/Event_refresh/event_refresh_cubit.dart';
 import 'package:gdsc_app/cubit/event/Event_register/event_register_cubit.dart';
@@ -20,6 +21,7 @@ class _AddEventBottomSheetState extends State<AddEventBottomSheet> {
   DateTime selectedDate = DateTime.now();
   TimeOfDay startTime = TimeOfDay.now();
   TimeOfDay endTime = TimeOfDay.now();
+  String domainInitValue = 'General';
   @override
   Widget build(BuildContext context) {
     return ConstrainedBox(
@@ -107,42 +109,80 @@ class _AddEventBottomSheetState extends State<AddEventBottomSheet> {
         });
   }
 
+  Widget domainDropDown() {
+    return DropdownButtonHideUnderline(
+      child: Container(
+        width: double.maxFinite,
+        child: DropdownButtonFormField(
+          borderRadius: BorderRadius.circular(18),
+          elevation: 3,
+          menuMaxHeight: 450,
+          hint: const Text('Domain'),
+          // value: domainInitValue,
+          items: domainModel.keys.toList().map((String domain) {
+            return DropdownMenuItem<String>(
+              value: domain,
+              child: Text(domain, textAlign: TextAlign.center),
+            );
+          }).toList(),
+          onChanged: (value) {
+            setState(() {
+              domainInitValue = value!;
+            });
+          },
+        ),
+      ),
+    );
+  }
+
   void clearControllers() {
     eventName.clear();
     eventDescription.clear();
+    domainInitValue = 'General';
   }
 
   Widget bottomSheetBody() {
     return Expanded(
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 12),
-        child: SingleChildScrollView(
-          // child: Expanded(
-          // color: Colors.green,
-          // height: 100,
-          child:
-              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            const Text("New Event", style: TextStyle(fontSize: 27)),
-            const Divider(),
-            const SizedBox(height: 18),
-            CustomTextField(
-                controller: eventName,
-                hintText: "Event name (Ex: Flutter Festival 2023)"),
-            const SizedBox(height: 12),
-            CustomTextField(
-                controller: eventDescription, hintText: "Description"),
-            const SizedBox(height: 12),
-            CustomTextField(
-                controller: eventVenue,
-                hintText:
-                    "Venue (Ex: Cloud Computing Lab, 4th floor, SIT Base campus"),
-            const SizedBox(height: 12),
-            dayPicker(),
-            const SizedBox(height: 12),
-            timePicker(true),
-            const SizedBox(height: 12),
-            timePicker(false),
-          ]),
+        child: Scrollbar(
+          thumbVisibility: true,
+          thickness: 6,
+          radius: const Radius.circular(18),
+          child: SingleChildScrollView(
+            // child: Expanded(
+            // color: Colors.green,
+            // height: 100,
+            child: Padding(
+              padding: const EdgeInsets.only(right: 9),
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text("New Event", style: TextStyle(fontSize: 27)),
+                    const Divider(),
+                    const SizedBox(height: 18),
+                    domainDropDown(),
+                    const SizedBox(height: 12),
+                    CustomTextField(
+                        controller: eventName,
+                        hintText: "Event name (Ex: Flutter Festival 2023)"),
+                    const SizedBox(height: 12),
+                    CustomTextField(
+                        controller: eventDescription, hintText: "Description"),
+                    const SizedBox(height: 12),
+                    CustomTextField(
+                        controller: eventVenue,
+                        hintText:
+                            "Venue (Ex: Cloud Computing Lab, 4th floor, SIT Base campus"),
+                    const SizedBox(height: 12),
+                    dayPicker(),
+                    const SizedBox(height: 12),
+                    timePicker(true),
+                    const SizedBox(height: 12),
+                    timePicker(false),
+                  ]),
+            ),
+          ),
         ),
       ),
       // ),
@@ -159,6 +199,7 @@ class _AddEventBottomSheetState extends State<AddEventBottomSheet> {
             )),
         onPressed: () async {
           EventModel data = EventModel(
+              eventDomain: domainInitValue.trim(),
               eventName: eventName.text.toString().trim(),
               eventDescripion: eventDescription.text.toString().trim(),
               eventVenue: eventVenue.text.toString().trim(),

@@ -1,4 +1,5 @@
 class EventModel {
+  final String eventDomain;
   final String eventName;
   final String eventDescripion;
   final String eventVenue;
@@ -7,6 +8,7 @@ class EventModel {
   final String eventEndTime;
 
   EventModel({
+    required this.eventDomain,
     required this.eventName,
     required this.eventDescripion,
     required this.eventVenue,

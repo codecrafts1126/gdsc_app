@@ -23,6 +23,7 @@ class EventEditCubit extends Cubit<EventEditState> {
         data: {
           "eid": eid,
           "uid": FirebaseAuth.instance.currentUser?.uid,
+          "domain": eventData.eventDomain.toString(),
           "name": eventData.eventName.toString(),
           "description": eventData.eventDescripion.toString(),
           "venue": eventData.eventVenue.toString(),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gdsc_app/Models/domain_model.dart';
 import 'package:gdsc_app/Widgets/edit_event_bottom_sheet.dart';
 import 'package:gdsc_app/cubit/event/Event_delete/event_delete_cubit.dart';
 import 'package:gdsc_app/cubit/event/Event_refresh/event_refresh_cubit.dart';
@@ -58,20 +59,21 @@ class _EventsPageListViewState extends State<EventsPageListView> {
       child: Container(
         color: Colors.grey[50],
         child: ListView.builder(
-          itemCount: events.length,
+          itemCount: sortedEvents.length,
           itemBuilder: (context, index) {
-            final sortedEvents = Map.fromEntries(events.entries.toList()
+            sortedEvents = Map.fromEntries(events.entries.toList()
               ..sort((e1, e2) => e1.value['date'].compareTo(e2.value['date'])));
+
             return Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 6),
-                child: eventCard(sortedEvents, index));
+                child: eventCard(index));
           },
         ),
       ),
     );
   }
 
-  Widget eventCard(dynamic sortedEvents, int index) {
+  Widget eventCard(int index) {
     return Padding(
       padding: EdgeInsets.only(top: ((index == 0) ? 12 : 0)),
       child: Container(
@@ -83,6 +85,10 @@ class _EventsPageListViewState extends State<EventsPageListView> {
             Padding(
                 padding: const EdgeInsets.only(top: 18),
                 child: InkWell(
+                  onTap: () {
+                    print(
+                        sortedEvents.values.elementAt(0)['domain'].toString());
+                  },
                   child: Card(
                     shape: const RoundedRectangleBorder(
                         borderRadius: BorderRadius.only(
@@ -95,7 +101,6 @@ class _EventsPageListViewState extends State<EventsPageListView> {
                     child: Padding(
                         padding: const EdgeInsets.only(
                             left: 9, right: 9, top: 9, bottom: 12),
-                        // events[events.keys.elementAt(index)].toString()
                         child: SizedBox(
                           width: double.maxFinite,
                           child: Column(children: [
@@ -138,13 +143,15 @@ class _EventsPageListViewState extends State<EventsPageListView> {
               shape: const CircleBorder(),
               child: CircleAvatar(
                 backgroundColor: Colors.white,
-
                 radius: 36,
-                child: Image.asset(
-                  'icons/flutter.png',
-                  fit: BoxFit.cover,
-                ),
-                // backgroundColor: Colors.black,
+                child: CircleAvatar(
+                    backgroundColor: Colors.white,
+                    radius: 33,
+                    child: domainModel[sortedEvents.values
+                        .elementAt(index)['domain']
+                        .toString()]
+                    // backgroundColor: Colors.black,
+                    ),
               ),
             ),
           ],

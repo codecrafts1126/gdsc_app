@@ -7,4 +7,5 @@ String getUserInfoPath = '$serverAddress/read/userInfo';
 String deleteEventpath = '$serverAddress/delete/event';
 
 var events = {};
+var sortedEvents = {};
 var roles = [];

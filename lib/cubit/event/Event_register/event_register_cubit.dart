@@ -22,6 +22,7 @@ class EventRegisterCubit extends Cubit<EventRegisterState> {
         eventsRegisterPath,
         data: {
           "uid": FirebaseAuth.instance.currentUser?.uid,
+          "domain": eventData.eventDomain.toString(),
           "name": eventData.eventName.toString(),
           "description": eventData.eventDescripion.toString(),
           "venue": eventData.eventVenue.toString(),
