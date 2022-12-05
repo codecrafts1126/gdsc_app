@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gdsc_app/Models/domain_model.dart';
+import 'package:gdsc_app/Screens/event_details_screen.dart';
 import 'package:gdsc_app/Widgets/edit_event_bottom_sheet.dart';
 import 'package:gdsc_app/cubit/event/Event_delete/event_delete_cubit.dart';
 import 'package:gdsc_app/cubit/event/Event_refresh/event_refresh_cubit.dart';
@@ -60,6 +61,8 @@ class _EventsPageListViewState extends State<EventsPageListView> {
       child: Container(
         color: Colors.grey[50],
         child: ListView.builder(
+          physics:
+              BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
           itemCount: sortedEvents.length,
           itemBuilder: (context, index) {
             sortedEvents = Map.fromEntries(events.entries.toList()
@@ -75,6 +78,16 @@ class _EventsPageListViewState extends State<EventsPageListView> {
   }
 
   Widget eventCard(int index) {
+    int participants = sortedEvents[sortedEvents.keys.elementAt(index)]
+                ['participants']
+            .length -
+        1;
+
+    int daysLeftToEvent = daysBetween(
+        DateTime.now(),
+        stringToDatetime(sortedEvents[sortedEvents.keys.elementAt(index)]
+                ['date']
+            .toString()));
     return Padding(
       padding: EdgeInsets.only(top: ((index == 0) ? 12 : 0)),
       child: Container(
@@ -86,7 +99,16 @@ class _EventsPageListViewState extends State<EventsPageListView> {
             Padding(
                 padding: const EdgeInsets.only(top: 18),
                 child: InkWell(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => EventDetailsScreen(
+                              EventData: sortedEvents[
+                                  sortedEvents.keys.elementAt(index)],
+                              eid: sortedEvents.keys.elementAt(index)),
+                        ));
+                  },
                   child: Card(
                     shape: const RoundedRectangleBorder(
                         borderRadius: BorderRadius.only(
@@ -122,26 +144,6 @@ class _EventsPageListViewState extends State<EventsPageListView> {
                             ),
                             const SizedBox(height: 9),
                             Text(
-                              sortedEvents[sortedEvents.keys.elementAt(index)]
-                                      ['description']
-                                  .toString(),
-                              textAlign: TextAlign.center,
-                              style: const TextStyle(
-                                fontSize: 15,
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
-                            const SizedBox(height: 9),
-                            Text(
-                              "Venue: ${sortedEvents[sortedEvents.keys.elementAt(index)]['venue'].toString()}",
-                              textAlign: TextAlign.center,
-                              style: const TextStyle(
-                                fontSize: 15,
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
-                            const SizedBox(height: 9),
-                            Text(
                               "Date: ${writableDateTimeToReadableDateTime(
                                 sortedEvents[sortedEvents.keys.elementAt(index)]
                                         ['date']
@@ -155,24 +157,45 @@ class _EventsPageListViewState extends State<EventsPageListView> {
                             ),
                             const SizedBox(height: 9),
                             Text(
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 5,
                               sortedEvents[sortedEvents.keys.elementAt(index)]
-                                  ['startTime'],
+                                      ['description']
+                                  .toString(),
                               textAlign: TextAlign.center,
                               style: const TextStyle(
                                 fontSize: 15,
                                 fontWeight: FontWeight.w400,
                               ),
                             ),
-                            const SizedBox(height: 9),
-                            Text(
-                              sortedEvents[sortedEvents.keys.elementAt(index)]
-                                  ['endTime'],
-                              textAlign: TextAlign.center,
-                              style: const TextStyle(
-                                fontSize: 15,
-                                fontWeight: FontWeight.w400,
+                            SizedBox(height: 15),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 9),
+                              child: Container(
+                                child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        participants == 1
+                                            ? "${(participants).toString()} participant"
+                                            : "${(participants).toString()} participants",
+                                        style: TextStyle(
+                                            fontSize: 15,
+                                            color: Colors.grey[500],
+                                            fontWeight: FontWeight.w400),
+                                      ),
+                                      Text(
+                                        "$daysLeftToEvent days left",
+                                        style: TextStyle(
+                                            fontSize: 15,
+                                            color: Colors.grey[500],
+                                            fontWeight: FontWeight.w400),
+                                      ),
+                                    ]),
                               ),
-                            ),
+                            )
                           ]),
                         )),
                   ),
