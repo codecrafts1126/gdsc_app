@@ -192,8 +192,15 @@ class EventDataScrollable extends StatelessWidget {
                 data: eventData['name'],
               ),
               DetailItem(
-                tag: "Date",
-                data: writableDateTimeToReadableDateTime(eventData['date']),
+                tag: "Duration",
+                data: (stringToDatetime(eventData['startDate']).year ==
+                            stringToDatetime(eventData['endDate']).year &&
+                        stringToDatetime(eventData['startDate']).month ==
+                            stringToDatetime(eventData['endDate']).month &&
+                        stringToDatetime(eventData['startDate']).day ==
+                            stringToDatetime(eventData['endDate']).day)
+                    ? writableDateTimeToReadableDateTime(eventData['startDate'])
+                    : "${writableDateTimeToReadableDateTime(eventData['startDate'])} - ${writableDateTimeToReadableDateTime(eventData['endDate'])}",
               ),
               DetailItem(
                 tag: "Venue",

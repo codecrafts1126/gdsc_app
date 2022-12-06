@@ -18,7 +18,8 @@ class _AddEventBottomSheetState extends State<AddEventBottomSheet> {
   TextEditingController eventName = TextEditingController();
   TextEditingController eventDescription = TextEditingController();
   TextEditingController eventVenue = TextEditingController();
-  DateTime selectedDate = DateTime.now();
+  DateTime startDate = DateTime.now();
+  DateTime endDate = DateTime.now();
   TimeOfDay startTime = TimeOfDay.now();
   TimeOfDay endTime = TimeOfDay.now();
   String domainInitValue = 'General';
@@ -65,8 +66,8 @@ class _AddEventBottomSheetState extends State<AddEventBottomSheet> {
             setState(() {
               if (time != null) {
                 startTime = time;
-                selectedDate = DateTime(selectedDate.year, selectedDate.month,
-                    selectedDate.day, startTime.hour, startTime.minute);
+                startDate = DateTime(startDate.year, startDate.month,
+                    startDate.day, startTime.hour, startTime.minute);
               }
             });
           } else {
@@ -77,35 +78,53 @@ class _AddEventBottomSheetState extends State<AddEventBottomSheet> {
             setState(() {
               if (time != null) {
                 endTime = time;
+                endDate = DateTime(endDate.year, endDate.month, endDate.day,
+                    endDate.hour, endDate.minute);
               }
             });
           }
         });
   }
 
-  Widget dayPicker() {
+  Widget dayPicker(bool isStart) {
     return TextField(
         //editing controller of this TextField
 
         decoration: InputDecoration(
             icon: const Icon(Icons.calendar_today), //icon of text field
-            hintText:
-                "Event date is on ${dateToStringReadable(selectedDate)}" //label text of field
+            hintText: isStart
+                ? "Start date is on ${dateToStringReadable(startDate)}"
+                : "End date is on ${dateToStringReadable(endDate)}" //label text of field
             ),
         readOnly: true, // when true user cannot edit text
         onTap: () async {
-          var date = (await showDatePicker(
-              context: context,
-              initialDate: selectedDate, //get today's date
-              firstDate: DateTime(
-                  2000), //DateTime.now() - not to allow to choose before today.
-              lastDate: DateTime(2100)));
-          setState(() {
-            if (date != null) {
-              selectedDate = DateTime(date.year, date.month, date.day,
-                  startTime.hour, startTime.minute);
-            }
-          });
+          if (isStart) {
+            var date = (await showDatePicker(
+                context: context,
+                initialDate: startDate, //get today's date
+                firstDate: DateTime(
+                    2000), //DateTime.now() - not to allow to choose before today.
+                lastDate: DateTime(2100)));
+            setState(() {
+              if (date != null) {
+                startDate = DateTime(date.year, date.month, date.day,
+                    startTime.hour, startTime.minute);
+              }
+            });
+          } else {
+            var date = (await showDatePicker(
+                context: context,
+                initialDate: endDate, //get today's date
+                firstDate: DateTime(
+                    2000), //DateTime.now() - not to allow to choose before today.
+                lastDate: DateTime(2100)));
+            setState(() {
+              if (date != null) {
+                endDate = DateTime(date.year, date.month, date.day,
+                    endTime.hour, endTime.minute);
+              }
+            });
+          }
         });
   }
 
@@ -175,9 +194,11 @@ class _AddEventBottomSheetState extends State<AddEventBottomSheet> {
                         hintText:
                             "Venue (Ex: Cloud Computing Lab, 4th floor, SIT Base campus"),
                     const SizedBox(height: 12),
-                    dayPicker(),
+                    dayPicker(true),
                     const SizedBox(height: 12),
                     timePicker(true),
+                    const SizedBox(height: 12),
+                    dayPicker(false),
                     const SizedBox(height: 12),
                     timePicker(false),
                   ]),
@@ -203,7 +224,8 @@ class _AddEventBottomSheetState extends State<AddEventBottomSheet> {
               eventName: eventName.text.toString().trim(),
               eventDescripion: eventDescription.text.toString().trim(),
               eventVenue: eventVenue.text.toString().trim(),
-              eventDate: dateToStringWritable(selectedDate),
+              eventStartDate: dateToStringWritable(startDate),
+              eventEndDate: dateToStringWritable(endDate),
               eventStartTime: dateTimeToTimeString(startTime).toString().trim(),
               eventEndTime: dateTimeToTimeString(endTime).toString().trim());
 

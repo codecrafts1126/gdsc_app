@@ -33,7 +33,8 @@ class EventRefreshCubit extends Cubit<EventRefreshState> {
         if (jsonRes["status"] == true) {
           events = jsonRes["message"];
           sortedEvents = Map.fromEntries(events.entries.toList()
-            ..sort((e1, e2) => e1.value['date'].compareTo(e2.value['date'])));
+            ..sort((e1, e2) =>
+                e1.value['startDate'].compareTo(e2.value['startDate'])));
         } else {
           emit(EventRefreshErrorState(jsonRes["message"].toString()));
         }

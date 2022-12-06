@@ -66,7 +66,8 @@ class _EventsPageListViewState extends State<EventsPageListView> {
           itemCount: sortedEvents.length,
           itemBuilder: (context, index) {
             sortedEvents = Map.fromEntries(events.entries.toList()
-              ..sort((e1, e2) => e1.value['date'].compareTo(e2.value['date'])));
+              ..sort((e1, e2) =>
+                  e1.value['startDate'].compareTo(e2.value['startDate'])));
 
             return Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 6),
@@ -82,10 +83,19 @@ class _EventsPageListViewState extends State<EventsPageListView> {
                 ['participants']
             .length -
         1;
-
+    DateTime startDate = stringToDatetime(
+        sortedEvents[sortedEvents.keys.elementAt(index)]['startDate']
+            .toString());
+    DateTime endDate = stringToDatetime(
+        sortedEvents[sortedEvents.keys.elementAt(index)]['endDate'].toString());
+    String duration = (startDate.year == endDate.year &&
+            startDate.month == endDate.month &&
+            startDate.day == endDate.day)
+        ? "Duration: ${writableDateTimeToReadableDateTime(sortedEvents[sortedEvents.keys.elementAt(index)]['startDate'].toString())}"
+        : "Duration: ${writableDateTimeToReadableDateTime(sortedEvents[sortedEvents.keys.elementAt(index)]['startDate'].toString())} - ${writableDateTimeToReadableDateTime(sortedEvents[sortedEvents.keys.elementAt(index)]['endDate'].toString())} ";
     String timeLeftToEvent = timeLeftForEvent(
         stringToDatetime(
-            sortedEvents[sortedEvents.keys.elementAt(index)]['date']),
+            sortedEvents[sortedEvents.keys.elementAt(index)]['startDate']),
         stringToTime(
             sortedEvents[sortedEvents.keys.elementAt(index)]['startTime']),
         stringToTime(
@@ -146,11 +156,7 @@ class _EventsPageListViewState extends State<EventsPageListView> {
                             ),
                             const SizedBox(height: 9),
                             Text(
-                              "Date: ${writableDateTimeToReadableDateTime(
-                                sortedEvents[sortedEvents.keys.elementAt(index)]
-                                        ['date']
-                                    .toString(),
-                              )}",
+                              duration,
                               textAlign: TextAlign.center,
                               style: const TextStyle(
                                 fontSize: 15,

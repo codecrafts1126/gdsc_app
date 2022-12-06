@@ -27,7 +27,8 @@ class EventEditCubit extends Cubit<EventEditState> {
           "name": eventData.eventName.toString(),
           "description": eventData.eventDescripion.toString(),
           "venue": eventData.eventVenue.toString(),
-          "date": eventData.eventDate.toString(),
+          "startDate": eventData.eventStartDate.toString(),
+          "endDate": eventData.eventEndDate.toString(),
           "startTime": eventData.eventStartTime.toString(),
           "endTime": eventData.eventEndTime.toString()
         },
