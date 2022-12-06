@@ -211,7 +211,7 @@ class _EditEventBottomSheetState extends State<EditEventBottomSheet> {
 
           await context
               .read<EventEditCubit>()
-              .editEvent(events.keys.elementAt(index).toString(), data)
+              .editEvent(sortedEvents.keys.elementAt(index).toString(), data)
               .then((value) async =>
                   await context.read<EventRefreshCubit>().refreshEventData());
 

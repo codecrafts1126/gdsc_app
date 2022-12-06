@@ -83,11 +83,13 @@ class _EventsPageListViewState extends State<EventsPageListView> {
             .length -
         1;
 
-    int daysLeftToEvent = daysBetween(
-        DateTime.now(),
-        stringToDatetime(sortedEvents[sortedEvents.keys.elementAt(index)]
-                ['date']
-            .toString()));
+    String timeLeftToEvent = timeLeftForEvent(
+        stringToDatetime(
+            sortedEvents[sortedEvents.keys.elementAt(index)]['date']),
+        stringToTime(
+            sortedEvents[sortedEvents.keys.elementAt(index)]['startTime']),
+        stringToTime(
+            sortedEvents[sortedEvents.keys.elementAt(index)]['endTime']));
     return Padding(
       padding: EdgeInsets.only(top: ((index == 0) ? 12 : 0)),
       child: Container(
@@ -187,7 +189,7 @@ class _EventsPageListViewState extends State<EventsPageListView> {
                                             fontWeight: FontWeight.w400),
                                       ),
                                       Text(
-                                        "$daysLeftToEvent days left",
+                                        timeLeftToEvent,
                                         style: TextStyle(
                                             fontSize: 15,
                                             color: Colors.grey[500],

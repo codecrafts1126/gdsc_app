@@ -42,7 +42,65 @@ String dateToStringWritable(DateTime date) {
 }
 
 int daysBetween(DateTime from, DateTime to) {
-  from = DateTime(from.year, from.month, from.day);
-  to = DateTime(to.year, to.month, to.day);
-  return (to.difference(from).inHours / 24).round();
+  from = DateTime(from.year, from.month, from.day, from.hour);
+  to = DateTime(to.year, to.month, to.day, to.hour);
+  return (to.difference(from).inHours).round();
+}
+
+String timeLeftForEvent(DateTime date, TimeOfDay startTime, TimeOfDay endtime) {
+  int hours = daysBetween(DateTime.now(), date);
+  // DateTime sampleDate = DateTime(2022, 12, 5, 22); //6 dec 11 am
+  // int hours = daysBetween(sampleDate, date);
+
+  int days = (hours / 24).round();
+  // int days = (hours).round();
+  //dont use date for hour calc, only use for date calc
+  // int startHour = date.hour;
+  int startHour = startTime.hour;
+  int endHour = endtime.hour;
+  // int currHour = sampleDate.hour;
+
+  print(hours);
+  return "$hours hours left";
+  // if (hours > 1) {
+  //   if (hours < 3) {
+  //     return "$hours hours left";
+  //   } else {
+  //     return "hours left";
+  //   }
+  // } else {
+  //   int startTimeHourDiff = startHour - currHour;
+  //   int endTimeHourDiff = endHour - currHour;
+  //   print([startTimeHourDiff, endTimeHourDiff].toString());
+  //   if (startTimeHourDiff > 0) {
+  //     return "event starts soon";
+  //   } else if (startTimeHourDiff <= 0 && endTimeHourDiff > 0) {
+  //     return "ongoing";
+  //   } else {
+  //     return "event has ended";
+  //   }
+  // }
+  // if (hours < 0) {
+  //   return "Event has ended";
+  // } else if (hours < 24) {
+  //   int startTimeHourDiff = startHour - currHour;
+  //   int endTimeHourDiff = endHour - currHour;
+  //   print([startTimeHourDiff, endTimeHourDiff].toString());
+  //   //do hours stuff
+  //   if (startTimeHourDiff > 0) {
+  //     // print(startTimeHourDiff);
+  //     if (startTimeHourDiff > 1) {
+  //       return "$startTimeHourDiff hours left";
+  //     } else {
+  //       return "Event starts soon";
+  //     }
+  //   }
+  // } else {
+  //   //if (days > 0) {
+  //   if (hours <= 48) {
+  //     return "${days} day left";
+  //   } else {
+  //     return "${days} days left";
+  //   }
+  // }
 }
