@@ -181,42 +181,44 @@ class _EditEventBottomSheetState extends State<EditEventBottomSheet> {
           thumbVisibility: true,
           thickness: 6,
           radius: const Radius.circular(18),
-          child: SingleChildScrollView(
-            // child: Expanded(
-            // color: Colors.green,
-            // height: 100,
-            child: Padding(
-              padding: const EdgeInsets.only(right: 9),
-              child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text("Edit Event", style: TextStyle(fontSize: 27)),
-                    const Divider(),
-                    const SizedBox(height: 18),
-                    domainDropDown(),
-                    const SizedBox(height: 18),
-                    CustomTextField(
-                        controller: eventName,
-                        hintText: "Event name (Ex: Flutter Festival 2023)"),
-                    const SizedBox(height: 12),
-                    CustomTextField(
-                        controller: eventDescription, hintText: "Description"),
-                    const SizedBox(height: 12),
-                    CustomTextField(
-                        controller: eventVenue,
-                        hintText:
-                            "Venue (Ex: Cloud Computing Lab, 4th floor, SIT Base campus"),
-                    const SizedBox(height: 12),
-                    dayPicker(true),
-                    const SizedBox(height: 12),
-                    timePicker(true),
-                    const SizedBox(height: 12),
-                    dayPicker(false),
-                    const SizedBox(height: 12),
-                    timePicker(false),
-                  ]),
-            ),
-          ),
+          child: ListView(
+              physics: const BouncingScrollPhysics(
+                  parent: AlwaysScrollableScrollPhysics()),
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(right: 9),
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text("Edit Event",
+                            style: TextStyle(fontSize: 27)),
+                        const Divider(),
+                        const SizedBox(height: 18),
+                        domainDropDown(),
+                        const SizedBox(height: 18),
+                        CustomTextField(
+                            controller: eventName,
+                            hintText: "Event name (Ex: Flutter Festival 2023)"),
+                        const SizedBox(height: 12),
+                        CustomTextField(
+                            controller: eventDescription,
+                            hintText: "Description"),
+                        const SizedBox(height: 12),
+                        CustomTextField(
+                            controller: eventVenue,
+                            hintText:
+                                "Venue (Ex: Cloud Computing Lab, 4th floor, SIT Base campus"),
+                        const SizedBox(height: 12),
+                        dayPicker(true),
+                        const SizedBox(height: 12),
+                        timePicker(true),
+                        const SizedBox(height: 12),
+                        dayPicker(false),
+                        const SizedBox(height: 12),
+                        timePicker(false),
+                      ]),
+                ),
+              ]),
         ),
       ),
       // ),
