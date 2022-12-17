@@ -7,6 +7,7 @@ import 'package:gdsc_app/Screens/signup_screen.dart';
 import 'package:gdsc_app/Widgets/elevated_signin_button.dart';
 import 'package:gdsc_app/Widgets/email_text_input.dart';
 import 'package:gdsc_app/Widgets/password_text_input.dart';
+import 'package:gdsc_app/utils/page_transition.dart';
 
 import '../cubit/auth/auth_cubit.dart';
 
@@ -78,10 +79,8 @@ class _LoginScreenState extends State<LoginScreen> {
                           onTap: () {
                             Navigator.push(
                                 context,
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      const RecoverPasswordScreen(),
-                                ));
+                                customSlideTransition(
+                                    const RecoverPasswordScreen()));
                           },
                           child: const Text(
                             "Recover Password",
@@ -131,11 +130,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       const SizedBox(width: 3),
                       GestureDetector(
                         onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const SignUpScreen(),
-                              ));
+                          Navigator.push(context,
+                              customSlideTransition(const SignUpScreen()));
                         },
                         child: const Text(
                           "Register now",
@@ -183,10 +179,7 @@ class LoginButton extends StatelessWidget {
           listener: (context, state) {
             if (state is LoggedInState) {
               Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const MainScreen(),
-                  ));
+                  context, customSlideTransition(const MainScreen()));
               emailController.clear();
               passwordController.clear();
             } else if (state is LogInErrorState) {

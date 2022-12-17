@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:gdsc_app/network_vars.dart';
+import 'package:gdsc_app/utils/network_vars.dart';
 import 'package:meta/meta.dart';
 
 part 'event_participant_state.dart';

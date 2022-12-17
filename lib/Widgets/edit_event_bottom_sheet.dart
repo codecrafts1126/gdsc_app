@@ -4,8 +4,8 @@ import 'package:gdsc_app/Models/domain_model.dart';
 import 'package:gdsc_app/Models/event_model.dart';
 import 'package:gdsc_app/cubit/event/Event_edit/event_edit_cubit.dart';
 import 'package:gdsc_app/cubit/event/Event_refresh/event_refresh_cubit.dart';
-import 'package:gdsc_app/network_vars.dart';
-import '../date_time_utils.dart';
+import 'package:gdsc_app/utils/network_vars.dart';
+import 'package:gdsc_app/utils/date_time_utils.dart';
 import 'custom_textfield.dart';
 
 class EditEventBottomSheet extends StatefulWidget {

@@ -8,7 +8,7 @@ import 'package:gdsc_app/Widgets/custom_drawer.dart';
 import 'package:gdsc_app/Widgets/custom_navbar.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gdsc_app/cubit/nav_bar/navbar_cubit.dart';
-import 'package:gdsc_app/network_vars.dart';
+import 'package:gdsc_app/utils/network_vars.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
