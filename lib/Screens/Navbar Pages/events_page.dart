@@ -83,23 +83,27 @@ class _EventsPageListViewState extends State<EventsPageListView> {
                 ['participants']
             .length -
         1;
+
     DateTime startDate = stringToDatetime(
         sortedEvents[sortedEvents.keys.elementAt(index)]['startDate']
             .toString());
+
     DateTime endDate = stringToDatetime(
         sortedEvents[sortedEvents.keys.elementAt(index)]['endDate'].toString());
+
     String duration = (startDate.year == endDate.year &&
             startDate.month == endDate.month &&
             startDate.day == endDate.day)
         ? "Duration: ${writableDateTimeToReadableDateTime(sortedEvents[sortedEvents.keys.elementAt(index)]['startDate'].toString())}"
         : "Duration: ${writableDateTimeToReadableDateTime(sortedEvents[sortedEvents.keys.elementAt(index)]['startDate'].toString())} - ${writableDateTimeToReadableDateTime(sortedEvents[sortedEvents.keys.elementAt(index)]['endDate'].toString())} ";
+
     String timeLeftToEvent = timeLeftForEvent(
-        stringToDatetime(
-            sortedEvents[sortedEvents.keys.elementAt(index)]['startDate']),
-        stringToTime(
-            sortedEvents[sortedEvents.keys.elementAt(index)]['startTime']),
-        stringToTime(
-            sortedEvents[sortedEvents.keys.elementAt(index)]['endTime']));
+      stringToDatetime(
+          sortedEvents[sortedEvents.keys.elementAt(index)]['startDate']),
+      stringToDatetime(
+          sortedEvents[sortedEvents.keys.elementAt(index)]['endDate']),
+    );
+
     return Padding(
       padding: EdgeInsets.only(top: ((index == 0) ? 12 : 0)),
       child: Container(

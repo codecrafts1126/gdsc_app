@@ -79,7 +79,7 @@ class _AddEventBottomSheetState extends State<AddEventBottomSheet> {
               if (time != null) {
                 endTime = time;
                 endDate = DateTime(endDate.year, endDate.month, endDate.day,
-                    endDate.hour, endDate.minute);
+                    endTime.hour, endTime.minute);
               }
             });
           }
