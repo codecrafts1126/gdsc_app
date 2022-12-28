@@ -9,6 +9,7 @@ import 'package:gdsc_app/cubit/event/Event_participant/event_participant_cubit.d
 import 'package:gdsc_app/cubit/event/Event_refresh/event_refresh_cubit.dart';
 import 'package:gdsc_app/cubit/event/Event_register/event_register_cubit.dart';
 import 'package:gdsc_app/cubit/nav_bar/navbar_cubit.dart';
+import 'package:gdsc_app/cubit/news/news_cubit.dart';
 
 import 'firebase_options.dart';
 
@@ -51,6 +52,9 @@ class MyApp extends StatelessWidget {
           ),
           BlocProvider(
             create: (context) => EventDeleteCubit(),
+          ),
+          BlocProvider(
+            create: (context) => NewsCubit(),
           ),
         ],
         child: const AppNavigator(),

@@ -1,4 +1,5 @@
 String serverAddress = 'https://gdsc-server.onrender.com';
+String newsReadPath = '$serverAddress/read/news';
 String eventsReadPath = '$serverAddress/read/events';
 String eventsRegisterPath = '$serverAddress/create/event';
 String eventsEditPath = '$serverAddress/update/event';
@@ -10,4 +11,5 @@ String removeEventParticipantPath = '$serverAddress/delete/event_participants';
 
 var events = {};
 var sortedEvents = {};
+var news = {};
 var roles = [];
