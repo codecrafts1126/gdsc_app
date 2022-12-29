@@ -74,7 +74,7 @@ class _NewsPageViewState extends State<NewsPageView> {
     String newsSource = news['articles'][index]['source']['name'].toString();
     String newsTitle = news['articles'][index]['title'].toString();
     String newsUrl = news['articles'][index]['url'].toString();
-    String newsImageUrl = news['articles'][index]['urlToImage'].toString();
+    String newsImageUrl = (news['articles'][index]['urlToImage'].toString());
     return Container(
       height: 100,
       width: 100,
@@ -116,9 +116,12 @@ class _NewsPageViewState extends State<NewsPageView> {
           ]),
         ),
         SizedBox(height: 9),
-        ClipRRect(
-            borderRadius: BorderRadius.circular(12),
-            child: Image(image: NetworkImage(newsImageUrl))),
+        if (newsImageUrl != "null")
+          ClipRRect(
+              borderRadius: BorderRadius.circular(12),
+              child: Image(image: NetworkImage(newsImageUrl))),
+        Divider(),
+        Text(newsDescription)
       ]),
     );
   }
