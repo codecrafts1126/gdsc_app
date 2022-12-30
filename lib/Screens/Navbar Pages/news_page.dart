@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gdsc_app/cubit/news/news_cubit.dart';
 import 'package:gdsc_app/utils/network_vars.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class NewsPage extends StatefulWidget {
   const NewsPage({super.key});
@@ -45,6 +46,16 @@ class NewsPageView extends StatefulWidget {
 }
 
 class _NewsPageViewState extends State<NewsPageView> {
+  Future<void> openUrl(String url) async {
+    try {
+      launchUrl(Uri.parse(url));
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          backgroundColor: Colors.red[300],
+          content: Text("could not open news url")));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return RefreshIndicator(
@@ -79,50 +90,146 @@ class _NewsPageViewState extends State<NewsPageView> {
       height: 100,
       width: 100,
       color: Colors.transparent,
-      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        Text(
-          newsTitle,
-          style: TextStyle(fontSize: 27, fontWeight: FontWeight.w500),
-        ),
-        SizedBox(height: 9),
-        Container(
-          child:
-              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-            Text(
-              newsAuthor == "null" ? newsSource : newsAuthor,
-              style: TextStyle(
-                  fontSize: 15,
-                  color: Colors.grey[500],
-                  fontWeight: FontWeight.w400),
-            ),
+      child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(height: 12),
             Padding(
-              padding: const EdgeInsets.only(right: 12),
-              child: Row(
-                children: [
-                  Text(
-                    "Visit",
-                    style: TextStyle(
-                        fontSize: 15,
-                        color: Colors.redAccent,
-                        fontWeight: FontWeight.w800),
-                  ),
-                  Icon(
-                    Icons.link,
-                    color: Colors.redAccent,
-                  )
-                ],
+              padding: const EdgeInsets.symmetric(horizontal: 12),
+              child: Text(
+                newsTitle,
+                style: const TextStyle(
+                    fontSize: 24, fontWeight: FontWeight.w400, height: 1),
               ),
-            )
+            ),
+            const SizedBox(height: 9),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 12),
+              child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    SizedBox(
+                      width: 210,
+                      child: Text(
+                        newsAuthor == "null" ? newsSource : newsAuthor,
+                        style: TextStyle(
+                            overflow: TextOverflow.ellipsis,
+                            fontSize: 15,
+                            color: Colors.grey[500],
+                            fontWeight: FontWeight.w400),
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () async {
+                        await openUrl(newsUrl);
+                      },
+                      child: Row(
+                        children: const [
+                          Text(
+                            "Visit",
+                            style: TextStyle(
+                                fontSize: 15,
+                                color: Colors.redAccent,
+                                fontWeight: FontWeight.w800),
+                          ),
+                          Icon(
+                            Icons.link,
+                            color: Colors.redAccent,
+                          )
+                        ],
+                      ),
+                    ),
+                  ]),
+            ),
+            const SizedBox(height: 9),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 12),
+                child: Scrollbar(
+                  child: ListView(
+                    // physics: BouncingScrollPhysics(),
+                    children: [
+                      if (newsImageUrl != "null")
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(12),
+                          child: Image(
+                            image: NetworkImage(newsImageUrl),
+                            fit: BoxFit.fill,
+                            errorBuilder: (context, error, stackTrace) {
+                              return Container(
+                                color: Colors.grey[300],
+                                child: Center(
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Column(children: [
+                                      const Icon(Icons.error,
+                                          color: Colors.red),
+                                      const SizedBox(height: 9),
+                                      Text(
+                                        error.toString(),
+                                        style: const TextStyle(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w300),
+                                      )
+                                    ]),
+                                  ),
+                                ),
+                              );
+                            },
+                            loadingBuilder: (BuildContext context, Widget child,
+                                ImageChunkEvent? loadingProgress) {
+                              if (loadingProgress == null) return child;
+                              return Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Center(
+                                  child: CircularProgressIndicator(
+                                    value: loadingProgress.expectedTotalBytes !=
+                                            null
+                                        ? loadingProgress
+                                                .cumulativeBytesLoaded /
+                                            loadingProgress.expectedTotalBytes!
+                                        : null,
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                      (newsDescription == "" ||
+                              newsDescription == "null" ||
+                              newsDescription == null)
+                          ? SizedBox()
+                          : Column(
+                              children: [
+                                Divider(),
+                                Text(
+                                  newsDescription,
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w300,
+                                      fontSize: 18),
+                                )
+                              ],
+                            ),
+                      (newsContent == "" ||
+                              newsContent == "null" ||
+                              newsContent == null)
+                          ? SizedBox()
+                          : Column(
+                              children: [
+                                Divider(),
+                                Text(newsContent,
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w300,
+                                        fontSize: 18))
+                              ],
+                            ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
           ]),
-        ),
-        SizedBox(height: 9),
-        if (newsImageUrl != "null")
-          ClipRRect(
-              borderRadius: BorderRadius.circular(12),
-              child: Image(image: NetworkImage(newsImageUrl))),
-        Divider(),
-        Text(newsDescription)
-      ]),
     );
   }
 }
