@@ -1,4 +1,4 @@
-package com.example.gdsc_app
+package com.demonicplay.DSCSITP
 
 import io.flutter.embedding.android.FlutterActivity
 

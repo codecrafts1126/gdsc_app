@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.gdsc_app">
+    package="com.demonicplay.DSCSITP">
    <application
         android:label="gdsc_app"
         android:name="${applicationName}"
