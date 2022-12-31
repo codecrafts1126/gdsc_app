@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:gdsc_app/utils/network_vars.dart';
+import 'package:DSCSITP/utils/network_vars.dart';
 import 'package:meta/meta.dart';
 
 part 'news_state.dart';

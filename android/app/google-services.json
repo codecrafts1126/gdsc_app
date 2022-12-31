@@ -8,17 +8,17 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:298592581662:android:16ac407d0631e3af27d60f",
+        "mobilesdk_app_id": "1:298592581662:android:eb86bdbc5f7b712327d60f",
         "android_client_info": {
-          "package_name": "com.example.gdsc_app"
+          "package_name": "com.demonicplay.DSCSITP"
         }
       },
       "oauth_client": [
         {
-          "client_id": "298592581662-r9ub8jt5q81khv8cfe962jbk76infj82.apps.googleusercontent.com",
+          "client_id": "298592581662-ehhkakcn0b2vlmt4tvo05u3f5dsn7qou.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.gdsc_app",
+            "package_name": "com.demonicplay.DSCSITP",
             "certificate_hash": "00682592cc41f8da655da15030304768650945e5"
           }
         },
@@ -40,10 +40,10 @@
               "client_type": 3
             },
             {
-              "client_id": "298592581662-abqedcffdn135oqp287l888c2fad9k1o.apps.googleusercontent.com",
+              "client_id": "298592581662-72rb7q11np5grshje34itkjkj051h7rr.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.example.mockApp"
+                "bundle_id": "com.example.gdscApp"
               }
             }
           ]

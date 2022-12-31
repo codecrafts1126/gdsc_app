@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gdsc_app/Screens/main_screen.dart';
-import 'package:gdsc_app/Screens/recover_password_screen.dart';
-import 'package:gdsc_app/Screens/signup_screen.dart';
-import 'package:gdsc_app/Widgets/elevated_signin_button.dart';
-import 'package:gdsc_app/Widgets/email_text_input.dart';
-import 'package:gdsc_app/Widgets/password_text_input.dart';
-import 'package:gdsc_app/utils/page_transition.dart';
+import 'package:DSCSITP/Screens/main_screen.dart';
+import 'package:DSCSITP/Screens/recover_password_screen.dart';
+import 'package:DSCSITP/Screens/signup_screen.dart';
+import 'package:DSCSITP/Widgets/elevated_signin_button.dart';
+import 'package:DSCSITP/Widgets/email_text_input.dart';
+import 'package:DSCSITP/Widgets/password_text_input.dart';
+import 'package:DSCSITP/utils/page_transition.dart';
 
 import '../cubit/auth/auth_cubit.dart';
 

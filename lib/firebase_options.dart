@@ -54,7 +54,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyBsVeoIPbonPfFqRVAESBLzL-8Gxfrh1ag',
-    appId: '1:298592581662:android:16ac407d0631e3af27d60f',
+    appId: '1:298592581662:android:eb86bdbc5f7b712327d60f',
     messagingSenderId: '298592581662',
     projectId: 'the-gdsc-club-app',
     databaseURL: 'https://the-gdsc-club-app-default-rtdb.asia-southeast1.firebasedatabase.app',

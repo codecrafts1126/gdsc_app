@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:gdsc_app/Screens/Navbar%20Pages/events_page.dart';
-import 'package:gdsc_app/Screens/Navbar%20Pages/news_page.dart';
-import 'package:gdsc_app/Screens/Navbar%20Pages/settings_page.dart';
-import 'package:gdsc_app/Widgets/add_event_bottom_sheet.dart';
-import 'package:gdsc_app/Widgets/custom_drawer.dart';
+import 'package:DSCSITP/Screens/Navbar%20Pages/events_page.dart';
+import 'package:DSCSITP/Screens/Navbar%20Pages/news_page.dart';
+import 'package:DSCSITP/Screens/Navbar%20Pages/settings_page.dart';
+import 'package:DSCSITP/Widgets/add_event_bottom_sheet.dart';
+import 'package:DSCSITP/Widgets/custom_drawer.dart';
 
-import 'package:gdsc_app/Widgets/custom_navbar.dart';
+import 'package:DSCSITP/Widgets/custom_navbar.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gdsc_app/cubit/nav_bar/navbar_cubit.dart';
-import 'package:gdsc_app/utils/network_vars.dart';
+import 'package:DSCSITP/cubit/nav_bar/navbar_cubit.dart';
+import 'package:DSCSITP/utils/network_vars.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});

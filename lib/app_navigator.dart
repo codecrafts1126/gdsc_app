@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gdsc_app/Screens/login_screen.dart';
+import 'package:DSCSITP/Screens/login_screen.dart';
 
 class AppNavigator extends StatefulWidget {
   const AppNavigator({super.key});

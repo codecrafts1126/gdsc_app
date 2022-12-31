@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gdsc_app/cubit/auth/auth_cubit.dart';
+import 'package:DSCSITP/cubit/auth/auth_cubit.dart';
 
 import '../Widgets/elevated_signin_button.dart';
 import '../Widgets/email_text_input.dart';

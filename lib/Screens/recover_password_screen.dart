@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gdsc_app/Widgets/email_text_input.dart';
-import 'package:gdsc_app/cubit/auth/auth_cubit.dart';
+import 'package:DSCSITP/Widgets/email_text_input.dart';
+import 'package:DSCSITP/cubit/auth/auth_cubit.dart';
 
 class RecoverPasswordScreen extends StatefulWidget {
   const RecoverPasswordScreen({super.key});

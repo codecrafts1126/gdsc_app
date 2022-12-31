@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gdsc_app/cubit/news/news_cubit.dart';
-import 'package:gdsc_app/utils/network_vars.dart';
+import 'package:DSCSITP/cubit/news/news_cubit.dart';
+import 'package:DSCSITP/utils/network_vars.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class NewsPage extends StatefulWidget {

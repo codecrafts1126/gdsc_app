@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
-import 'package:gdsc_app/cubit/nav_bar/navbar_cubit.dart';
+import 'package:DSCSITP/cubit/nav_bar/navbar_cubit.dart';
 import 'package:provider/provider.dart';
 
 class CustomNavbar extends StatefulWidget {

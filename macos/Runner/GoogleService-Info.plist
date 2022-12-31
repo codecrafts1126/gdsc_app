@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>298592581662-72rb7q11np5grshje34itkjkj051h7rr.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.298592581662-72rb7q11np5grshje34itkjkj051h7rr</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>298592581662-k3mqk34ekcruj4ms4mg9jgl7qtn5spa0.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyAPzBx5DEM5X-9lVAX5Y1T2ymtQLFnfBEc</string>
+	<key>GCM_SENDER_ID</key>
+	<string>298592581662</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.gdscApp</string>
+	<key>PROJECT_ID</key>
+	<string>the-gdsc-club-app</string>
+	<key>STORAGE_BUCKET</key>
+	<string>the-gdsc-club-app.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:298592581662:ios:546fee402badf1ad27d60f</string>
+	<key>DATABASE_URL</key>
+	<string>https://the-gdsc-club-app-default-rtdb.asia-southeast1.firebasedatabase.app</string>
+</dict>
+</plist>

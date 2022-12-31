@@ -1,9 +1,9 @@
 import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:gdsc_app/utils/network_vars.dart';
+import 'package:DSCSITP/utils/network_vars.dart';
 import 'package:meta/meta.dart';
-import 'package:gdsc_app/Models/event_model.dart';
+import 'package:DSCSITP/Models/event_model.dart';
 
 part 'event_register_state.dart';
 

@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gdsc_app/cubit/auth/auth_cubit.dart';
+import 'package:DSCSITP/cubit/auth/auth_cubit.dart';
 
 class CustomDrawer extends StatefulWidget {
   const CustomDrawer({super.key});
@@ -38,12 +38,12 @@ class _CustomDrawerState extends State<CustomDrawer> {
                 // Navigator.pop(context);
               },
             ),
-            ListTile(
-              title: FirebaseAuth.instance.currentUser != null
-                  ? Text(
-                      "UID: ${FirebaseAuth.instance.currentUser!.uid.toString()}")
-                  : const Text("null"),
-            ),
+            // ListTile(
+            //   title: FirebaseAuth.instance.currentUser != null
+            //       ? Text(
+            //           "UID: ${FirebaseAuth.instance.currentUser!.uid.toString()}")
+            //       : const Text("null"),
+            // ),
             ListTile(
               title: FirebaseAuth.instance.currentUser != null
                   ? Text(

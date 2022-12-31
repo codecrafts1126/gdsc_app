@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gdsc_app/Models/domain_model.dart';
-import 'package:gdsc_app/Screens/event_details_screen.dart';
-import 'package:gdsc_app/Widgets/edit_event_bottom_sheet.dart';
-import 'package:gdsc_app/cubit/event/Event_delete/event_delete_cubit.dart';
-import 'package:gdsc_app/cubit/event/Event_refresh/event_refresh_cubit.dart';
+import 'package:DSCSITP/Models/domain_model.dart';
+import 'package:DSCSITP/Screens/event_details_screen.dart';
+import 'package:DSCSITP/Widgets/edit_event_bottom_sheet.dart';
+import 'package:DSCSITP/cubit/event/Event_delete/event_delete_cubit.dart';
+import 'package:DSCSITP/cubit/event/Event_refresh/event_refresh_cubit.dart';
 
-import 'package:gdsc_app/utils/date_time_utils.dart';
-import 'package:gdsc_app/utils/network_vars.dart';
-import 'package:gdsc_app/utils/page_transition.dart';
+import 'package:DSCSITP/utils/date_time_utils.dart';
+import 'package:DSCSITP/utils/network_vars.dart';
+import 'package:DSCSITP/utils/page_transition.dart';
 
 class EventsPage extends StatefulWidget {
   const EventsPage({super.key});
