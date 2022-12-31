@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 Map<String, Image> domainModel = {
-  'General': Image.asset('icons/dev.png', fit: BoxFit.cover),
+  'General': Image.asset('icons/dsc_logo.png', fit: BoxFit.cover),
   'Android': Image.asset('icons/android.png', fit: BoxFit.cover),
   'Cloud': Image.asset('icons/cloud.png', fit: BoxFit.cover),
   'CP': Image.asset('icons/code.png', fit: BoxFit.cover),

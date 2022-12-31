@@ -52,7 +52,7 @@ class _NewsPageViewState extends State<NewsPageView> {
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           backgroundColor: Colors.red[300],
-          content: Text("could not open news url")));
+          content: const Text("could not open news url")));
     }
   }
 
@@ -94,7 +94,7 @@ class _NewsPageViewState extends State<NewsPageView> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: 12),
+            const SizedBox(height: 12),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 12),
               child: Text(
@@ -105,7 +105,7 @@ class _NewsPageViewState extends State<NewsPageView> {
             ),
             const SizedBox(height: 9),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 12),
+              padding: const EdgeInsets.symmetric(horizontal: 12),
               child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -120,25 +120,28 @@ class _NewsPageViewState extends State<NewsPageView> {
                             fontWeight: FontWeight.w400),
                       ),
                     ),
-                    GestureDetector(
-                      onTap: () async {
-                        await openUrl(newsUrl);
-                      },
-                      child: Row(
-                        children: const [
-                          Text(
-                            "Visit",
-                            style: TextStyle(
-                                fontSize: 15,
-                                color: Colors.redAccent,
-                                fontWeight: FontWeight.w800),
-                          ),
-                          Icon(
-                            Icons.link,
-                            color: Colors.redAccent,
-                          )
-                        ],
-                      ),
+                    Row(
+                      children: [
+                        ElevatedButton(
+                          onPressed: () async {
+                            await openUrl(newsUrl);
+                          },
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.black, elevation: 0),
+                          child: const Text("Visit"),
+                        ),
+                        // Text(
+                        //   "Visit",
+                        //   style: TextStyle(
+                        //       fontSize: 15,
+                        //       color: Colors.redAccent,
+                        //       fontWeight: FontWeight.w800),
+                        // ),
+                        // Icon(
+                        //   Icons.link,
+                        //   color: Colors.redAccent,
+                        // )
+                      ],
                     ),
                   ]),
             ),
@@ -199,13 +202,13 @@ class _NewsPageViewState extends State<NewsPageView> {
                       (newsDescription == "" ||
                               newsDescription == "null" ||
                               newsDescription == null)
-                          ? SizedBox()
+                          ? const SizedBox()
                           : Column(
                               children: [
-                                Divider(),
+                                const Divider(),
                                 Text(
                                   newsDescription,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       fontWeight: FontWeight.w300,
                                       fontSize: 18),
                                 )
@@ -214,12 +217,12 @@ class _NewsPageViewState extends State<NewsPageView> {
                       (newsContent == "" ||
                               newsContent == "null" ||
                               newsContent == null)
-                          ? SizedBox()
+                          ? const SizedBox()
                           : Column(
                               children: [
-                                Divider(),
+                                const Divider(),
                                 Text(newsContent,
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         fontWeight: FontWeight.w300,
                                         fontSize: 18))
                               ],

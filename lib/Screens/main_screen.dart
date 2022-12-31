@@ -59,10 +59,19 @@ class _MainScreenState extends State<MainScreen> {
       title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           mainAxisSize: MainAxisSize.min,
-          children: const [
-            Icon(Icons.developer_board_off_outlined),
-            SizedBox(width: 10),
-            Text("GDSC")
+          children: [
+            // Icon(Icons.developer_board_off_outlined),
+            SizedBox(
+              height: 20,
+              child: Image.asset(
+                "icons/dsc_logo.png",
+              ),
+            ),
+            // SizedBox(width: 10),
+            // Text(
+            //   "Developers",
+            //   style: TextStyle(color: Colors.grey[600]),
+            // )
           ]),
       backgroundColor: Colors.white,
       foregroundColor: Colors.black,
@@ -87,7 +96,7 @@ class _MainScreenState extends State<MainScreen> {
             });
       },
       elevation: 1,
-      backgroundColor: Colors.green[300],
+      backgroundColor: Colors.blueGrey[100],
       child: const Icon(Icons.add),
     );
   }

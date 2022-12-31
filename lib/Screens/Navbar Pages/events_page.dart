@@ -63,8 +63,8 @@ class _EventsPageListViewState extends State<EventsPageListView> {
       child: Container(
         color: Colors.grey[50],
         child: ListView.builder(
-          physics:
-              BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+          physics: const BouncingScrollPhysics(
+              parent: AlwaysScrollableScrollPhysics()),
           itemCount: sortedEvents.length,
           itemBuilder: (context, index) {
             sortedEvents = Map.fromEntries(events.entries.toList()
@@ -120,7 +120,7 @@ class _EventsPageListViewState extends State<EventsPageListView> {
                   onTap: () {
                     Navigator.push(
                         context,
-                        customSlideTransition(EventDetailsScreen(
+                        customSlideTransitionRight(EventDetailsScreen(
                             EventData: sortedEvents[
                                 sortedEvents.keys.elementAt(index)],
                             eid: sortedEvents.keys.elementAt(index))));
@@ -180,33 +180,31 @@ class _EventsPageListViewState extends State<EventsPageListView> {
                                 fontWeight: FontWeight.w400,
                               ),
                             ),
-                            SizedBox(height: 15),
+                            const SizedBox(height: 15),
                             Padding(
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 9),
-                              child: Container(
-                                child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        participants == 1
-                                            ? "${(participants).toString()} participant"
-                                            : "${(participants).toString()} participants",
-                                        style: TextStyle(
-                                            fontSize: 15,
-                                            color: Colors.grey[500],
-                                            fontWeight: FontWeight.w400),
-                                      ),
-                                      Text(
-                                        timeLeftToEvent,
-                                        style: TextStyle(
-                                            fontSize: 15,
-                                            color: Colors.grey[500],
-                                            fontWeight: FontWeight.w400),
-                                      ),
-                                    ]),
-                              ),
+                              child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      participants == 1
+                                          ? "${(participants).toString()} participant"
+                                          : "${(participants).toString()} participants",
+                                      style: TextStyle(
+                                          fontSize: 15,
+                                          color: Colors.grey[500],
+                                          fontWeight: FontWeight.w400),
+                                    ),
+                                    Text(
+                                      timeLeftToEvent,
+                                      style: TextStyle(
+                                          fontSize: 15,
+                                          color: Colors.grey[500],
+                                          fontWeight: FontWeight.w400),
+                                    ),
+                                  ]),
                             )
                           ]),
                         )),

@@ -1,11 +1,5 @@
-import 'dart:ffi';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/animation/animation_controller.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
-import 'package:flutter/src/widgets/ticker_provider.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gdsc_app/Models/domain_model.dart';
 import 'package:gdsc_app/cubit/event/Event_participant/event_participant_cubit.dart';
@@ -49,46 +43,44 @@ class _EventDetailsScreenState extends State<EventDetailsScreen>
         foregroundColor: Colors.black,
         shadowColor: Colors.black,
       ),
-      body: Container(
-        child: Stack(
-          alignment: Alignment.topCenter,
-          children: [
-            Column(children: [
-              Material(
-                elevation: 3,
-                child: Container(
-                  height: 45,
-                  color: Colors.white,
-                ),
-              ),
-              SizedBox(height: 60),
-              EventDataScrollable(eventData: widget.EventData),
-              SizedBox(height: 21),
-              SizedBox(
-                  width: MediaQuery.of(context).size.width - 42,
-                  height: 60,
-                  child: InterestedButton()),
-              SizedBox(height: 10)
-            ]),
-            Positioned(
-              child: Material(
-                elevation: 3,
-                color: Colors.transparent,
-                shape: const CircleBorder(),
-                child: CircleAvatar(
-                  backgroundColor: Colors.white,
-                  radius: 45,
-                  child: CircleAvatar(
-                      backgroundColor: Colors.white,
-                      radius: 43,
-                      child: domainModel[widget.EventData['domain'].toString()]
-                      // backgroundColor: Colors.black,
-                      ),
-                ),
+      body: Stack(
+        alignment: Alignment.topCenter,
+        children: [
+          Column(children: [
+            Material(
+              elevation: 3,
+              child: Container(
+                height: 45,
+                color: Colors.white,
               ),
             ),
-          ],
-        ),
+            const SizedBox(height: 60),
+            EventDataScrollable(eventData: widget.EventData),
+            const SizedBox(height: 21),
+            SizedBox(
+                width: MediaQuery.of(context).size.width - 42,
+                height: 60,
+                child: InterestedButton()),
+            const SizedBox(height: 10)
+          ]),
+          Positioned(
+            child: Material(
+              elevation: 3,
+              color: Colors.transparent,
+              shape: const CircleBorder(),
+              child: CircleAvatar(
+                backgroundColor: Colors.white,
+                radius: 45,
+                child: CircleAvatar(
+                    backgroundColor: Colors.white,
+                    radius: 43,
+                    child: domainModel[widget.EventData['domain'].toString()]
+                    // backgroundColor: Colors.black,
+                    ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -152,7 +144,7 @@ class _EventDetailsScreenState extends State<EventDetailsScreen>
                           .contains(FirebaseAuth.instance.currentUser?.uid)
                       ? "Opt out"
                       : "Become a participant"),
-                  SizedBox(width: 12),
+                  const SizedBox(width: 12),
                   Icon(widget.EventData['participants']
                           .contains(FirebaseAuth.instance.currentUser?.uid)
                       ? Icons.person_remove
@@ -182,8 +174,8 @@ class EventDataScrollable extends StatelessWidget {
         thickness: 6,
         radius: const Radius.circular(18),
         child: SingleChildScrollView(
-          physics: BouncingScrollPhysics(),
-          child: Container(
+          physics: const BouncingScrollPhysics(),
+          child: SizedBox(
             width: double.maxFinite,
             // color: Colors.blue,
             child: Column(children: [
@@ -239,7 +231,7 @@ class DetailItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 9),
-      child: Container(
+      child: SizedBox(
         width: double.maxFinite,
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Text(
@@ -251,7 +243,7 @@ class DetailItem extends StatelessWidget {
           ),
           Text(
             data,
-            style: TextStyle(fontSize: 21, fontWeight: FontWeight.w300),
+            style: const TextStyle(fontSize: 21, fontWeight: FontWeight.w300),
           )
         ]),
       ),

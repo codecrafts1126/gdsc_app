@@ -44,23 +44,49 @@ class _LoginScreenState extends State<LoginScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 // crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Column(children: [
-                    Text("Hello again!",
+                  Column(
+                    children: [
+                      SizedBox(
+                          height: 40,
+                          width: 78,
+                          child: Image.asset(
+                            "icons/dsc_logo.png",
+                          )),
+                      const SizedBox(height: 9),
+                      Text("Google Developer Student Clubs",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              color: Colors.grey[850],
+                              fontSize: 30,
+                              fontWeight: FontWeight.w400)),
+                      Text(
+                        "SIT - Pune",
+                        textAlign: TextAlign.center,
                         style: TextStyle(
-                            color: Colors.grey[850],
-                            fontSize: 30,
-                            fontWeight: FontWeight.w400)),
-                    const SizedBox(height: 9),
-                    Text(
-                      "Welcome back \nyou've been missed",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          color: Colors.grey[850],
-                          fontSize: 21,
-                          overflow: TextOverflow.visible,
-                          fontWeight: FontWeight.w100),
-                    ),
-                  ]),
+                            color: Colors.grey[600],
+                            fontSize: 21,
+                            overflow: TextOverflow.visible,
+                            fontWeight: FontWeight.w400),
+                      ),
+                    ],
+                  ),
+                  // Column(children: [
+                  //   Text("Hello again!",
+                  //       style: TextStyle(
+                  //           color: Colors.grey[850],
+                  //           fontSize: 30,
+                  //           fontWeight: FontWeight.w400)),
+                  //   const SizedBox(height: 9),
+                  //   Text(
+                  //     "Welcome back \nyou've been missed",
+                  //     textAlign: TextAlign.center,
+                  //     style: TextStyle(
+                  //         color: Colors.grey[850],
+                  //         fontSize: 21,
+                  //         overflow: TextOverflow.visible,
+                  //         fontWeight: FontWeight.w100),
+                  //   ),
+                  // ]),
                   Column(children: [
                     EmailTextInput(
                       controller: emailController,
@@ -79,7 +105,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           onTap: () {
                             Navigator.push(
                                 context,
-                                customSlideTransition(
+                                customSlideTransitionRight(
                                     const RecoverPasswordScreen()));
                           },
                           child: const Text(
@@ -131,7 +157,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       GestureDetector(
                         onTap: () {
                           Navigator.push(context,
-                              customSlideTransition(const SignUpScreen()));
+                              customSlideTransitionRight(const SignUpScreen()));
                         },
                         child: const Text(
                           "Register now",
@@ -179,7 +205,7 @@ class LoginButton extends StatelessWidget {
           listener: (context, state) {
             if (state is LoggedInState) {
               Navigator.push(
-                  context, customSlideTransition(const MainScreen()));
+                  context, customSlideTransitionLeft(const MainScreen()));
               emailController.clear();
               passwordController.clear();
             } else if (state is LogInErrorState) {
