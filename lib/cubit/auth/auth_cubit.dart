@@ -1,5 +1,3 @@
-// ignore_for_file: await_only_futures
-
 import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -29,6 +27,7 @@ class AuthCubit extends Cubit<AuthState> {
       var user = await FirebaseAuth.instance.currentUser;
       if (user != null) {
         emit(const ProcessingState());
+        // check if user has filled details or not and redirect to home page or details page accordingly
         await getUserInfo();
         emit(const LoggedInState());
       } else {
@@ -53,7 +52,10 @@ class AuthCubit extends Cubit<AuthState> {
       if (res.statusCode == 200) {
         var data = res.data;
         if (data['status'] == true) {
-          roles = data['message']['roles'];
+          userDetails = data['message'];
+          if (data['message']['name'] == null) {
+            print("No details bruh");
+          }
         } else {
           await registerIfNewUser();
           throw DioError(
@@ -136,9 +138,8 @@ class AuthCubit extends Cubit<AuthState> {
         if (authResult.additionalUserInfo?.isNewUser == true) {
           await registerIfNewUser();
         }
-        await getUserInfo();
       }
-
+      await getUserInfo();
       emit(const LoggedInState());
     } on Exception catch (e) {
       throwLoginException(e);

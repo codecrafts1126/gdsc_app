@@ -147,7 +147,8 @@ class _EventsPageListViewState extends State<EventsPageListView> {
                               child: Row(
                                   mainAxisAlignment: MainAxisAlignment.end,
                                   children: [
-                                    if (roles.contains("EventManager"))
+                                    if ((userDetails['roles'] as List<dynamic>)
+                                        .contains('EventManager'))
                                       popUpDialogueButton(index),
                                   ]),
                             ),

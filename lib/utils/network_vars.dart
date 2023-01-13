@@ -12,4 +12,4 @@ String removeEventParticipantPath = '$serverAddress/delete/event_participants';
 var events = {};
 var sortedEvents = {};
 var news = {};
-var roles = [];
+var userDetails = {};

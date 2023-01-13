@@ -1,3 +1,6 @@
+import 'package:DSCSITP/Screens/user_data_collection_screen.dart';
+import 'package:DSCSITP/cubit/data_collection/data_collection_cubit.dart';
+import 'package:DSCSITP/utils/page_transition.dart';
 import 'package:flutter/material.dart';
 import 'package:DSCSITP/Screens/Navbar%20Pages/events_page.dart';
 import 'package:DSCSITP/Screens/Navbar%20Pages/news_page.dart';
@@ -18,6 +21,14 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
+  @override
+  void initState() {
+    super.initState();
+    if (userDetails['name'] == null) {
+      context.read<DataCollectionCubit>().showDataCollectionScreen();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     // globalContext = context;
@@ -42,7 +53,9 @@ class _MainScreenState extends State<MainScreen> {
         resizeToAvoidBottomInset: false,
         floatingActionButton: BlocBuilder<NavbarCubit, NavbarState>(
           builder: (context, state) {
-            if (state is NavbarEventsState && roles.contains('EventManager')) {
+            if (state is NavbarEventsState &&
+                (userDetails['roles'] as List<dynamic>)
+                    .contains('EventManager')) {
               return addEventButton(context);
             } else {
               return Container();

@@ -141,7 +141,11 @@ class _AddEventBottomSheetState extends State<AddEventBottomSheet> {
           items: domainModel.keys.toList().map((String domain) {
             return DropdownMenuItem<String>(
               value: domain,
-              child: Text(domain, textAlign: TextAlign.center),
+              child: Text(
+                domain,
+                textAlign: TextAlign.center,
+                overflow: TextOverflow.ellipsis,
+              ),
             );
           }).toList(),
           onChanged: (value) {

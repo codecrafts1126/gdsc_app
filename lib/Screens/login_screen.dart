@@ -1,3 +1,5 @@
+import 'package:DSCSITP/Screens/user_data_collection_screen.dart';
+import 'package:DSCSITP/cubit/data_collection/data_collection_cubit.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -206,26 +208,43 @@ class LoginButton extends StatelessWidget {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12),
             )),
-        child: BlocConsumer<AuthCubit, AuthState>(
-          listener: (context, state) {
-            if (state is LoggedInState) {
-              Navigator.push(
-                  context, customSlideTransitionLeft(const MainScreen()));
-              emailController.clear();
-              passwordController.clear();
-            } else if (state is LogInErrorState) {
-              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                  backgroundColor: Colors.red[300],
-                  content: Text(state.message)));
-            }
-          },
-          builder: (context, state) {
-            if (state is ProcessingState) {
-              return const CircularProgressIndicator();
-            } else {
-              return const Text("Sign In");
-            }
-          },
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            BlocListener<DataCollectionCubit, DataCollectionState>(
+              listener: (context, state) {
+                if (state is DataCollectionInitialState) {
+                  Navigator.push(
+                      context,
+                      customSlideTransitionRight(
+                          const UserDataCollectionScreen()));
+                }
+              },
+              child: Container(),
+            ),
+            BlocConsumer<AuthCubit, AuthState>(
+              listener: (context, state) {
+                if (state is LoggedInState) {
+                  Navigator.push(
+                      context, customSlideTransitionLeft(const MainScreen()));
+                  emailController.clear();
+                  passwordController.clear();
+                } else if (state is LogInErrorState) {
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      backgroundColor: Colors.red[300],
+                      content: Text(state.message)));
+                }
+              },
+              builder: (context, state) {
+                if (state is ProcessingState) {
+                  return const CircularProgressIndicator();
+                } else {
+                  return const Text("Sign In");
+                }
+              },
+            )
+          ],
         ));
   }
 }
