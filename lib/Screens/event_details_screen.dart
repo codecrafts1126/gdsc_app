@@ -229,23 +229,26 @@ class DetailItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 9),
-      child: SizedBox(
-        width: double.maxFinite,
-        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Text(
-            tag,
-            style: TextStyle(
-                fontSize: 15,
-                color: Colors.grey[500],
-                fontWeight: FontWeight.w300),
-          ),
-          Text(
-            data,
-            style: const TextStyle(fontSize: 21, fontWeight: FontWeight.w300),
-          )
-        ]),
+    return SafeArea(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 9),
+        child: SizedBox(
+          width: double.maxFinite,
+          child:
+              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Text(
+              tag,
+              style: TextStyle(
+                  fontSize: 15,
+                  color: Colors.grey[500],
+                  fontWeight: FontWeight.w300),
+            ),
+            Text(
+              data,
+              style: const TextStyle(fontSize: 21, fontWeight: FontWeight.w300),
+            )
+          ]),
+        ),
       ),
     );
   }

@@ -17,10 +17,7 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      throw UnsupportedError(
-        'DefaultFirebaseOptions have not been configured for web - '
-        'you can reconfigure this by running the FlutterFire CLI again.',
-      );
+      return web;
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
@@ -51,6 +48,16 @@ class DefaultFirebaseOptions {
         );
     }
   }
+
+  static const FirebaseOptions web = FirebaseOptions(
+    apiKey: 'AIzaSyDCsqQATEzbBgL_4PmUWYE2W53MdwlWpoM',
+    appId: '1:298592581662:web:6d7c35f8cb7a338827d60f',
+    messagingSenderId: '298592581662',
+    projectId: 'the-gdsc-club-app',
+    authDomain: 'the-gdsc-club-app.firebaseapp.com',
+    databaseURL: 'https://the-gdsc-club-app-default-rtdb.asia-southeast1.firebasedatabase.app',
+    storageBucket: 'the-gdsc-club-app.appspot.com',
+  );
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyBsVeoIPbonPfFqRVAESBLzL-8Gxfrh1ag',

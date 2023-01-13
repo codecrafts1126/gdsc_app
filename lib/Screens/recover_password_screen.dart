@@ -14,61 +14,63 @@ class _RecoverPasswordScreenState extends State<RecoverPasswordScreen> {
   final TextEditingController emailController = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      backgroundColor: Colors.blueGrey[50],
-      body: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 51, horizontal: 27),
-        child: Center(
-          child: ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 500),
-            child: Container(
-              width: double.maxFinite,
-              color: Colors.transparent,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+    return SafeArea(
+      child: Scaffold(
+        resizeToAvoidBottomInset: false,
+        backgroundColor: Colors.blueGrey[50],
+        body: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 51, horizontal: 27),
+          child: Center(
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 500),
+              child: Container(
+                width: double.maxFinite,
+                color: Colors.transparent,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
 
-                // crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Column(children: [
-                    const SizedBox(height: 15),
-                    Text("Lost?😔",
+                  // crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Column(children: [
+                      const SizedBox(height: 15),
+                      Text("Lost?😔",
+                          style: TextStyle(
+                              color: Colors.grey[850],
+                              fontSize: 30,
+                              fontWeight: FontWeight.w400)),
+                      const SizedBox(height: 9),
+                      Text(
+                        "Reset your password now",
+                        textAlign: TextAlign.center,
                         style: TextStyle(
                             color: Colors.grey[850],
-                            fontSize: 30,
-                            fontWeight: FontWeight.w400)),
-                    const SizedBox(height: 9),
-                    Text(
-                      "Reset your password now",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          color: Colors.grey[850],
-                          fontSize: 21,
-                          overflow: TextOverflow.visible,
-                          fontWeight: FontWeight.w100),
+                            fontSize: 21,
+                            overflow: TextOverflow.visible,
+                            fontWeight: FontWeight.w100),
+                      ),
+                    ]),
+                    Column(children: [
+                      EmailTextInput(
+                        controller: emailController,
+                        hintText: "Enter email",
+                      ),
+                    ]),
+                    SizedBox(
+                      height: 51,
+                      width: double.maxFinite,
+                      child: SendMailButton(emailController: emailController),
                     ),
-                  ]),
-                  Column(children: [
-                    EmailTextInput(
-                      controller: emailController,
-                      hintText: "Enter email",
+                    FloatingActionButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      foregroundColor: Colors.grey[850],
+                      elevation: 1,
+                      backgroundColor: Colors.blueGrey[50],
+                      child: const Icon(Icons.arrow_back),
                     ),
-                  ]),
-                  SizedBox(
-                    height: 51,
-                    width: double.maxFinite,
-                    child: SendMailButton(emailController: emailController),
-                  ),
-                  FloatingActionButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    foregroundColor: Colors.grey[850],
-                    elevation: 1,
-                    backgroundColor: Colors.blueGrey[50],
-                    child: const Icon(Icons.arrow_back),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),

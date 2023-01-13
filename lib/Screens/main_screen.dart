@@ -21,34 +21,36 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     // globalContext = context;
-    return Scaffold(
-      body: BlocBuilder<NavbarCubit, NavbarState>(
-        builder: (context, state) {
-          if (state is NavbarEventsState) {
-            return const EventsPage();
-          } else if (state is NavbarNewsState) {
-            return const NewsPage();
-          } else if (state is NavbarSettingsState) {
-            return const SettingsPage();
-          } else {
-            return const CircularProgressIndicator();
-          }
-        },
+    return SafeArea(
+      child: Scaffold(
+        body: BlocBuilder<NavbarCubit, NavbarState>(
+          builder: (context, state) {
+            if (state is NavbarEventsState) {
+              return const EventsPage();
+            } else if (state is NavbarNewsState) {
+              return const NewsPage();
+            } else if (state is NavbarSettingsState) {
+              return const SettingsPage();
+            } else {
+              return const CircularProgressIndicator();
+            }
+          },
+        ),
+        appBar: customAppBar(),
+        bottomNavigationBar: const CustomNavbar(),
+        drawerEdgeDragWidth: 30,
+        resizeToAvoidBottomInset: false,
+        floatingActionButton: BlocBuilder<NavbarCubit, NavbarState>(
+          builder: (context, state) {
+            if (state is NavbarEventsState && roles.contains('EventManager')) {
+              return addEventButton(context);
+            } else {
+              return Container();
+            }
+          },
+        ),
+        drawer: const CustomDrawer(),
       ),
-      appBar: customAppBar(),
-      bottomNavigationBar: const CustomNavbar(),
-      drawerEdgeDragWidth: 30,
-      resizeToAvoidBottomInset: false,
-      floatingActionButton: BlocBuilder<NavbarCubit, NavbarState>(
-        builder: (context, state) {
-          if (state is NavbarEventsState && roles.contains('EventManager')) {
-            return addEventButton(context);
-          } else {
-            return Container();
-          }
-        },
-      ),
-      drawer: const CustomDrawer(),
     );
   }
 

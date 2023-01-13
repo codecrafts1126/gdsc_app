@@ -29,145 +29,150 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      backgroundColor: Colors.blueGrey[50],
-      body: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 51, horizontal: 27),
-        child: Center(
-          child: ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 500),
-            child: Container(
-              width: double.maxFinite,
-              color: Colors.transparent,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                // crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Column(
-                    children: [
-                      SizedBox(
-                          height: 40,
-                          width: 78,
-                          child: Image.asset(
-                            "icons/dsc_logo.png",
-                          )),
-                      const SizedBox(height: 9),
-                      Text("Google Developer Student Clubs",
+    return SafeArea(
+      child: Scaffold(
+        resizeToAvoidBottomInset: false,
+        backgroundColor: Colors.blueGrey[50],
+        body: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 51, horizontal: 27),
+          child: Center(
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 500),
+              child: Container(
+                width: double.maxFinite,
+                color: Colors.transparent,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  // crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Column(
+                      children: [
+                        SizedBox(
+                            height: 40,
+                            width: 78,
+                            child: Image.asset(
+                              "icons/dsc_logo.png",
+                            )),
+                        const SizedBox(height: 9),
+                        Text("Google Developer Student Clubs",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                color: Colors.grey[850],
+                                fontSize: 30,
+                                fontWeight: FontWeight.w400)),
+                        Text(
+                          "SIT - Pune",
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                              color: Colors.grey[850],
-                              fontSize: 30,
-                              fontWeight: FontWeight.w400)),
-                      Text(
-                        "SIT - Pune",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            color: Colors.grey[600],
-                            fontSize: 21,
-                            overflow: TextOverflow.visible,
-                            fontWeight: FontWeight.w400),
+                              color: Colors.grey[600],
+                              fontSize: 21,
+                              overflow: TextOverflow.visible,
+                              fontWeight: FontWeight.w400),
+                        ),
+                      ],
+                    ),
+                    // Column(children: [
+                    //   Text("Hello again!",
+                    //       style: TextStyle(
+                    //           color: Colors.grey[850],
+                    //           fontSize: 30,
+                    //           fontWeight: FontWeight.w400)),
+                    //   const SizedBox(height: 9),
+                    //   Text(
+                    //     "Welcome back \nyou've been missed",
+                    //     textAlign: TextAlign.center,
+                    //     style: TextStyle(
+                    //         color: Colors.grey[850],
+                    //         fontSize: 21,
+                    //         overflow: TextOverflow.visible,
+                    //         fontWeight: FontWeight.w100),
+                    //   ),
+                    // ]),
+                    Column(children: [
+                      EmailTextInput(
+                        controller: emailController,
+                        hintText: "Enter email",
                       ),
-                    ],
-                  ),
-                  // Column(children: [
-                  //   Text("Hello again!",
-                  //       style: TextStyle(
-                  //           color: Colors.grey[850],
-                  //           fontSize: 30,
-                  //           fontWeight: FontWeight.w400)),
-                  //   const SizedBox(height: 9),
-                  //   Text(
-                  //     "Welcome back \nyou've been missed",
-                  //     textAlign: TextAlign.center,
-                  //     style: TextStyle(
-                  //         color: Colors.grey[850],
-                  //         fontSize: 21,
-                  //         overflow: TextOverflow.visible,
-                  //         fontWeight: FontWeight.w100),
-                  //   ),
-                  // ]),
-                  Column(children: [
-                    EmailTextInput(
-                      controller: emailController,
-                      hintText: "Enter email",
-                    ),
-                    const SizedBox(
-                      height: 9,
-                    ),
-                    PasswordTextInput(
-                        controller: passwordController, hintText: "Password"),
+                      const SizedBox(
+                        height: 9,
+                      ),
+                      PasswordTextInput(
+                          controller: passwordController, hintText: "Password"),
+                      SizedBox(
+                        width: double.maxFinite,
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 10, right: 12),
+                          child: GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  customSlideTransitionRight(
+                                      const RecoverPasswordScreen()));
+                            },
+                            child: const Text(
+                              "Recover Password",
+                              style: TextStyle(
+                                  color: Colors.blue,
+                                  fontWeight: FontWeight.w500),
+                              textAlign: TextAlign.end,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ]),
                     SizedBox(
+                      height: 51,
                       width: double.maxFinite,
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 10, right: 12),
-                        child: GestureDetector(
+                      child: LoginButton(
+                          emailController: emailController,
+                          passwordController: passwordController),
+                    ),
+                    Column(children: [
+                      const Text("Or continue with"),
+                      const SizedBox(height: 21),
+                      SizedBox(
+                        width: double.maxFinite,
+                        height: 51,
+                        child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: const [
+                              ElevatedSignInButton(
+                                path: "icons/google.png",
+                                mode: 1,
+                              ),
+                              // SizedBox(width: 12),
+                              // ElevatedSignInButton(
+                              //   path: "icons/github.png",
+                              //   mode: 2,
+                              // ),
+                            ]),
+                        // color: Colors.red,
+                      ),
+                    ]),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Text("Not a member?"),
+                        const SizedBox(width: 3),
+                        GestureDetector(
                           onTap: () {
                             Navigator.push(
                                 context,
                                 customSlideTransitionRight(
-                                    const RecoverPasswordScreen()));
+                                    const SignUpScreen()));
                           },
                           child: const Text(
-                            "Recover Password",
+                            "Register now",
                             style: TextStyle(
                                 color: Colors.blue,
                                 fontWeight: FontWeight.w500),
-                            textAlign: TextAlign.end,
                           ),
                         ),
-                      ),
-                    ),
-                  ]),
-                  SizedBox(
-                    height: 51,
-                    width: double.maxFinite,
-                    child: LoginButton(
-                        emailController: emailController,
-                        passwordController: passwordController),
-                  ),
-                  Column(children: [
-                    const Text("Or continue with"),
-                    const SizedBox(height: 21),
-                    SizedBox(
-                      width: double.maxFinite,
-                      height: 51,
-                      child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: const [
-                            ElevatedSignInButton(
-                              path: "icons/google.png",
-                              mode: 1,
-                            ),
-                            // SizedBox(width: 12),
-                            // ElevatedSignInButton(
-                            //   path: "icons/github.png",
-                            //   mode: 2,
-                            // ),
-                          ]),
-                      // color: Colors.red,
-                    ),
-                  ]),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Text("Not a member?"),
-                      const SizedBox(width: 3),
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.push(context,
-                              customSlideTransitionRight(const SignUpScreen()));
-                        },
-                        child: const Text(
-                          "Register now",
-                          style: TextStyle(
-                              color: Colors.blue, fontWeight: FontWeight.w500),
-                        ),
-                      ),
-                    ],
-                  )
-                ],
+                      ],
+                    )
+                  ],
+                ),
               ),
             ),
           ),
