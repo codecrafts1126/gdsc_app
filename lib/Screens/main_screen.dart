@@ -24,7 +24,8 @@ class _MainScreenState extends State<MainScreen> {
   @override
   void initState() {
     super.initState();
-    if (userDetails['name'] == null) {
+    if (userDetails['name'] == null ||
+        (userDetails['name'] as String).trim() == "") {
       context.read<DataCollectionCubit>().showDataCollectionScreen();
     }
   }
