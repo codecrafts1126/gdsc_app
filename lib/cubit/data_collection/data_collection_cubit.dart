@@ -44,10 +44,10 @@ class DataCollectionCubit extends Cubit<DataCollectionState> {
         updateUserInfoPath,
         data: {
           "uid": FirebaseAuth.instance.currentUser?.uid,
-          "name": userData.branch.toString(),
-          "prn": userData.prn.toString(),
-          "number": userData.phoneNumber.toString(),
-          "branch": userData.branch.toString(),
+          "name": userData.name.toString().trim(),
+          "prn": userData.prn.toString().trim(),
+          "number": userData.phoneNumber.toString().trim(),
+          "branch": userData.branch.toString().trim(),
         },
       );
       if (res.statusCode == 200) {
