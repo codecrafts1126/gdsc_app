@@ -203,8 +203,8 @@ class LoginButton extends StatelessWidget {
           FocusManager.instance.primaryFocus?.unfocus();
         },
         style: ElevatedButton.styleFrom(
-            elevation: 1,
-            backgroundColor: Colors.black,
+            elevation: 3,
+            backgroundColor: Colors.black87,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12),
             )),
@@ -217,7 +217,7 @@ class LoginButton extends StatelessWidget {
                 if (state is DataCollectionInitialState) {
                   Navigator.push(
                       context,
-                      customSlideTransitionRight(
+                      customSlideTransitionLeft(
                           const UserDataCollectionScreen()));
                 }
               },
@@ -240,7 +240,9 @@ class LoginButton extends StatelessWidget {
                 if (state is ProcessingState) {
                   return const CircularProgressIndicator();
                 } else {
-                  return const Text("Sign In");
+                  return const Text(
+                    "Sign In",
+                  );
                 }
               },
             )

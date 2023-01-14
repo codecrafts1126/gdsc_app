@@ -136,14 +136,14 @@ class _AddEventBottomSheetState extends State<AddEventBottomSheet> {
           borderRadius: BorderRadius.circular(18),
           elevation: 3,
           menuMaxHeight: 450,
+          isExpanded: true,
           hint: const Text('Domain'),
-          // value: domainInitValue,
           items: domainModel.keys.toList().map((String domain) {
             return DropdownMenuItem<String>(
               value: domain,
               child: Text(
                 domain,
-                textAlign: TextAlign.center,
+                textAlign: TextAlign.left,
                 overflow: TextOverflow.ellipsis,
               ),
             );

@@ -34,53 +34,55 @@ class _EventDetailsScreenState extends State<EventDetailsScreen>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      backgroundColor: Colors.grey[50],
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Colors.white,
-        foregroundColor: Colors.black,
-        shadowColor: Colors.black,
-      ),
-      body: Stack(
-        alignment: Alignment.topCenter,
-        children: [
-          Column(children: [
-            Material(
-              elevation: 3,
-              child: Container(
-                height: 45,
-                color: Colors.white,
+    return SafeArea(
+      child: Scaffold(
+        resizeToAvoidBottomInset: false,
+        backgroundColor: Colors.grey[50],
+        appBar: AppBar(
+          elevation: 0,
+          backgroundColor: Colors.white,
+          foregroundColor: Colors.black,
+          shadowColor: Colors.black,
+        ),
+        body: Stack(
+          alignment: Alignment.topCenter,
+          children: [
+            Column(children: [
+              Material(
+                elevation: 3,
+                child: Container(
+                  height: 45,
+                  color: Colors.white,
+                ),
               ),
-            ),
-            const SizedBox(height: 60),
-            EventDataScrollable(eventData: widget.EventData),
-            const SizedBox(height: 21),
-            SizedBox(
-                width: MediaQuery.of(context).size.width - 42,
-                height: 60,
-                child: InterestedButton()),
-            const SizedBox(height: 10)
-          ]),
-          Positioned(
-            child: Material(
-              elevation: 3,
-              color: Colors.transparent,
-              shape: const CircleBorder(),
-              child: CircleAvatar(
-                backgroundColor: Colors.white,
-                radius: 45,
+              const SizedBox(height: 60),
+              EventDataScrollable(eventData: widget.EventData),
+              const SizedBox(height: 21),
+              SizedBox(
+                  width: MediaQuery.of(context).size.width - 42,
+                  height: 60,
+                  child: InterestedButton()),
+              const SizedBox(height: 10)
+            ]),
+            Positioned(
+              child: Material(
+                elevation: 3,
+                color: Colors.transparent,
+                shape: const CircleBorder(),
                 child: CircleAvatar(
-                    backgroundColor: Colors.white,
-                    radius: 43,
-                    child: domainModel[widget.EventData['domain'].toString()]
-                    // backgroundColor: Colors.black,
-                    ),
+                  backgroundColor: Colors.white,
+                  radius: 45,
+                  child: CircleAvatar(
+                      backgroundColor: Colors.white,
+                      radius: 43,
+                      child: domainModel[widget.EventData['domain'].toString()]
+                      // backgroundColor: Colors.black,
+                      ),
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -229,26 +231,23 @@ class DetailItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 9),
-        child: SizedBox(
-          width: double.maxFinite,
-          child:
-              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Text(
-              tag,
-              style: TextStyle(
-                  fontSize: 15,
-                  color: Colors.grey[500],
-                  fontWeight: FontWeight.w300),
-            ),
-            Text(
-              data,
-              style: const TextStyle(fontSize: 21, fontWeight: FontWeight.w300),
-            )
-          ]),
-        ),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 9),
+      child: SizedBox(
+        width: double.maxFinite,
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Text(
+            tag,
+            style: TextStyle(
+                fontSize: 15,
+                color: Colors.grey[500],
+                fontWeight: FontWeight.w300),
+          ),
+          Text(
+            data,
+            style: const TextStyle(fontSize: 21, fontWeight: FontWeight.w300),
+          )
+        ]),
       ),
     );
   }

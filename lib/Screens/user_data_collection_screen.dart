@@ -112,20 +112,33 @@ class _UserDataCollectionScreenState extends State<UserDataCollectionScreen> {
         width: double.maxFinite,
         child: DropdownButtonFormField(
           borderRadius: BorderRadius.circular(18),
+          decoration: InputDecoration(
+            contentPadding:
+                const EdgeInsets.symmetric(horizontal: 21, vertical: 18),
+            filled: true,
+            fillColor: Colors.white,
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(15),
+              borderSide: const BorderSide(color: Colors.transparent),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(15),
+              borderSide: const BorderSide(color: Colors.transparent),
+            ),
+            border: const OutlineInputBorder(),
+            // hintText: widget.hintText,
+          ),
           elevation: 3,
           menuMaxHeight: 450,
+          isExpanded: true,
           hint: const Text('Branch'),
-          // value: domainInitValue,
-          items: branchModel.map((String domain) {
-            // ------------------------------------- FIX THIS ERROR DROPDOWNMENUITEM OVERFLOW ----------------------------------------
+          items: branchModel.map((String branch) {
             return DropdownMenuItem<String>(
-              value: domain,
-              child: Expanded(
-                child: Text(
-                  domain,
-                  textAlign: TextAlign.center,
-                  overflow: TextOverflow.ellipsis,
-                ),
+              value: branch,
+              child: Text(
+                branch,
+                textAlign: TextAlign.left,
+                overflow: TextOverflow.ellipsis,
               ),
             );
           }).toList(),
