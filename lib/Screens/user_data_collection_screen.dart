@@ -1,4 +1,5 @@
 import 'package:DSCSITP/Models/branch_model.dart';
+import 'package:DSCSITP/Models/user_data_model.dart';
 import 'package:DSCSITP/Widgets/email_text_input.dart';
 import 'package:DSCSITP/cubit/data_collection/data_collection_cubit.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +16,7 @@ class UserDataCollectionScreen extends StatefulWidget {
 class _UserDataCollectionScreenState extends State<UserDataCollectionScreen> {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController prnController = TextEditingController();
-  final TextEditingController phoneNumberController = TextEditingController();
+  final TextEditingController phoneController = TextEditingController();
   String BranchInitValue = 'Branch';
   @override
   Widget build(BuildContext context) {
@@ -61,7 +62,7 @@ class _UserDataCollectionScreenState extends State<UserDataCollectionScreen> {
                         children: [
                           EmailTextInput(
                             controller: nameController,
-                            hintText: "Name",
+                            hintText: "Full Name",
                           ),
                           const SizedBox(
                             height: 9,
@@ -74,7 +75,7 @@ class _UserDataCollectionScreenState extends State<UserDataCollectionScreen> {
                             height: 9,
                           ),
                           EmailTextInput(
-                            controller: phoneNumberController,
+                            controller: phoneController,
                             hintText: "Phone number (without +91)",
                           ),
                           const SizedBox(
@@ -85,7 +86,12 @@ class _UserDataCollectionScreenState extends State<UserDataCollectionScreen> {
                     SizedBox(
                       height: 51,
                       width: double.maxFinite,
-                      child: SendMailButton(emailController: nameController),
+                      child: SendMailButton(
+                        nameController: nameController,
+                        prnController: prnController,
+                        phoneController: phoneController,
+                        branch: BranchInitValue,
+                      ),
                     ),
                     // FloatingActionButton(
                     //   onPressed: () {
@@ -156,16 +162,27 @@ class _UserDataCollectionScreenState extends State<UserDataCollectionScreen> {
 class SendMailButton extends StatelessWidget {
   const SendMailButton({
     super.key,
-    required this.emailController,
+    required this.nameController,
+    required this.prnController,
+    required this.phoneController,
+    required this.branch,
   });
 
-  final TextEditingController emailController;
+  final TextEditingController nameController;
+  final TextEditingController prnController;
+  final TextEditingController phoneController;
+  final String branch;
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
         onPressed: () async {
-          await context.read<DataCollectionCubit>().addUserDetails();
+          UserDataModel data = UserDataModel(
+              name: nameController.text.toString().trim(),
+              prn: prnController.text.toString().trim(),
+              phoneNumber: phoneController.text.toString().trim(),
+              branch: branch);
+          await context.read<DataCollectionCubit>().UpdateUserDetails(data);
           FocusManager.instance.primaryFocus?.unfocus();
         },
         style: ElevatedButton.styleFrom(
@@ -181,7 +198,9 @@ class SendMailButton extends StatelessWidget {
               ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                   backgroundColor: Colors.green[300],
                   content: Text(state.message)));
-              emailController.clear();
+              nameController.clear();
+              prnController.clear();
+              phoneController.clear();
 
               Navigator.pop(context);
             } else if (state is DataCollectionErrorState) {

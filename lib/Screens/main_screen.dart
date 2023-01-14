@@ -112,7 +112,7 @@ class _MainScreenState extends State<MainScreen> {
       },
       elevation: 1,
       backgroundColor: Colors.blueGrey[100],
-      child: const Icon(Icons.add),
+      child: const Icon(Icons.add_rounded, color: Colors.black),
     );
   }
 }
