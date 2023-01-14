@@ -23,11 +23,33 @@ class _CustomDrawerState extends State<CustomDrawer> {
       builder: (context, state) {
         return Drawer(
           child: ListView(padding: EdgeInsets.zero, children: [
-            const DrawerHeader(
-              decoration: BoxDecoration(color: Colors.black),
-              child: Text("Options",
-                  style: TextStyle(fontSize: 18, color: Colors.white)),
-            ),
+            DrawerHeader(
+                decoration: BoxDecoration(color: Colors.black),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text("Options",
+                        style: TextStyle(fontSize: 21, color: Colors.white)),
+                    Container(
+                      child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "RegId: ${FirebaseAuth.instance.currentUser != null ? FirebaseAuth.instance.currentUser!.uid.toString() : null}",
+                              style:
+                                  TextStyle(color: Colors.grey, fontSize: 12),
+                            ),
+                            Text(
+                              "Email: ${FirebaseAuth.instance.currentUser != null ? FirebaseAuth.instance.currentUser!.email.toString() : null}",
+                              style:
+                                  TextStyle(color: Colors.grey, fontSize: 12),
+                            )
+                          ]),
+                    )
+                  ],
+                )),
             ListTile(
               title: const Text(
                 "Log Out",
@@ -44,12 +66,12 @@ class _CustomDrawerState extends State<CustomDrawer> {
             //           "UID: ${FirebaseAuth.instance.currentUser!.uid.toString()}")
             //       : const Text("null"),
             // ),
-            ListTile(
-              title: FirebaseAuth.instance.currentUser != null
-                  ? Text(
-                      "Email: ${FirebaseAuth.instance.currentUser!.email.toString()}")
-                  : const Text("null"),
-            )
+            // ListTile(
+            //   title: FirebaseAuth.instance.currentUser != null
+            //       ? Text(
+            //           "Email: ${FirebaseAuth.instance.currentUser!.email.toString()}")
+            //       : const Text("null"),
+            // )
           ]),
         );
       },
