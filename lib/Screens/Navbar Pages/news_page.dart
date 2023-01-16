@@ -65,7 +65,7 @@ class _NewsPageViewState extends State<NewsPageView> {
       child: Container(
         color: Colors.grey[50],
         child: PageView.builder(
-          scrollDirection: Axis.vertical,
+          scrollDirection: Axis.horizontal,
           itemCount: news['articles'].length,
           itemBuilder: (context, index) {
             return Padding(
