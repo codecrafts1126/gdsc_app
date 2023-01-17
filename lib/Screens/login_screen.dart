@@ -63,7 +63,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 fontSize: 30,
                                 fontWeight: FontWeight.w400)),
                         Text(
-                          "SIT - Pune",
+                          "SIT Pune",
                           textAlign: TextAlign.center,
                           style: TextStyle(
                               color: Colors.grey[600],

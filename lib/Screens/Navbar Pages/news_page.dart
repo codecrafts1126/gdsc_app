@@ -180,6 +180,10 @@ class _NewsPageViewState extends State<NewsPageView> {
                                 ),
                               );
                             },
+                            frameBuilder: (context, child, frame,
+                                wasSynchronouslyLoaded) {
+                              return child;
+                            },
                             loadingBuilder: (BuildContext context, Widget child,
                                 ImageChunkEvent? loadingProgress) {
                               if (loadingProgress == null) return child;

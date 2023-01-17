@@ -38,6 +38,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     Column(children: [
                       const SizedBox(height: 15),
                       Text("First time?😏",
+                          textAlign: TextAlign.center,
                           style: TextStyle(
                               color: Colors.grey[850],
                               fontSize: 30,

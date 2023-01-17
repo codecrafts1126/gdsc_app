@@ -34,6 +34,7 @@ class _RecoverPasswordScreenState extends State<RecoverPasswordScreen> {
                     Column(children: [
                       const SizedBox(height: 15),
                       Text("Lost?😔",
+                          textAlign: TextAlign.center,
                           style: TextStyle(
                               color: Colors.grey[850],
                               fontSize: 30,

@@ -38,6 +38,7 @@ class DataCollectionCubit extends Cubit<DataCollectionState> {
     if (!_canTriggerAuthActions) return;
     _canTriggerAuthActions = false;
     emit(const DataCollectionProcessingState());
+    print("hehe");
 
     try {
       var res = await Dio().post(
