@@ -206,7 +206,7 @@ class _ThemesSectionState extends State<ThemesSection> {
                         fontSize: 21,
                         fontWeight: FontWeight.w300),
                   ),
-                  const SizedBox(height: 12),
+                  const SizedBox(height: 15),
                 ])));
   }
 }

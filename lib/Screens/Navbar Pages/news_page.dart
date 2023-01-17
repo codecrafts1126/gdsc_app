@@ -69,7 +69,7 @@ class _NewsPageViewState extends State<NewsPageView> {
           itemCount: news['articles'].length,
           itemBuilder: (context, index) {
             return Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.symmetric(horizontal: 8),
                 child: singleNewsPage(index));
           },
         ),
@@ -127,7 +127,11 @@ class _NewsPageViewState extends State<NewsPageView> {
                             await openUrl(newsUrl);
                           },
                           style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.black, elevation: 0),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(18)),
+                              shadowColor: Colors.black,
+                              backgroundColor: Colors.black,
+                              elevation: 3),
                           child: const Text("Visit"),
                         ),
                         // Text(

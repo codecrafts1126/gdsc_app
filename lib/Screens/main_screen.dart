@@ -111,7 +111,8 @@ class _MainScreenState extends State<MainScreen> {
               return const AddEventBottomSheet();
             });
       },
-      elevation: 1,
+      elevation: 3,
+      highlightElevation: 0,
       backgroundColor: Colors.blueGrey[100],
       child: const Icon(Icons.add_rounded, color: Colors.black),
     );

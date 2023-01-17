@@ -23,6 +23,10 @@ class EventParticipantRemovedState extends EventParticipantState {
   const EventParticipantRemovedState(this.message);
 }
 
+class EventParticipantsLoadedState extends EventParticipantState {
+  const EventParticipantsLoadedState();
+}
+
 class EventParticipantErrorState extends EventParticipantState {
   final String message;
   const EventParticipantErrorState(this.message);

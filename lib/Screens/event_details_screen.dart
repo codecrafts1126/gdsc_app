@@ -138,6 +138,7 @@ class _EventDetailsScreenState extends State<EventDetailsScreen>
             if (state is EventParticipantErrorState ||
                 state is EventParticipantAddedState ||
                 state is EventParticipantRemovedState ||
+                state is EventParticipantsLoadedState ||
                 state is EventParticipantInitialState) {
               return Row(
                 mainAxisAlignment: MainAxisAlignment.center,
