@@ -225,7 +225,7 @@ class ChangeDetailsButtons extends StatelessWidget {
                       branch: branch);
                   await context
                       .read<DataCollectionCubit>()
-                      .UpdateUserDetails(data)
+                      .updateUserDetails(data)
                       .then((value) => {Navigator.pop(context)});
                 },
                 elevation: 3,

@@ -24,27 +24,27 @@ class _CustomDrawerState extends State<CustomDrawer> {
         return Drawer(
           child: ListView(padding: EdgeInsets.zero, children: [
             DrawerHeader(
-                decoration: BoxDecoration(color: Colors.black),
+                decoration: const BoxDecoration(color: Colors.black),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text("Options",
+                    const Text("Options",
                         style: TextStyle(fontSize: 21, color: Colors.white)),
-                    Container(
+                    SizedBox(
                       child: Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
                               "RegId: ${FirebaseAuth.instance.currentUser != null ? FirebaseAuth.instance.currentUser!.uid.toString() : null}",
-                              style:
-                                  TextStyle(color: Colors.grey, fontSize: 12),
+                              style: const TextStyle(
+                                  color: Colors.grey, fontSize: 12),
                             ),
                             Text(
                               "Email: ${FirebaseAuth.instance.currentUser != null ? FirebaseAuth.instance.currentUser!.email.toString() : null}",
-                              style:
-                                  TextStyle(color: Colors.grey, fontSize: 12),
+                              style: const TextStyle(
+                                  color: Colors.grey, fontSize: 12),
                             )
                           ]),
                     )

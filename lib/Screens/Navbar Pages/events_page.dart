@@ -1,5 +1,4 @@
 import 'package:DSCSITP/Screens/event_participants_screen.dart';
-import 'package:DSCSITP/cubit/event/Event_participant/event_participant_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:DSCSITP/Models/domain_model.dart';

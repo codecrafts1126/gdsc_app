@@ -103,7 +103,7 @@ class EventParticipantCubit extends Cubit<EventParticipantState> {
           sortedParticipantsDetails = Map.fromEntries(participantDetails.entries
               .toList()
             ..sort((e1, e2) => e1.value['name'].compareTo(e2.value['name'])));
-          print(sortedParticipantsDetails);
+
           emit(const EventParticipantsLoadedState());
         } else {
           emit(EventParticipantErrorState(jsonRes["message"].toString()));

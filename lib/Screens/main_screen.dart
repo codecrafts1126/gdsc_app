@@ -1,6 +1,4 @@
-import 'package:DSCSITP/Screens/user_data_collection_screen.dart';
 import 'package:DSCSITP/cubit/data_collection/data_collection_cubit.dart';
-import 'package:DSCSITP/utils/page_transition.dart';
 import 'package:flutter/material.dart';
 import 'package:DSCSITP/Screens/Navbar%20Pages/events_page.dart';
 import 'package:DSCSITP/Screens/Navbar%20Pages/news_page.dart';

@@ -24,7 +24,7 @@ class AuthCubit extends Cubit<AuthState> {
 
   Future<void> autoLoginStateCall() async {
     try {
-      var user = await FirebaseAuth.instance.currentUser;
+      var user = FirebaseAuth.instance.currentUser;
       if (user != null) {
         emit(const ProcessingState());
         // check if user has filled details or not and redirect to home page or details page accordingly
@@ -53,9 +53,7 @@ class AuthCubit extends Cubit<AuthState> {
         var data = res.data;
         if (data['status'] == true) {
           userDetails = data['message'];
-          if (data['message']['name'] == null) {
-            print("No details bruh");
-          }
+          if (data['message']['name'] == null) {}
         } else {
           await registerIfNewUser();
           throw DioError(

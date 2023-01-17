@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-
-import 'package:DSCSITP/cubit/event/Event_participant/event_participant_cubit.dart';
 
 class UserProfileScreen extends StatefulWidget {
   final String name;

@@ -17,7 +17,7 @@ class _UserDataCollectionScreenState extends State<UserDataCollectionScreen> {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController prnController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
-  String BranchInitValue = 'Branch';
+  String branchInitValue = 'Branch';
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -91,7 +91,7 @@ class _UserDataCollectionScreenState extends State<UserDataCollectionScreen> {
                         nameController: nameController,
                         prnController: prnController,
                         phoneController: phoneController,
-                        branch: BranchInitValue,
+                        branch: branchInitValue,
                       ),
                     ),
                     // FloatingActionButton(
@@ -151,7 +151,7 @@ class _UserDataCollectionScreenState extends State<UserDataCollectionScreen> {
           }).toList(),
           onChanged: (value) {
             setState(() {
-              BranchInitValue = value!;
+              branchInitValue = value!;
             });
           },
         ),
@@ -183,7 +183,7 @@ class ConfirmDataButton extends StatelessWidget {
               prn: prnController.text.toString().trim(),
               phoneNumber: phoneController.text.toString().trim(),
               branch: branch);
-          await context.read<DataCollectionCubit>().UpdateUserDetails(data);
+          await context.read<DataCollectionCubit>().updateUserDetails(data);
           FocusManager.instance.primaryFocus?.unfocus();
         },
         style: ElevatedButton.styleFrom(

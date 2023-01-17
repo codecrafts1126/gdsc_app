@@ -20,7 +20,7 @@ class DataCollectionCubit extends Cubit<DataCollectionState> {
     _canTriggerAuthActions = true;
   }
 
-  Future<dynamic> UpdateUserDetails(UserDataModel userData) async {
+  Future<dynamic> updateUserDetails(UserDataModel userData) async {
     if (!_canTriggerAuthActions) return;
     _canTriggerAuthActions = false;
     emit(const DataCollectionProcessingState());

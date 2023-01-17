@@ -49,22 +49,7 @@ int hoursBetween(DateTime from, DateTime to) {
 
 String timeLeftForEvent(DateTime startDate, DateTime endDate) {
   int hours = hoursBetween(DateTime.now(), startDate);
-
-  int currHour = DateTime.now().hour;
-  int startHour = startDate.hour;
-  int endHour = endDate.hour;
-
-  // int startTimeHourDiff = startHour - currHour;
-  // int endTimeHourDiff = -(endHour - currHour);
-  int startTimeHourDiff = hoursBetween(DateTime.now(), startDate);
-  int endTimeHourDiff = hoursBetween(DateTime.now(), endDate);
-
-  // print(hours);
   if (DateTime.now().isAfter(endDate)) {
-    // print(startDate);
-    // print(endDate);
-    // print(
-    //     DateTime.now().isAfter(startDate) && DateTime.now().isBefore(endDate));
     return "Event has ended";
   } else if (DateTime.now().isAfter(startDate) &&
       DateTime.now().isBefore(endDate)) {
