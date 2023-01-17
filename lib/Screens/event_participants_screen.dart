@@ -1,13 +1,9 @@
 import 'package:DSCSITP/Screens/user_profile_screen.dart';
 import 'package:DSCSITP/utils/network_vars.dart';
 import 'package:DSCSITP/utils/page_transition.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:DSCSITP/Models/domain_model.dart';
 import 'package:DSCSITP/cubit/event/Event_participant/event_participant_cubit.dart';
-import 'package:DSCSITP/cubit/event/Event_refresh/event_refresh_cubit.dart';
-import 'package:DSCSITP/utils/date_time_utils.dart';
 
 class EventParticipantsScreen extends StatefulWidget {
   final eid;
@@ -127,7 +123,7 @@ class EventParticipantsScrollable extends StatelessWidget {
     final String number =
         sortedParticipantsDetails.values.elementAt(index)['number'].toString();
     // sortedParticipantsDetails.values.elementAt(index).toString()
-    return Container(
+    return SizedBox(
       width: double.maxFinite,
       child: Column(
         children: [
