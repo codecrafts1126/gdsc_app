@@ -202,7 +202,7 @@ class EventParticipantsScrollable extends StatelessWidget {
                         foregroundColor: Colors.black,
                         child: const Icon(
                           Icons.arrow_forward_rounded,
-                          color: Colors.grey,
+                          color: Colors.black,
                         ),
                       ),
                     ),

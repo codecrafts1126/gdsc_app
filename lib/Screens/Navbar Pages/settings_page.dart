@@ -73,6 +73,7 @@ class _ProfileSectionState extends State<ProfileSection> {
             Stack(alignment: Alignment.bottomRight, children: [
               Card(
                   color: Colors.blueGrey[50],
+                  elevation: 3,
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(18)),
                   child: Padding(
@@ -141,7 +142,7 @@ class _ProfileSectionState extends State<ProfileSection> {
                   onPressed: () {
                     showEditProfileScreen();
                   },
-                  elevation: 3,
+                  elevation: 2,
                   highlightElevation: 0,
                   backgroundColor: Colors.blueGrey[100],
                   foregroundColor: Colors.black,
@@ -182,6 +183,7 @@ class _ThemesSectionState extends State<ThemesSection> {
   Widget build(BuildContext context) {
     return Card(
         color: Colors.blueGrey[50],
+        elevation: 3,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
         child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 12),

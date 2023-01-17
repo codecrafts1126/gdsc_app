@@ -20,10 +20,11 @@ class _CustomNavbarState extends State<CustomNavbar> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: const BoxDecoration(
-        boxShadow: <BoxShadow>[
+      decoration: BoxDecoration(
+        color: Colors.grey[50],
+        boxShadow: const <BoxShadow>[
           BoxShadow(
-              color: Colors.black54,
+              color: Colors.black45,
               blurRadius: 4.5,
               offset: Offset(0.0, 0.75),
               blurStyle: BlurStyle.outer)
@@ -45,7 +46,7 @@ class _CustomNavbarState extends State<CustomNavbar> {
                 color: Colors.white,
                 activeColor: Colors.white,
                 gap: 9,
-                tabBackgroundColor: Colors.grey.shade800,
+                tabBackgroundColor: const Color.fromARGB(255, 45, 45, 45),
                 tabBorderRadius: 75,
                 tabs: const [
                   GButton(
