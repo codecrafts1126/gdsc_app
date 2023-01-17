@@ -82,4 +82,45 @@ class EventParticipantCubit extends Cubit<EventParticipantState> {
     }
     _canTriggerActions = true;
   }
+
+  Future<dynamic> getParticipants(String eid) async {
+    if (!_canTriggerActions) return;
+    _canTriggerActions = false;
+    emit(const EventParticipantProcessingState());
+
+    try {
+      var res = await Dio().post(
+        eventParticipantsReadPath,
+        data: {
+          "uid": FirebaseAuth.instance.currentUser?.uid,
+          "eid": eid,
+        },
+      );
+      if (res.statusCode == 200) {
+        var jsonRes = res.data;
+        if (jsonRes["status"] == true) {
+          participantDetails = jsonRes['message'];
+          sortedParticipantsDetails = Map.fromEntries(participantDetails.entries
+              .toList()
+            ..sort((e1, e2) => e1.value['name'].compareTo(e2.value['name'])));
+          print(sortedParticipantsDetails);
+          emit(const EventParticipantsLoadedState());
+        } else {
+          emit(EventParticipantErrorState(jsonRes["message"].toString()));
+        }
+      } else {
+        emit(EventParticipantErrorState(
+            "Server returned an error with status code ${res.statusCode}"));
+      }
+      emit(const EventParticipantInitialState());
+      _canTriggerActions = true;
+    } on DioError catch (e) {
+      emit(EventParticipantErrorState(e.error.toString()));
+      emit(const EventParticipantInitialState());
+    } on Exception catch (e) {
+      emit(EventParticipantErrorState(e.toString()));
+      emit(const EventParticipantInitialState());
+    }
+    _canTriggerActions = true;
+  }
 }

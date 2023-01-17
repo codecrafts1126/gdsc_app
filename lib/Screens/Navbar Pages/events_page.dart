@@ -1,3 +1,5 @@
+import 'package:DSCSITP/Screens/event_participants_screen.dart';
+import 'package:DSCSITP/cubit/event/Event_participant/event_participant_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:DSCSITP/Models/domain_model.dart';
@@ -242,8 +244,30 @@ class _EventsPageListViewState extends State<EventsPageListView> {
               PopupMenuItem<String>(
                 child: ListTile(
                   contentPadding: EdgeInsets.zero,
-                  title: const Text('Edit Event'),
-                  leading: const Icon(Icons.edit_outlined),
+                  title: const Text('View Participants'),
+                  leading: Icon(
+                    Icons.person_2,
+                    color: Colors.blue[400],
+                  ),
+                  onTap: () async {
+                    Navigator.of(context).pop();
+                    Navigator.push(
+                        context,
+                        customSlideTransitionRight(EventParticipantsScreen(
+                            eid: sortedEvents.keys.elementAt(index))));
+                  },
+                ),
+              ),
+              PopupMenuItem<String>(
+                child: ListTile(
+                  contentPadding: EdgeInsets.zero,
+                  title: const Text(
+                    'Edit Event',
+                  ),
+                  leading: Icon(
+                    Icons.edit_outlined,
+                    color: Colors.green[400],
+                  ),
                   onTap: () async {
                     Navigator.of(context).pop();
                     await showModalBottomSheet(

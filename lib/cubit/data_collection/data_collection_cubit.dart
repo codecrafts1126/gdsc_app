@@ -20,35 +20,21 @@ class DataCollectionCubit extends Cubit<DataCollectionState> {
     _canTriggerAuthActions = true;
   }
 
-  // Future<dynamic> addUserDetails() async {
-  //   if (!_canTriggerAuthActions) return;
-  //   _canTriggerAuthActions = false;
-  //   bool updated = true;
-  //   if (updated) {
-  //     emit(const DataCollectedState("Your details have been saved"));
-  //   } else {
-  //     emit(const DataCollectionErrorState("Could not register your data"));
-  //   }
-
-  //   _canTriggerAuthActions = true;
-  //   return updated;
-  // }
-
   Future<dynamic> UpdateUserDetails(UserDataModel userData) async {
     if (!_canTriggerAuthActions) return;
     _canTriggerAuthActions = false;
     emit(const DataCollectionProcessingState());
-    print("hehe");
 
     try {
       var res = await Dio().post(
         updateUserInfoPath,
         data: {
-          "uid": FirebaseAuth.instance.currentUser?.uid,
+          "uid": FirebaseAuth.instance.currentUser?.uid.toString(),
           "name": userData.name.toString().trim(),
           "prn": userData.prn.toString().trim(),
           "number": userData.phoneNumber.toString().trim(),
           "branch": userData.branch.toString().trim(),
+          "pfp": FirebaseAuth.instance.currentUser?.photoURL.toString()
         },
       );
       if (res.statusCode == 200) {
