@@ -1,7 +1,8 @@
+import 'package:DSCSITP/utils/network_vars.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:DSCSITP/cubit/news/news_cubit.dart';
-import 'package:DSCSITP/utils/network_vars.dart';
+import 'package:intl/intl.dart' show DateFormat, toBeginningOfSentenceCase;
 import 'package:url_launcher/url_launcher.dart';
 
 class NewsPage extends StatefulWidget {
@@ -31,21 +32,21 @@ class _NewsPageState extends State<NewsPage> {
         if (state is NewsProcessingState) {
           return const Center(child: CircularProgressIndicator());
         } else {
-          return const NewsPageView();
+          return const NewsPageOverview();
         }
       },
     );
   }
 }
 
-class NewsPageView extends StatefulWidget {
-  const NewsPageView({super.key});
+class NewsPageOverview extends StatefulWidget {
+  const NewsPageOverview({super.key});
 
   @override
-  State<NewsPageView> createState() => _NewsPageViewState();
+  State<NewsPageOverview> createState() => _NewsPageOverviewState();
 }
 
-class _NewsPageViewState extends State<NewsPageView> {
+class _NewsPageOverviewState extends State<NewsPageOverview> {
   Future<void> openUrl(String url) async {
     try {
       launchUrl(Uri.parse(url));
@@ -56,191 +57,219 @@ class _NewsPageViewState extends State<NewsPageView> {
     }
   }
 
-  @override
   Widget build(BuildContext context) {
     return RefreshIndicator(
       onRefresh: () async {
-        context.read<NewsCubit>().refreshNewsData();
+        await context.read<NewsCubit>().refreshNewsData();
       },
       child: Container(
         color: Colors.grey[50],
-        child: PageView.builder(
-          scrollDirection: Axis.horizontal,
-          itemCount: news['articles'].length,
+        child: ListView.builder(
+          physics: const BouncingScrollPhysics(
+              parent: AlwaysScrollableScrollPhysics()),
+          itemCount: news['count-articles'],
           itemBuilder: (context, index) {
             return Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8),
-                child: singleNewsPage(index));
+                padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 3),
+                child: participantItem(index, context));
           },
         ),
       ),
     );
   }
 
-  Widget singleNewsPage(int index) {
-    String newsAuthor = news['articles'][index]['author'].toString();
-    String newsContent = news['articles'][index]['content'].toString();
-    String newsDescription = news['articles'][index]['description'].toString();
-    String newsDate = news['articles'][index]['publishedAt'].toString();
-    String newsSource = news['articles'][index]['source']['name'].toString();
-    String newsTitle = news['articles'][index]['title'].toString();
-    String newsUrl = news['articles'][index]['url'].toString();
-    String newsImageUrl = (news['articles'][index]['urlToImage'].toString());
-    return Container(
-      height: 100,
-      width: 100,
-      color: Colors.transparent,
-      child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(height: 12),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12),
-              child: Text(
-                newsTitle,
-                style: const TextStyle(
-                    fontSize: 24, fontWeight: FontWeight.w400, height: 1),
-              ),
-            ),
-            const SizedBox(height: 9),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12),
-              child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    SizedBox(
-                      width: 210,
-                      child: Text(
-                        newsAuthor == "null" ? newsSource : newsAuthor,
-                        style: TextStyle(
-                            overflow: TextOverflow.ellipsis,
-                            fontSize: 15,
-                            color: Colors.grey[500],
-                            fontWeight: FontWeight.w400),
-                      ),
-                    ),
-                    Row(
+  Widget participantItem(int index, BuildContext context) {
+    String category = news['category'].toString();
+    String author = news['data'][index]['author'].toString();
+    String description = news['data'][index]['decription'].toString();
+    String time = news['data'][index]['time'].toString();
+    String title = news['data'][index]['title'].toString();
+    String url = news['data'][index]['read-more'].toString();
+    String imageUrl = news['data'][index]['images'].toString();
+    return Column(
+      children: [
+        index == 0 ? const SizedBox(height: 12) : const SizedBox(),
+        Card(
+            elevation: 3,
+            color: Colors.blueGrey[50],
+            shadowColor: Colors.black,
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
+            child: Padding(
+              padding:
+                  const EdgeInsets.only(top: 6, bottom: 12, left: 6, right: 6),
+              child: Column(
+                children: [
+                  if (imageUrl != "None")
+                    Stack(
+                      alignment: Alignment.topLeft,
                       children: [
-                        ElevatedButton(
-                          onPressed: () async {
-                            await openUrl(newsUrl);
-                          },
-                          style: ElevatedButton.styleFrom(
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(18)),
-                              shadowColor: Colors.black,
-                              backgroundColor: Colors.black,
-                              elevation: 3),
-                          child: const Text("Visit"),
-                        ),
-                        // Text(
-                        //   "Visit",
-                        //   style: TextStyle(
-                        //       fontSize: 15,
-                        //       color: Colors.redAccent,
-                        //       fontWeight: FontWeight.w800),
-                        // ),
-                        // Icon(
-                        //   Icons.link,
-                        //   color: Colors.redAccent,
-                        // )
-                      ],
-                    ),
-                  ]),
-            ),
-            const SizedBox(height: 9),
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 12),
-                child: Scrollbar(
-                  child: ListView(
-                    // physics: BouncingScrollPhysics(),
-                    children: [
-                      if (newsImageUrl != "null")
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(12),
-                          child: Image(
-                            image: NetworkImage(newsImageUrl),
-                            fit: BoxFit.fill,
-                            errorBuilder: (context, error, stackTrace) {
-                              return Container(
-                                color: Colors.grey[300],
-                                child: Center(
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Column(children: [
-                                      const Icon(Icons.error,
-                                          color: Colors.red),
-                                      const SizedBox(height: 9),
-                                      Text(
-                                        error.toString(),
-                                        style: const TextStyle(
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w300),
-                                      )
-                                    ]),
+                        Material(
+                          elevation: 3,
+                          shadowColor: Colors.black,
+                          borderRadius: BorderRadius.circular(18),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(18),
+                            child: Image(
+                              image: NetworkImage(imageUrl),
+                              fit: BoxFit.fill,
+                              errorBuilder: (context, error, stackTrace) {
+                                return Container(
+                                  color: Colors.grey[300],
+                                  child: Center(
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Column(children: [
+                                        const Icon(Icons.error,
+                                            color: Colors.red),
+                                        const SizedBox(height: 9),
+                                        Text(
+                                          error.toString(),
+                                          style: const TextStyle(
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w300),
+                                        )
+                                      ]),
+                                    ),
                                   ),
-                                ),
-                              );
-                            },
-                            frameBuilder: (context, child, frame,
-                                wasSynchronouslyLoaded) {
-                              return child;
-                            },
-                            loadingBuilder: (BuildContext context, Widget child,
-                                ImageChunkEvent? loadingProgress) {
-                              if (loadingProgress == null) return child;
-                              return Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Center(
-                                  child: CircularProgressIndicator(
-                                    value: loadingProgress.expectedTotalBytes !=
-                                            null
-                                        ? loadingProgress
-                                                .cumulativeBytesLoaded /
-                                            loadingProgress.expectedTotalBytes!
-                                        : null,
+                                );
+                              },
+                              frameBuilder: (context, child, frame,
+                                  wasSynchronouslyLoaded) {
+                                return child;
+                              },
+                              loadingBuilder: (BuildContext context,
+                                  Widget child,
+                                  ImageChunkEvent? loadingProgress) {
+                                if (loadingProgress == null) return child;
+                                return Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Center(
+                                    child: CircularProgressIndicator(
+                                      value:
+                                          loadingProgress.expectedTotalBytes !=
+                                                  null
+                                              ? loadingProgress
+                                                      .cumulativeBytesLoaded /
+                                                  loadingProgress
+                                                      .expectedTotalBytes!
+                                              : null,
+                                    ),
                                   ),
-                                ),
-                              );
-                            },
+                                );
+                              },
+                            ),
                           ),
                         ),
-                      (newsDescription == "" ||
-                              newsDescription == "null" ||
-                              newsDescription == null)
-                          ? const SizedBox()
-                          : Column(
-                              children: [
-                                const Divider(),
-                                Text(
-                                  newsDescription,
+                        if (category != "None")
+                          Positioned(
+                            left: 10,
+                            top: 10,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  color: Colors.blue[500],
+                                  borderRadius: BorderRadius.circular(18)),
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  toBeginningOfSentenceCase(category)!,
                                   style: const TextStyle(
-                                      fontWeight: FontWeight.w300,
-                                      fontSize: 18),
-                                )
-                              ],
+                                      fontSize: 12, color: Colors.white),
+                                ),
+                              ),
                             ),
-                      (newsContent == "" ||
-                              newsContent == "null" ||
-                              newsContent == null)
-                          ? const SizedBox()
-                          : Column(
-                              children: [
-                                const Divider(),
-                                Text(newsContent,
-                                    style: const TextStyle(
-                                        fontWeight: FontWeight.w300,
-                                        fontSize: 18))
-                              ],
+                          ),
+                        if (imageUrl != "None")
+                          Positioned(
+                            bottom: 10,
+                            right: 10,
+                            child: ElevatedButton(
+                              onPressed: () async {
+                                await openUrl(url);
+                              },
+                              style: ElevatedButton.styleFrom(
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(18)),
+                                  shadowColor: Colors.black,
+                                  backgroundColor: Colors.black54,
+                                  elevation: 3),
+                              child: const Text("Visit"),
                             ),
-                    ],
+                          )
+                      ],
+                    ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 6, right: 8, left: 8),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        if (imageUrl == "None")
+                          ElevatedButton(
+                            onPressed: () async {
+                              await openUrl(url);
+                            },
+                            style: ElevatedButton.styleFrom(
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(18)),
+                                shadowColor: Colors.black,
+                                backgroundColor: Colors.black,
+                                elevation: 3),
+                            child: const Text("Visit"),
+                          ),
+                        Expanded(child: Container()),
+                      ],
+                    ),
                   ),
-                ),
+                  const SizedBox(height: 9),
+                  if (title != "None" || title == "null")
+                    Padding(
+                      padding: const EdgeInsets.only(
+                          right: 8, left: 8, bottom: 0, top: 0),
+                      child: Column(
+                        children: [
+                          Text(
+                            title,
+                            style: const TextStyle(
+                                fontWeight: FontWeight.w400, fontSize: 21),
+                          )
+                        ],
+                      ),
+                    ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      if (author != "None")
+                        Padding(
+                          padding: const EdgeInsets.only(left: 8, top: 9),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Text(
+                                author,
+                                style:
+                                    TextStyle(color: Colors.grey, fontSize: 14),
+                              )
+                            ],
+                          ),
+                        ),
+                      Expanded(child: Container()),
+                      if (time != "None")
+                        Padding(
+                          padding: const EdgeInsets.only(top: 9, right: 8),
+                          child: Text(
+                            DateFormat.yMMMMd()
+                                .format(DateTime.parse(time).toLocal()),
+                            style: TextStyle(fontSize: 14, color: Colors.grey),
+                          ),
+                        ),
+                    ],
+                  )
+                ],
               ),
-            ),
-          ]),
+            )),
+      ],
     );
   }
 }
