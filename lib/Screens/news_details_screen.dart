@@ -230,7 +230,8 @@ class _NewsDetailsScreenState extends State<NewsDetailsScreen> {
                       children: [
                         Text(
                           author,
-                          style: TextStyle(color: Colors.grey, fontSize: 14),
+                          style:
+                              const TextStyle(color: Colors.grey, fontSize: 14),
                         )
                       ],
                     ),
@@ -243,16 +244,17 @@ class _NewsDetailsScreenState extends State<NewsDetailsScreen> {
                       time,
                       // DateFormat.yMMMMd()
                       //     .format(DateTime.parse(time).toLocal()),
-                      style: TextStyle(fontSize: 14, color: Colors.grey),
+                      style: const TextStyle(fontSize: 14, color: Colors.grey),
                     ),
                   ),
               ],
             ),
             Padding(
-                padding: EdgeInsets.symmetric(horizontal: 8, vertical: 18),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 8, vertical: 18),
                 child: Text(
                   description,
-                  style: TextStyle(
+                  style: const TextStyle(
                       fontSize: 18, fontWeight: FontWeight.w300, height: 1.2),
                 ))
           ],

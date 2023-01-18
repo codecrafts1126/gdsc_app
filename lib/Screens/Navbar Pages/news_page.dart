@@ -4,7 +4,7 @@ import 'package:DSCSITP/utils/page_transition.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:DSCSITP/cubit/news/news_cubit.dart';
-import 'package:intl/intl.dart' show DateFormat, toBeginningOfSentenceCase;
+import 'package:intl/intl.dart' show toBeginningOfSentenceCase;
 import 'package:url_launcher/url_launcher.dart';
 
 class NewsPage extends StatefulWidget {
@@ -59,6 +59,7 @@ class _NewsPageOverviewState extends State<NewsPageOverview> {
     }
   }
 
+  @override
   Widget build(BuildContext context) {
     return RefreshIndicator(
       onRefresh: () async {
@@ -265,7 +266,7 @@ class _NewsPageOverviewState extends State<NewsPageOverview> {
                               children: [
                                 Text(
                                   author,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       color: Colors.grey, fontSize: 14),
                                 )
                               ],
@@ -279,8 +280,8 @@ class _NewsPageOverviewState extends State<NewsPageOverview> {
                               time,
                               // DateFormat.yMMMMd()
                               //     .format(DateTime.parse(time).toLocal()),
-                              style:
-                                  TextStyle(fontSize: 14, color: Colors.grey),
+                              style: const TextStyle(
+                                  fontSize: 14, color: Colors.grey),
                             ),
                           ),
                       ],
