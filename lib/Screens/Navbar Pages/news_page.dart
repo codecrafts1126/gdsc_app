@@ -290,6 +290,7 @@ class _NewsPageOverviewState extends State<NewsPageOverview> {
                 ),
               )),
         ),
+        if (index == news['count-articles'] - 1) const SizedBox(height: 12)
       ],
     );
   }
