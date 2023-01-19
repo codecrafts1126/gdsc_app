@@ -177,7 +177,8 @@ class EventDataScrollable extends StatelessWidget {
         thickness: 6,
         radius: const Radius.circular(18),
         child: SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
+          physics: const BouncingScrollPhysics(
+              parent: AlwaysScrollableScrollPhysics()),
           child: SizedBox(
             width: double.maxFinite,
             // color: Colors.blue,

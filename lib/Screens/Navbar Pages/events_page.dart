@@ -157,6 +157,7 @@ class _EventsPageListViewState extends State<EventsPageListView> {
                               sortedEvents[sortedEvents.keys.elementAt(index)]
                                       ['name']
                                   .toString(),
+                              textAlign: TextAlign.center,
                               style: const TextStyle(
                                   fontSize: 24, fontWeight: FontWeight.w300),
                             ),
