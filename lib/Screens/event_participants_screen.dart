@@ -147,23 +147,31 @@ class EventParticipantsScrollable extends StatelessWidget {
                               child: Image.asset('icons/default_pfp.png',
                                   fit: BoxFit.cover))
                           : ClipOval(
-                              child: Image.network(
-                                pfpUrl,
+                              // child: Image.network(
+                              //   pfpUrl,
+                              //   fit: BoxFit.cover,
+                              //   frameBuilder: (context, child, frame,
+                              //       wasSynchronouslyLoaded) {
+                              //     return child;
+                              //   },
+                              //   loadingBuilder:
+                              //       (context, child, loadingProgress) {
+                              //     if (loadingProgress == null) {
+                              //       return child;
+                              //     } else {
+                              //       return const Center(
+                              //         child: CircularProgressIndicator(),
+                              //       );
+                              //     }
+                              //   },
+                              // ),
+                              child: FadeInImage.assetNetwork(
+                                image: pfpUrl,
+                                placeholder: 'icons/default_pfp.png',
+                                fadeInDuration: const Duration(milliseconds: 1),
+                                fadeOutDuration:
+                                    const Duration(milliseconds: 1),
                                 fit: BoxFit.cover,
-                                frameBuilder: (context, child, frame,
-                                    wasSynchronouslyLoaded) {
-                                  return child;
-                                },
-                                loadingBuilder:
-                                    (context, child, loadingProgress) {
-                                  if (loadingProgress == null) {
-                                    return child;
-                                  } else {
-                                    return const Center(
-                                      child: CircularProgressIndicator(),
-                                    );
-                                  }
-                                },
                               ),
                             ),
                     ),

@@ -89,22 +89,29 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                           child: Image.asset('icons/default_pfp.png',
                               fit: BoxFit.cover))
                       : ClipOval(
-                          child: Image.network(
-                            widget.pfp,
+                          // child: Image.network(
+                          //   widget.pfp,
+                          //   fit: BoxFit.cover,
+                          //   frameBuilder: (context, child, frame,
+                          //       wasSynchronouslyLoaded) {
+                          //     return child;
+                          //   },
+                          //   loadingBuilder: (context, child, loadingProgress) {
+                          //     if (loadingProgress == null) {
+                          //       return child;
+                          //     } else {
+                          //       return const Center(
+                          //         child: CircularProgressIndicator(),
+                          //       );
+                          //     }
+                          //   },
+                          // ),
+                          child: FadeInImage.assetNetwork(
+                            image: widget.pfp,
+                            placeholder: 'icons/default_pfp.png',
+                            fadeInDuration: const Duration(milliseconds: 1),
+                            fadeOutDuration: const Duration(milliseconds: 1),
                             fit: BoxFit.cover,
-                            frameBuilder: (context, child, frame,
-                                wasSynchronouslyLoaded) {
-                              return child;
-                            },
-                            loadingBuilder: (context, child, loadingProgress) {
-                              if (loadingProgress == null) {
-                                return child;
-                              } else {
-                                return const Center(
-                                  child: CircularProgressIndicator(),
-                                );
-                              }
-                            },
                           ),
                         ),
                 ),
