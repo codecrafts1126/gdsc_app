@@ -127,54 +127,58 @@ class _NewsPageOverviewState extends State<NewsPageOverview> {
                             borderRadius: BorderRadius.circular(18),
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(18),
-                              child: Image(
-                                image: NetworkImage(imageUrl),
-                                fit: BoxFit.fill,
-                                errorBuilder: (context, error, stackTrace) {
-                                  return Container(
-                                    color: Colors.grey[300],
-                                    child: Center(
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Column(children: [
-                                          const Icon(Icons.error,
-                                              color: Colors.red),
-                                          const SizedBox(height: 9),
-                                          Text(
-                                            error.toString(),
-                                            style: const TextStyle(
-                                                fontSize: 12,
-                                                fontWeight: FontWeight.w300),
-                                          )
-                                        ]),
+                              child: AspectRatio(
+                                aspectRatio: 10 / 5.5,
+                                child: Image(
+                                  image: NetworkImage(imageUrl),
+                                  fit: BoxFit.fitWidth,
+                                  alignment: FractionalOffset.center,
+                                  errorBuilder: (context, error, stackTrace) {
+                                    return Container(
+                                      color: Colors.grey[300],
+                                      child: Center(
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Column(children: [
+                                            const Icon(Icons.error,
+                                                color: Colors.red),
+                                            const SizedBox(height: 9),
+                                            Text(
+                                              error.toString(),
+                                              style: const TextStyle(
+                                                  fontSize: 12,
+                                                  fontWeight: FontWeight.w300),
+                                            )
+                                          ]),
+                                        ),
                                       ),
-                                    ),
-                                  );
-                                },
-                                frameBuilder: (context, child, frame,
-                                    wasSynchronouslyLoaded) {
-                                  return child;
-                                },
-                                loadingBuilder: (BuildContext context,
-                                    Widget child,
-                                    ImageChunkEvent? loadingProgress) {
-                                  if (loadingProgress == null) return child;
-                                  return Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Center(
-                                      child: CircularProgressIndicator(
-                                        value: loadingProgress
-                                                    .expectedTotalBytes !=
-                                                null
-                                            ? loadingProgress
-                                                    .cumulativeBytesLoaded /
-                                                loadingProgress
-                                                    .expectedTotalBytes!
-                                            : null,
+                                    );
+                                  },
+                                  frameBuilder: (context, child, frame,
+                                      wasSynchronouslyLoaded) {
+                                    return child;
+                                  },
+                                  loadingBuilder: (BuildContext context,
+                                      Widget child,
+                                      ImageChunkEvent? loadingProgress) {
+                                    if (loadingProgress == null) return child;
+                                    return Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Center(
+                                        child: CircularProgressIndicator(
+                                          value: loadingProgress
+                                                      .expectedTotalBytes !=
+                                                  null
+                                              ? loadingProgress
+                                                      .cumulativeBytesLoaded /
+                                                  loadingProgress
+                                                      .expectedTotalBytes!
+                                              : null,
+                                        ),
                                       ),
-                                    ),
-                                  );
-                                },
+                                    );
+                                  },
+                                ),
                               ),
                             ),
                           ),

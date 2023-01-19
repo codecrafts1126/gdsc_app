@@ -3,9 +3,13 @@ import 'package:flutter/material.dart';
 class CustomTextField extends StatefulWidget {
   final TextEditingController controller;
   final String hintText;
+  final int maxLines;
 
   const CustomTextField(
-      {super.key, required this.controller, required this.hintText});
+      {super.key,
+      required this.controller,
+      required this.hintText,
+      required this.maxLines});
 
   @override
   State<CustomTextField> createState() => _CustomTextFieldState();
@@ -15,17 +19,20 @@ class _CustomTextFieldState extends State<CustomTextField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      maxLines: widget.maxLines,
       controller: widget.controller,
       decoration: InputDecoration(
-          enabledBorder: const UnderlineInputBorder(
-            borderSide: BorderSide(color: Colors.black),
+          enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.black26),
+              borderRadius: BorderRadius.circular(15)),
+          focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.black54),
+            borderRadius: BorderRadius.circular(15),
           ),
-          focusedBorder: const UnderlineInputBorder(
-            borderSide: BorderSide(color: Colors.black),
-          ),
-          border: const UnderlineInputBorder(),
+          border: const OutlineInputBorder(),
           hintText: widget.hintText,
-          fillColor: Colors.black),
+          filled: true,
+          fillColor: Colors.white),
     );
   }
 }

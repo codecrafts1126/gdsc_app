@@ -68,6 +68,19 @@ class _EditEventBottomSheetState extends State<EditEventBottomSheet> {
         //editing controller of this TextField
 
         decoration: InputDecoration(
+          contentPadding:
+              const EdgeInsets.symmetric(horizontal: 21, vertical: 18),
+          filled: true,
+          fillColor: Colors.white,
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(15),
+            borderSide: const BorderSide(color: Colors.black26),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(15),
+            borderSide: const BorderSide(color: Colors.black54),
+          ),
+          border: const OutlineInputBorder(),
           icon: const Icon(Icons.timelapse), //icon of text field
           hintText: isStart
               ? ("Start Time is set to ${dateTimeToTimeString(startTime)}")
@@ -107,8 +120,20 @@ class _EditEventBottomSheetState extends State<EditEventBottomSheet> {
   Widget dayPicker(bool isStart) {
     return TextField(
         //editing controller of this TextField
-
         decoration: InputDecoration(
+            contentPadding:
+                const EdgeInsets.symmetric(horizontal: 21, vertical: 18),
+            filled: true,
+            fillColor: Colors.white,
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(15),
+              borderSide: const BorderSide(color: Colors.black26),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(15),
+              borderSide: const BorderSide(color: Colors.black54),
+            ),
+            border: const OutlineInputBorder(),
             icon: const Icon(Icons.calendar_today), //icon of text field
             hintText: isStart
                 ? "Start date is on ${dateToStringReadable(startDate)}"
@@ -151,6 +176,22 @@ class _EditEventBottomSheetState extends State<EditEventBottomSheet> {
       child: SizedBox(
         width: double.maxFinite,
         child: DropdownButtonFormField(
+          decoration: InputDecoration(
+            contentPadding:
+                const EdgeInsets.symmetric(horizontal: 21, vertical: 18),
+            filled: true,
+            fillColor: Colors.white,
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(15),
+              borderSide: const BorderSide(color: Colors.black26),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(15),
+              borderSide: const BorderSide(color: Colors.black54),
+            ),
+            border: const OutlineInputBorder(),
+            // hintText: widget.hintText,
+          ),
           borderRadius: BorderRadius.circular(18),
           elevation: 3,
           menuMaxHeight: 450,
@@ -198,16 +239,19 @@ class _EditEventBottomSheetState extends State<EditEventBottomSheet> {
                         const SizedBox(height: 18),
                         CustomTextField(
                             controller: eventName,
-                            hintText: "Event name (Ex: Flutter Festival 2023)"),
+                            hintText: "Event name (Ex: Flutter Festival 2023)",
+                            maxLines: 1),
                         const SizedBox(height: 12),
                         CustomTextField(
                             controller: eventDescription,
-                            hintText: "Description"),
+                            hintText: "Description",
+                            maxLines: 5),
                         const SizedBox(height: 12),
                         CustomTextField(
                             controller: eventVenue,
                             hintText:
-                                "Venue (Ex: Cloud Computing Lab, 4th floor, SIT Base campus"),
+                                "Venue (Ex: Cloud Computing Lab, 4th floor, SIT Base campus",
+                            maxLines: 1),
                         const SizedBox(height: 12),
                         dayPicker(true),
                         const SizedBox(height: 12),

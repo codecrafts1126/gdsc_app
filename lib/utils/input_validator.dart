@@ -64,7 +64,7 @@ dynamic validateEmail(String email) {
     validationResult[1] = "Invalid email format";
   } else if (!contains(str, "@sitpune.edu.in")) {
     validationResult[0] = false;
-    validationResult[1] = "Only SITPUNE emails allowed";
+    validationResult[1] = "Only sitpune emails allowed";
   }
   return validationResult;
 }
