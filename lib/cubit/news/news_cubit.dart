@@ -25,7 +25,9 @@ class NewsCubit extends Cubit<NewsState> {
         if (jsonRes["status"] == true) {
           news = jsonRes["message"];
         } else {
-          emit(NewsErrorState(jsonRes["message"].toString()));
+          // emit(NewsErrorState(jsonRes["message"].toString()));
+          emit(const NewsErrorState(
+              "An internal error has occured, try again later"));
         }
       } else {
         emit(NewsErrorState(

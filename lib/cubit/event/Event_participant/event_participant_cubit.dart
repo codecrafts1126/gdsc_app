@@ -27,7 +27,9 @@ class EventParticipantCubit extends Cubit<EventParticipantState> {
       if (res.statusCode == 200) {
         var jsonRes = res.data;
         if (jsonRes["status"] == true) {
-          emit(EventParticipantAddedState(jsonRes["message"].toString()));
+          // emit(EventParticipantAddedState(jsonRes["message"].toString()));
+          emit(const EventParticipantAddedState(
+              "Successfully joined event as participant"));
         } else {
           emit(EventParticipantErrorState(jsonRes["message"].toString()));
         }
@@ -63,7 +65,9 @@ class EventParticipantCubit extends Cubit<EventParticipantState> {
       if (res.statusCode == 200) {
         var jsonRes = res.data;
         if (jsonRes["status"] == true) {
-          emit(EventParticipantRemovedState(jsonRes["message"].toString()));
+          // emit(EventParticipantRemovedState(jsonRes["message"].toString()));
+          emit(const EventParticipantRemovedState(
+              "successfully opted out of event"));
         } else {
           emit(EventParticipantErrorState(jsonRes["message"].toString()));
         }

@@ -5,6 +5,7 @@ class UserProfileScreen extends StatefulWidget {
   final String branch;
   final String prn;
   final String number;
+  final String email;
   final String pfp;
   const UserProfileScreen(
       {super.key,
@@ -12,6 +13,7 @@ class UserProfileScreen extends StatefulWidget {
       required this.branch,
       required this.prn,
       required this.number,
+      required this.email,
       required this.pfp});
 
   @override
@@ -121,6 +123,8 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                 dataItem("Branch", widget.branch),
                 const SizedBox(height: 15),
                 dataItem("PRN", widget.prn),
+                const SizedBox(height: 15),
+                dataItem("Email", "${widget.email}"),
                 const SizedBox(height: 15),
                 dataItem("Phone Number", "+91 ${widget.number}"),
                 const SizedBox(height: 18),

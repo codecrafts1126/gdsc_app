@@ -36,7 +36,9 @@ class EventRefreshCubit extends Cubit<EventRefreshState> {
             ..sort((e1, e2) =>
                 e1.value['startDate'].compareTo(e2.value['startDate'])));
         } else {
-          emit(EventRefreshErrorState(jsonRes["message"].toString()));
+          // emit(EventRefreshErrorState(jsonRes["message"].toString()));
+          emit(const EventRefreshErrorState(
+              "An internal error has occured, try again later"));
         }
       } else {
         emit(EventRefreshErrorState(

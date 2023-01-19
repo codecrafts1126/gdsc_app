@@ -120,6 +120,10 @@ class EventParticipantsScrollable extends StatelessWidget {
         sortedParticipantsDetails.values.elementAt(index)['branch'].toString();
     final String prn =
         sortedParticipantsDetails.values.elementAt(index)['prn'].toString();
+    final String email = sortedParticipantsDetails.values
+        .elementAt(index)['email']
+        .toString()
+        .replaceAll(RegExp(r'@'), "\n@");
     final String number =
         sortedParticipantsDetails.values.elementAt(index)['number'].toString();
     // sortedParticipantsDetails.values.elementAt(index).toString()
@@ -202,6 +206,7 @@ class EventParticipantsScrollable extends StatelessWidget {
                                   name: name,
                                   number: number,
                                   pfp: pfpUrl,
+                                  email: email,
                                   prn: prn)));
                         },
                         elevation: 3,

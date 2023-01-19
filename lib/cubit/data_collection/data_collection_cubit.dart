@@ -54,7 +54,8 @@ class DataCollectionCubit extends Cubit<DataCollectionState> {
       if (res.statusCode == 200) {
         var jsonRes = res.data;
         if (jsonRes["status"] == true) {
-          emit(DataCollectedState(jsonRes["message"].toString()));
+          // emit(DataCollectedState(jsonRes["message"].toString()));
+          emit(const DataCollectedState("Your details have been saved"));
         } else {
           emit(DataCollectionErrorState(jsonRes["message"].toString()));
         }

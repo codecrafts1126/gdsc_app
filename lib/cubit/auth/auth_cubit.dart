@@ -179,7 +179,9 @@ class AuthCubit extends Cubit<AuthState> {
       await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
       emit(const SignedUpState("A recovery email has been sent c:"));
     } on FirebaseAuthException catch (e) {
-      emit(SignUpErrorState(e.message.toString()));
+      // emit(SignUpErrorState(e.message.toString()));
+      emit(const SignUpErrorState(
+          "an error occured while performing the action"));
     }
     emit(const SignedOutState());
 
@@ -207,7 +209,9 @@ class AuthCubit extends Cubit<AuthState> {
           "Account created successfully. Please verify your email to proceed"));
       await FirebaseAuth.instance.currentUser!.sendEmailVerification();
     } on FirebaseAuthException catch (e) {
-      emit(SignUpErrorState(e.message.toString()));
+      // emit(SignUpErrorState(e.message.toString()));
+      emit(const SignUpErrorState(
+          "an error occured while performing the action"));
     }
     emit(const SignedOutState());
     _canTriggerAuthActions = true;
@@ -223,12 +227,20 @@ class AuthCubit extends Cubit<AuthState> {
         break;
       case (DioError):
         {
-          emit(LogInErrorState((e as DioError).message.toString()));
+          if ((e as DioError).message.toString().contains("http")) {
+            emit(const LogInErrorState("Service error, try again later"));
+          } else {
+            emit(LogInErrorState((e as DioError).message.toString()));
+          }
         }
         break;
       default:
         {
-          emit(LogInErrorState(e.toString()));
+          if ((e as DioError).message.toString().contains("http")) {
+            emit(const LogInErrorState("Service error, try again later"));
+          } else {
+            emit(LogInErrorState(e.toString()));
+          }
         }
     }
   }

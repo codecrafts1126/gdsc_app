@@ -37,7 +37,9 @@ class EventRegisterCubit extends Cubit<EventRegisterState> {
         if (jsonRes["status"] == true) {
           emit(EventRegisteredState(jsonRes["message"].toString()));
         } else {
-          emit(EventRegisterErrorState(jsonRes["message"].toString()));
+          // emit(EventRegisterErrorState(jsonRes["message"].toString()));
+          emit(const EventRegisterErrorState(
+              "An internal error has occured, try again later"));
         }
       } else {
         emit(EventRegisterErrorState(
