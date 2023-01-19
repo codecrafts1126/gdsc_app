@@ -17,7 +17,7 @@ class _UserDataCollectionScreenState extends State<UserDataCollectionScreen> {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController prnController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
-  String branchInitValue = 'Branch';
+  String branchInitValue = 'Mechanical';
   @override
   Widget build(BuildContext context) {
     return SafeArea(
