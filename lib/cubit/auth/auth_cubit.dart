@@ -1,3 +1,4 @@
+import 'package:DSCSITP/utils/input_validator.dart';
 import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -97,6 +98,16 @@ class AuthCubit extends Cubit<AuthState> {
 
     //auth code goes here
     try {
+      // input validation
+      dynamic x =
+          getValidation([validateEmail(email), validatePassword(password)]);
+      if (!x[0]) {
+        emit(LogInErrorState(x[1].toString()));
+        await signOut();
+        _canTriggerAuthActions = true;
+        return;
+      }
+
       await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
 
@@ -133,6 +144,17 @@ class AuthCubit extends Cubit<AuthState> {
         GoogleAuthProvider googleProvider = GoogleAuthProvider();
         var authResult =
             await FirebaseAuth.instance.signInWithProvider(googleProvider);
+
+// input validation
+        dynamic x = getValidation(
+            [validateEmail(authResult.additionalUserInfo?.profile?["email"])]);
+        if (!x[0]) {
+          emit(LogInErrorState(x[1].toString()));
+          await signOut();
+          _canTriggerAuthActions = true;
+          return;
+        }
+
         if (authResult.additionalUserInfo?.isNewUser == true) {
           await registerIfNewUser();
         }
@@ -169,6 +191,16 @@ class AuthCubit extends Cubit<AuthState> {
     _canTriggerAuthActions = false;
     emit(const ProcessingState());
     try {
+// input validation
+      dynamic x =
+          getValidation([validateEmail(email), validatePassword(password)]);
+      if (!x[0]) {
+        emit(LogInErrorState(x[1].toString()));
+        await signOut();
+        _canTriggerAuthActions = true;
+        return;
+      }
+
       await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email, password: password);
       emit(const SignedUpState(

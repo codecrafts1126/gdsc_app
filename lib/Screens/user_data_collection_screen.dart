@@ -1,6 +1,7 @@
 import 'package:DSCSITP/Models/branch_model.dart';
 import 'package:DSCSITP/Models/user_data_model.dart';
 import 'package:DSCSITP/Widgets/email_text_input.dart';
+import 'package:DSCSITP/cubit/auth/auth_cubit.dart';
 import 'package:DSCSITP/cubit/data_collection/data_collection_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -17,7 +18,7 @@ class _UserDataCollectionScreenState extends State<UserDataCollectionScreen> {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController prnController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
-  String branchInitValue = 'Mechanical';
+  String branchInitValue = '';
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -194,7 +195,7 @@ class ConfirmDataButton extends StatelessWidget {
             )),
         // child: Text("Confirm Details"),
         child: BlocConsumer<DataCollectionCubit, DataCollectionState>(
-          listener: (context, state) {
+          listener: (context, state) async {
             if (state is DataCollectedState) {
               ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                   backgroundColor: Colors.green[300],
@@ -202,7 +203,7 @@ class ConfirmDataButton extends StatelessWidget {
               nameController.clear();
               prnController.clear();
               phoneController.clear();
-
+              await context.read<AuthCubit>().getUserInfo();
               Navigator.pop(context);
             } else if (state is DataCollectionErrorState) {
               ScaffoldMessenger.of(context).showSnackBar(SnackBar(

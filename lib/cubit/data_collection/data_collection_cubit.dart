@@ -1,4 +1,5 @@
 import 'package:DSCSITP/Models/user_data_model.dart';
+import 'package:DSCSITP/utils/input_validator.dart';
 import 'package:DSCSITP/utils/network_vars.dart';
 import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
@@ -26,6 +27,19 @@ class DataCollectionCubit extends Cubit<DataCollectionState> {
     emit(const DataCollectionProcessingState());
 
     try {
+// input validation
+      dynamic x = getValidation([
+        validatePersonName(userData.name.toString().trim()),
+        validatePRN(userData.prn.toString().trim()),
+        validatePhoneNumber(userData.phoneNumber.toString().trim()),
+        validateBranch(userData.branch.toString().trim())
+      ]);
+      if (!x[0]) {
+        emit(DataCollectionErrorState(x[1].toString()));
+        _canTriggerAuthActions = true;
+        return;
+      }
+
       var res = await Dio().post(
         updateUserInfoPath,
         data: {

@@ -31,12 +31,12 @@ dynamic validatePRN(String name) {
 dynamic validatePhoneNumber(String name) {
   String str = name.trim();
   dynamic validationResult = [true, ""];
-  if (str.length != 10) {
-    validationResult[0] = false;
-    validationResult[1] = "Invalid phone number length";
-  } else if (!isNumeric(str)) {
+  if (!isNumeric(str)) {
     validationResult[0] = false;
     validationResult[1] = "Invalid phone number format";
+  } else if (str.length != 10) {
+    validationResult[0] = false;
+    validationResult[1] = "Invalid phone number length";
   }
 
   return validationResult;
@@ -81,4 +81,24 @@ dynamic validatePassword(String pswd) {
   }
 
   return validationResult;
+}
+
+dynamic validateBranch(String pswd) {
+  String str = pswd.trim();
+  dynamic validationResult = [true, ""];
+  if (str.isEmpty) {
+    validationResult[0] = false;
+    validationResult[1] = "You need to pick your branch";
+  }
+
+  return validationResult;
+}
+
+dynamic getValidation(dynamic validators) {
+  for (var i in validators) {
+    if (i[0] == false) {
+      return i;
+    }
+  }
+  return [true];
 }
