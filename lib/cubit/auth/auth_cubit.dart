@@ -227,13 +227,15 @@ class AuthCubit extends Cubit<AuthState> {
         break;
       case (DioError):
         {
-          if ((e as DioError).message.toString().contains("http")) {
-            emit(const LogInErrorState("Service error, try again later"));
+          if ((e as DioError).message.toString().contains("render")) {
+            emit(const LogInErrorState(
+                "Server is in maintainince mode, try again later"));
           } else {
             emit(LogInErrorState((e as DioError).message.toString()));
           }
         }
         break;
+
       default:
         {
           if ((e as DioError).message.toString().contains("http")) {

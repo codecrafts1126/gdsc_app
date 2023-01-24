@@ -1,3 +1,4 @@
+import 'package:DSCSITP/utils/network_vars.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -62,5 +63,30 @@ String timeLeftForEvent(DateTime startDate, DateTime endDate) {
     return "1 day left";
   } else {
     return "${(hours / 24).round()} days left";
+  }
+}
+
+void sortByNewsTime() {
+  //breakdown postedAt time
+  for (var i in news["data"]) {
+    dynamic x = i['postedAt'].split(' ');
+    i['postedAt'] = x;
+  }
+
+  //reverse sort based on time params
+  final list = news['data'].toList() as List<dynamic>;
+  list.sort((b, a) {
+    if (a["postedAt"][1] == b["postedAt"][1]) {
+      return a["postedAt"][0].compareTo(b["postedAt"][0]);
+    } else {
+      return a["postedAt"][1].compareTo(b["postedAt"][1]);
+    }
+  });
+
+  //join postedAt time again
+  news['data'] = list;
+  for (var i in news["data"]) {
+    dynamic x = i['postedAt'].join(' ');
+    i['postedAt'] = x;
   }
 }

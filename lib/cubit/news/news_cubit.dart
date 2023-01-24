@@ -1,3 +1,4 @@
+import 'package:DSCSITP/utils/date_time_utils.dart';
 import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -24,6 +25,7 @@ class NewsCubit extends Cubit<NewsState> {
         var jsonRes = res.data;
         if (jsonRes["status"] == true) {
           news = jsonRes["message"];
+          sortByNewsTime();
         } else {
           // emit(NewsErrorState(jsonRes["message"].toString()));
           emit(const NewsErrorState(
