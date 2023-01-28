@@ -76,10 +76,14 @@ void sortByNewsTime() {
   //reverse sort based on time params
   final list = news['data'].toList() as List<dynamic>;
   list.sort((b, a) {
-    if (a["postedAt"][1] == b["postedAt"][1]) {
-      return a["postedAt"][0].compareTo(b["postedAt"][0]);
+    if (a["postedAt"][3] == b["postedAt"][3]) {
+      if (a["postedAt"][1] == b["postedAt"][1]) {
+        return a["postedAt"][0].compareTo(b["postedAt"][0]);
+      } else {
+        return a["postedAt"][1].compareTo(b["postedAt"][1]);
+      }
     } else {
-      return a["postedAt"][1].compareTo(b["postedAt"][1]);
+      return a["postedAt"][3].compareTo(b["postedAt"][3]);
     }
   });
 

@@ -229,7 +229,7 @@ class AuthCubit extends Cubit<AuthState> {
         {
           if ((e as DioError).message.toString().contains("render")) {
             emit(const LogInErrorState(
-                "Server is in maintainince mode, try again later"));
+                "Could not connect to service, please try again later"));
           } else {
             emit(LogInErrorState((e as DioError).message.toString()));
           }
