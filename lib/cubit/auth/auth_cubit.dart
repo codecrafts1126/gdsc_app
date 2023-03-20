@@ -227,7 +227,7 @@ class AuthCubit extends Cubit<AuthState> {
         break;
       case (DioError):
         {
-          if ((e as DioError).message.toString().contains("render")) {
+          if ((e as DioError).message.toString().contains("vercel")) {
             emit(const LogInErrorState(
                 "Could not connect to service, please try again later"));
           } else {
